@@ -26,6 +26,16 @@ class User extends Authenticatable
         'is_aktif'
     ];
 
+    // Set nilai default untuk is_admin ke 0
+    protected $attributes = [
+        'is_aktif' => 1
+    ];
+
+    public $timestamps = true;
+
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
+
     // protected $guarded = [
     //     'id_users'
     // ];
