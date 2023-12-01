@@ -70,8 +70,8 @@
                     </a>
                 </div>
                 
-                <div class="menu-item {{ ($active === "matakuliah") ? 'here show' : '' }}">
-                    <a class="menu-link" href="{{ url('listmatkul') }}">
+                <div class="menu-item {{ ($active === "Uang Kas") ? 'here show' : '' }}">
+                    <a class="menu-link" href="{{ url('kas') }}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/art/art002.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -82,7 +82,7 @@
                             </span>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-title">Jurnal Akun</span>
+                        <span class="menu-title">Uang Kas</span>
                     </a>
                 </div>
 

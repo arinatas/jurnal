@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\KasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +39,5 @@ Route::delete('/deleteUser/{id}', [UserController::class, 'destroy'])->middlewar
 Route::get('/resetUser/{id}', [UserController::class, 'reset'])->middleware('auth')->name('reset.user');
 Route::post('/resetupdateUser/{id}', [UserController::class, 'resetupdate'])->middleware('auth')->name('resetupdate.user');
 
-
+// Master Kas
+Route::get('/kas', [KasController::class, 'index'])->middleware('auth')->name('kas');
