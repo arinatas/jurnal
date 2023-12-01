@@ -31,11 +31,11 @@
                                             <table class="table table-striped gy-7 gs-7">
                                                 <thead>
                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
-                                                        <th class="min-w-100px">No</th>
-                                                        <th class="min-w-300px">Username</th>
-                                                        <th class="min-w-300px">Nama</th>
+                                                        <th class="min-w-50px">No</th>
+                                                        <th class="min-w-100px">Username</th>
+                                                        <th class="min-w-100px">Nama</th>
                                                         <th class="min-w-100px">Status</th>
-                                                        <th class="min-w-300px">Action</th>
+                                                        <th class="min-w-100px">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
