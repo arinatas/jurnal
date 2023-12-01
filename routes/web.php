@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,13 @@ Route::patch('password', [ChangePasswordController::class, 'update'])->name('pas
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
-
+// Master User
+Route::get('/user', [UserController::class, 'index'])->middleware('auth')->name('user');
+Route::post('/user', [UserController::class, 'store'])->middleware('auth')->name('insert.user');
+Route::get('/editUser/{id}', [UserController::class, 'edit'])->middleware('auth')->name('edit.user');
+Route::post('/updateUser/{id}', [UserController::class, 'update'])->middleware('auth')->name('update.user');
+Route::delete('/deleteUser/{id}', [UserController::class, 'destroy'])->middleware('auth')->name('destroy.user');
+Route::get('/resetUser/{id}', [UserController::class, 'reset'])->middleware('auth')->name('reset.user');
+Route::post('/resetupdateUser/{id}', [UserController::class, 'resetupdate'])->middleware('auth')->name('resetupdate.user');
 
 

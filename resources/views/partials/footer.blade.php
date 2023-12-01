@@ -9,7 +9,7 @@
     <!--end::Copyright-->
     <!--begin::Menu-->
     <div class="simple-footer text-center" style="user-select: auto;">
-      Made with <i class="fas fa-heart text-danger" style="user-select: auto;"></i> by PPTI Primakara
+      Made with <i class="fas fa-heart text-danger" style="user-select: auto;"></i> by DTI Primakara
     </div>
     <!--end::Menu-->
   </div>

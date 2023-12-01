@@ -51,11 +51,11 @@
                 
                 <div class="menu-item">
                     <div class="menu-content pt-8 pb-2">
-                        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Angket</span>
+                        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Master</span>
                     </div>
                 </div>
-                <div class="menu-item {{ ($active === "dosen") ? 'here show' : '' }}">
-                    <a class="menu-link" href="{{ url('listdosen') }}">
+                <div class="menu-item {{ ($active === "user") ? 'here show' : '' }}">
+                    <a class="menu-link" href="{{ url('user') }}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/art/art002.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -66,7 +66,7 @@
                             </span>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-title">Dosen</span>
+                        <span class="menu-title">User</span>
                     </a>
                 </div>
                 
@@ -82,7 +82,7 @@
                             </span>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-title">Matakuliah</span>
+                        <span class="menu-title">Jurnal Akun</span>
                     </a>
                 </div>
 
