@@ -20,9 +20,10 @@ class User extends Authenticatable
      */
     protected $connection = 'mysql';
     protected $fillable = [
-        'name',
         'username',
         'password',
+        'nama',
+        'is_aktif'
     ];
 
     // protected $guarded = [
