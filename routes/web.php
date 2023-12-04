@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+
+use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KasController;
 
@@ -29,6 +31,10 @@ Route::get('password', [ChangePasswordController::class, 'edit'])->name('passwor
 Route::patch('password', [ChangePasswordController::class, 'update'])->name('password.edit')->middleware('auth');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+
+// Menu
+Route::get('/piutang', [PiutangController::class, 'index'])->middleware('auth')->name('piutang');
+
 
 // Master User
 Route::get('/user', [UserController::class, 'index'])->middleware('auth')->name('user');
