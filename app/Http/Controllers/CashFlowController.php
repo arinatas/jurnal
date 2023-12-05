@@ -14,10 +14,15 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 class CashFlowController extends Controller
-{
+{   
     public function index()
     {
-        $cashflows = CashFlow::with(['user:id,nama', 'rkat:id,kode_rkat'])->get();
+        $today = now()->format('Y-m-d'); // Get the current date in 'Y-m-d' format
+
+        $cashflows = CashFlow::with(['user:id,nama', 'rkat:id,kode_rkat'])
+            ->whereDate('tanggal', $today)
+            ->get();
+
         $rkatOptions = Rkat::pluck('kode_rkat', 'id'); // Get the list of kode_rkat options
         $rkatDescriptions = Rkat::pluck('keterangan', 'id');
         
@@ -29,7 +34,7 @@ class CashFlowController extends Controller
             'rkatOptions' => $rkatOptions,
             'rkatDescriptions' => $rkatDescriptions,
         ]);
-    }    
+    }
 
     public function store(Request $request)
     {
