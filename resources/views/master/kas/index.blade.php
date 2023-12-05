@@ -39,7 +39,7 @@
                                                     @foreach ($kass as $item)
                                                     <tr>
                                                         <td>{{ $no }}</td>
-                                                        <td>{{ $item->kas }}</td>
+                                                        <td>Rp. @currency($item->kas )</td>
                                                     </tr>
                                                     @php
                                                         $no++; // Tambahkan no setiap kali iterasi
