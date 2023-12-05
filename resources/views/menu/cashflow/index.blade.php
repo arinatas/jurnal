@@ -56,8 +56,8 @@
                                                         <td>{{ $item->rkat->kode_rkat }}</td>
                                                         <td>{{ $item->transaksi }}</td>
                                                         <td>{{ $item->ref }}</td>
-                                                        <td>{{ $item->debit }}</td>
-                                                        <td>{{ $item->kredit }}</td>
+                                                        <td>@currency($item->debit )</td>
+                                                        <td>@currency($item->kredit )</td>
                                                         <td>{{ $item->user->nama }}</td>
                                                     </tr>
                                                     @php
@@ -190,7 +190,10 @@
                                                             <span class="required">Debit</span>
                                                         </label>
                                                         <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="debit" required value=""/>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">Rp</span>
+                                                            <input class="form-control form-control-solid" type="text" name="debit" required value=""/>
+                                                        </div>
                                                     </div>
                                                     <div class="d-flex flex-column mb-7 fv-row">
                                                         <!--begin::Label-->
@@ -198,7 +201,10 @@
                                                             <span class="required">Kredit</span>
                                                         </label>
                                                         <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="kredit" required value=""/>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">Rp</span>
+                                                            <input class="form-control form-control-solid" type="text" name="kredit" required value=""/>
+                                                        </div>
                                                     </div>
                                                     <!--end::Input group-->
                                                     <!--begin::Actions-->
