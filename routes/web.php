@@ -9,6 +9,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KasController;
+use App\Http\Controllers\CashFlowController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,9 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('aut
 // Menu
 Route::get('/piutang', [PiutangController::class, 'index'])->middleware('auth')->name('piutang');
 
+// Menu Cash Flow
+Route::get('/cashflow', [CashFlowController::class, 'index'])->middleware('auth')->name('cashflow');
+Route::post('/cashflow', [CashFlowController::class, 'store'])->middleware('auth')->name('insert.cashflow');
 
 // Master User
 Route::get('/user', [UserController::class, 'index'])->middleware('auth')->name('user');
