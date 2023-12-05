@@ -192,9 +192,10 @@
                                                         <!--end::Label-->
                                                         <div class="input-group">
                                                             <span class="input-group-text">Rp</span>
-                                                            <input class="form-control form-control-solid" type="text" name="debit" required value=""/>
+                                                            <input class="form-control form-control-solid" type="text" name="debit" required oninput="formatNumber(this)" onblur="removeFormat(this)" value=""/>
                                                         </div>
                                                     </div>
+
                                                     <div class="d-flex flex-column mb-7 fv-row">
                                                         <!--begin::Label-->
                                                         <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
@@ -203,7 +204,7 @@
                                                         <!--end::Label-->
                                                         <div class="input-group">
                                                             <span class="input-group-text">Rp</span>
-                                                            <input class="form-control form-control-solid" type="text" name="kredit" required value=""/>
+                                                            <input class="form-control form-control-solid" type="text" name="kredit" required oninput="formatNumber(this)" onblur="removeFormat(this)" value=""/>
                                                         </div>
                                                     </div>
                                                     <!--end::Input group-->
@@ -244,6 +245,22 @@
 
                                     // Mencegah pengiriman berulang
                                     button.form.submit();
+                        }
+                        // Fungsi untuk menambahkan pemisah 3 digit pada input
+                        function formatNumber(input) {
+                            // Menghapus karakter selain angka
+                            let value = input.value.replace(/\D/g, '');
+
+                            // Menambahkan pemisah 3 digit
+                            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+                            // Memasukkan nilai yang telah diformat kembali ke input
+                            input.value = value;
+                        }
+
+                        // Fungsi untuk mengembalikan nilai tanpa pemisah saat disubmit
+                        function removeFormat(input) {
+                            input.value = input.value.replace(/\D/g, '');
                         }
                     </script>
 @endsection
