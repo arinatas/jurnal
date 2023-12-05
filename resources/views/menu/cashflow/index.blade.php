@@ -192,7 +192,7 @@
                                                         <!--end::Label-->
                                                         <div class="input-group">
                                                             <span class="input-group-text">Rp</span>
-                                                            <input class="form-control form-control-solid" type="text" name="debit" required oninput="formatNumber(this)" onblur="removeFormat(this)" value=""/>
+                                                            <input class="form-control form-control-solid" type="text" name="debit" required oninput="formatNumber(this)" onblur="removeFormat(this)"  onfocus="removeLeadingZeros(this)" value="0"/>
                                                         </div>
                                                     </div>
 
@@ -204,7 +204,7 @@
                                                         <!--end::Label-->
                                                         <div class="input-group">
                                                             <span class="input-group-text">Rp</span>
-                                                            <input class="form-control form-control-solid" type="text" name="kredit" required oninput="formatNumber(this)" onblur="removeFormat(this)" value=""/>
+                                                            <input class="form-control form-control-solid" type="text" name="kredit" required oninput="formatNumber(this)" onblur="removeFormat(this)" onfocus="removeLeadingZeros(this)" value="0"/>
                                                         </div>
                                                     </div>
                                                     <!--end::Input group-->
@@ -261,6 +261,14 @@
                         // Fungsi untuk mengembalikan nilai tanpa pemisah saat disubmit
                         function removeFormat(input) {
                             input.value = input.value.replace(/\D/g, '');
+                        }
+                        // Fungsi untuk menghapus angka nol di depan saat input difokuskan
+                        function removeLeadingZeros(input) {
+                            let value = input.value;
+                            // Menghapus angka nol di depan
+                            value = value.replace(/^0+/, '');
+                            // Memasukkan nilai yang telah diformat kembali ke input
+                            input.value = value;
                         }
                     </script>
 @endsection
