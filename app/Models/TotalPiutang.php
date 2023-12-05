@@ -14,7 +14,7 @@ class TotalPiutang extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        // 'total_piutang'
+        'total_piutang'
     ];
 
     public $timestamps = true;

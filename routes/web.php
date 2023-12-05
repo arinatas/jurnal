@@ -34,6 +34,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('aut
 
 // Menu
 Route::get('/piutang', [PiutangController::class, 'index'])->middleware('auth')->name('piutang');
+Route::post('/storePiutang', [PiutangController::class, 'storePiutang'])->middleware('auth')->name('insert.piutang');
+
 
 
 // Master User
