@@ -161,7 +161,12 @@
                                                             <span class="required">Kode Anggaran</span>
                                                         </label>
                                                         <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="kode_anggaran" required value=""/>
+                                                        <select class="form-control form-control-solid" name="kode_anggaran" required>
+                                                            <option value="">Select Kode Anggaran</option>
+                                                            @foreach($rkatOptions as $id => $kode_rkat)
+                                                                <option value="{{ $id }}">{{ $kode_rkat }} - {{ $rkatDescriptions[$id] }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                     <div class="d-flex flex-column mb-7 fv-row">
                                                         <!--begin::Label-->

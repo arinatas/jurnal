@@ -18,14 +18,18 @@ class CashFlowController extends Controller
     public function index()
     {
         $cashflows = CashFlow::with(['user:id,nama', 'rkat:id,kode_rkat'])->get();
-    
+        $rkatOptions = Rkat::pluck('kode_rkat', 'id'); // Get the list of kode_rkat options
+        $rkatDescriptions = Rkat::pluck('keterangan', 'id');
+        
         return view('menu.cashflow.index', [
             'title' => 'Cash Flow',
             'section' => 'Menu',
             'active' => 'Cash Flow',
             'cashflows' => $cashflows,
+            'rkatOptions' => $rkatOptions,
+            'rkatDescriptions' => $rkatDescriptions,
         ]);
-    }
+    }    
 
     public function store(Request $request)
     {
