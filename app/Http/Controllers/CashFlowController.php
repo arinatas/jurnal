@@ -15,22 +15,6 @@ use Illuminate\Support\Facades\Auth;
 
 class CashFlowController extends Controller
 {
-    // public function index()
-    // {
-    //     $cashflows = CashFlow::with(['user:id,nama', 'rkat:id,kode_rkat'])->get();
-    //     $rkatOptions = Rkat::pluck('kode_rkat', 'id'); // Get the list of kode_rkat options
-    //     $rkatDescriptions = Rkat::pluck('keterangan', 'id');
-        
-    //     return view('menu.cashflow.index', [
-    //         'title' => 'Cash Flow',
-    //         'section' => 'Menu',
-    //         'active' => 'Cash Flow',
-    //         'cashflows' => $cashflows,
-    //         'rkatOptions' => $rkatOptions,
-    //         'rkatDescriptions' => $rkatDescriptions,
-    //     ]);
-    // }    
-    
     public function index()
     {
         $today = now()->format('Y-m-d'); // Get the current date in 'Y-m-d' format
@@ -119,6 +103,45 @@ class CashFlowController extends Controller
             DB::rollBack();
             return redirect()->back()->with('insertFail', $e->getMessage());
         }
+    }    
+
+    public function laporan(Request $request)
+    {
+        // Get the start and end dates from the request, if available
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+    
+        // Query for CashFlows with optional date filter
+        $cashflowsQuery = CashFlow::with(['user:id,nama', 'rkat:id,kode_rkat']);
+    
+        // Add date filter if start and end dates are provided
+        if ($startDate && $endDate) {
+            $cashflowsQuery->whereBetween('tanggal', [$startDate, $endDate]);
+        }
+    
+        // Execute the query
+        $cashflows = $cashflowsQuery->get();
+    
+        // Calculate total debit and total kredit
+        $totalDebit = $cashflows->sum('debit');
+        $totalKredit = $cashflows->sum('kredit');
+    
+        // Get the list of kode_rkat options
+        $rkatOptions = Rkat::pluck('kode_rkat', 'id');
+        $rkatDescriptions = Rkat::pluck('keterangan', 'id');
+    
+        return view('menu.cashflow.laporan', [
+            'title' => 'Laporan Cash Flow',
+            'section' => 'Menu',
+            'active' => 'Laporan Cash Flow',
+            'cashflows' => $cashflows,
+            'rkatOptions' => $rkatOptions,
+            'rkatDescriptions' => $rkatDescriptions,
+            'totalDebit' => $totalDebit,
+            'totalKredit' => $totalKredit,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+        ]);
     }    
     
 }

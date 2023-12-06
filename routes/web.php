@@ -42,6 +42,7 @@ Route::get('/realisasiPiutang/{id}', [PiutangController::class, 'realisasiPiutan
 // Menu Cash Flow
 Route::get('/cashflow', [CashFlowController::class, 'index'])->middleware('auth')->name('cashflow');
 Route::post('/cashflow', [CashFlowController::class, 'store'])->middleware('auth')->name('insert.cashflow');
+Route::get('/lapcashflow', [CashFlowController::class, 'laporan'])->middleware('auth')->name('lapcashflow'); // Laporan Cash Flow
 
 // Master User
 Route::get('/user', [UserController::class, 'index'])->middleware('auth')->name('user');
