@@ -64,9 +64,9 @@
                                                         </td>
                                                         <td>
                                                             @if ($item->stts_reallisasi == 0)
-                                                                <a href="" class="btn btn-sm btn-primary btn-action" data-toggle="tooltip" title="Realisasi"><i class="fas fa-pencil-alt"></i></a>
+                                                                <a href="{{ route('realisasi.piutang', $item->id ) }}" class="btn btn-sm btn-primary btn-action" data-toggle="tooltip" title="Realisasi"><i class="fas fa-pencil-alt"></i></a>
                                                             @endif
-                                                            <a href="" class="btn btn-sm btn-warning btn-action" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a>
+                                                            {{-- <a href="" class="btn btn-sm btn-warning btn-action" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a> --}}
                                                         </td>
                                                     </tr>
                                                     @php

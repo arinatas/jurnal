@@ -36,6 +36,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('aut
 // Menu
 Route::get('/piutang', [PiutangController::class, 'index'])->middleware('auth')->name('piutang');
 Route::post('/storePiutang', [PiutangController::class, 'storePiutang'])->middleware('auth')->name('insert.piutang');
+Route::get('/realisasiPiutang/{id}', [PiutangController::class, 'realisasiPiutang'])->middleware('auth')->name('realisasi.piutang');
 
 
 // Menu Cash Flow

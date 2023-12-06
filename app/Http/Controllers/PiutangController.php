@@ -78,4 +78,19 @@ class PiutangController extends Controller
         }
     }
 
+    public function realisasiPiutang($id){
+        $piutang = Piutang::find($id);
+    
+        if (!$piutang) {
+            return redirect()->back()->with('dataNotFound', 'Data tidak ditemukan');
+        }
+
+        return view('menu.piutang.realisasi', [
+            'title' => 'Piutang',
+            'section' => 'Menu',
+            'active' => 'Piutang',
+            'piutang' => $piutang,
+        ]);
+    }
+
 }
