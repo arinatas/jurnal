@@ -48,7 +48,7 @@
                                     <th>Nama</th>
                                     <th>Keterangan</th>
                                     <th>Realisasi</th>
-                                    <th>Jumlah Piutang</th>
+                                    <th>Jumlah Piutang (Rp)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,7 +68,7 @@
                                             <span class="badge bg-primary">Selesai</span>
                                             @endif
                                         </td>
-                                        <td>Rp. @currency( $item->jumlah_piutang )</td>
+                                        <td>@currency( $item->jumlah_piutang )</td>
                                     </tr>
                                 @php
                                     $no++; // Tambahkan no setiap kali iterasi
