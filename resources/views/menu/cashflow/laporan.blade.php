@@ -53,7 +53,7 @@
                                             <table class="table table-striped gy-7 gs-7">
                                                 <thead>
                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
-                                                        <th class="min-w-50px">No</th>
+                                                        <th class="min-w-50px" >No</th>
                                                         <th class="min-w-100px">Tanggal</th>
                                                         <th class="min-w-100px">No Bukti</th>
                                                         <th class="min-w-100px">PIC</th>
@@ -98,6 +98,18 @@
                                                         <td><strong>Total</strong></td>
                                                         <td><strong>Rp. @currency($totalDebit)</strong></td>
                                                         <td><strong>Rp. @currency($totalKredit)</strong></td>
+                                                    </tr>
+                                                    <tr class="fw-bold fs-6 text-gray-800">
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td style="text-align: left;"><strong>Saldo Akhir</strong></td>
+                                                        <td></td>
+                                                        <td style="text-align: left;"><strong>Rp. @currency($totalKas)</strong></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

@@ -129,6 +129,11 @@ class CashFlowController extends Controller
         // Get the list of kode_rkat options
         $rkatOptions = Rkat::pluck('kode_rkat', 'id');
         $rkatDescriptions = Rkat::pluck('keterangan', 'id');
+
+        // Fetch the value of "kas" from the "uang_kas" table
+        $kasModel = Kas::first(); // Ambil record pertama
+        // Access the "kas" field from the model
+        $totalKas = $kasModel ? $kasModel->kas : 0;
     
         return view('menu.cashflow.laporan', [
             'title' => 'Laporan Cash Flow',
@@ -139,6 +144,7 @@ class CashFlowController extends Controller
             'rkatDescriptions' => $rkatDescriptions,
             'totalDebit' => $totalDebit,
             'totalKredit' => $totalKredit,
+            'totalKas' => $totalKas,
             'start_date' => $startDate,
             'end_date' => $endDate,
         ]);
@@ -165,7 +171,12 @@ class CashFlowController extends Controller
             // Get the list of kode_rkat options
             $rkatOptions = Rkat::pluck('kode_rkat', 'id');
             $rkatDescriptions = Rkat::pluck('keterangan', 'id');
-    
+
+            // Fetch the value of "kas" from the "uang_kas" table
+            $kasModel = Kas::first(); // Ambil record pertama
+            // Access the "kas" field from the model
+            $totalKas = $kasModel ? $kasModel->kas : 0;
+        
             return view('menu.cashflow.printlaporan', [
                 'title' => 'Laporan Cash Flow',
                 'section' => 'Menu',
@@ -175,6 +186,9 @@ class CashFlowController extends Controller
                 'rkatDescriptions' => $rkatDescriptions,
                 'totalDebit' => $totalDebit,
                 'totalKredit' => $totalKredit,
+                'totalKas' => $totalKas,
+                'start_date' => $startDate,
+                'end_date' => $endDate,
             ]);
         }
     
