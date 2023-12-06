@@ -16,9 +16,15 @@
                                         <!--begin::Heading-->
                                         <div class="card-px pt-10 d-flex justify-content-between">
                                             <!--begin::Title-->
-                                                <div class="d-inline mt-2">
-                                                    <h2 class="fs-2x fw-bolder mb-0">{{$title}}</h2>
-                                                </div>
+                                                @if (request('start_date') && request('end_date'))
+                                                    <div class="d-inline mt-2">
+                                                        <h2 class="fs-2x fw-bolder mb-0">{{$title}}</h2>
+                                                    </div>
+                                                    <div class="d-inline">
+                                                        <a href="#" class="btn btn-sm btn-info">Export Excel</a>
+                                                        <a href="{{ route('printcashflow', ['start_date' => request('start_date'), 'end_date' => request('end_date')]) }}" class="btn btn-sm btn-success" title="Unduh Laporan">Print Laporan</a> 
+                                                    </div>
+                                                @endif
                                             <!--end::Title-->
                                         </div>
                                         <!--end::Heading-->

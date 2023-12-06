@@ -43,6 +43,7 @@ Route::get('/realisasiPiutang/{id}', [PiutangController::class, 'realisasiPiutan
 Route::get('/cashflow', [CashFlowController::class, 'index'])->middleware('auth')->name('cashflow');
 Route::post('/cashflow', [CashFlowController::class, 'store'])->middleware('auth')->name('insert.cashflow');
 Route::get('/lapcashflow', [CashFlowController::class, 'laporan'])->middleware('auth')->name('lapcashflow'); // Laporan Cash Flow
+Route::get('/printcashflow/{start_date}/{end_date}', [CashFlowController::class, 'printCashFlow'])->middleware('auth')->name('printcashflow');
 
 // Master User
 Route::get('/user', [UserController::class, 'index'])->middleware('auth')->name('user');

@@ -142,6 +142,40 @@ class CashFlowController extends Controller
             'start_date' => $startDate,
             'end_date' => $endDate,
         ]);
-    }    
+    }
+
+        // Metode untuk Print PDF
+        public function printCashFlow($startDate, $endDate)
+        {
+            // Query for CashFlows with optional date filter
+            $cashflowsQuery = CashFlow::with(['user:id,nama', 'rkat:id,kode_rkat']);
+        
+            // Add date filter if start and end dates are provided
+            if ($startDate && $endDate) {
+                $cashflowsQuery->whereBetween('tanggal', [$startDate, $endDate]);
+            }
+        
+            // Execute the query
+            $cashflows = $cashflowsQuery->get();
+        
+            // Calculate total debit and total kredit
+            $totalDebit = $cashflows->sum('debit');
+            $totalKredit = $cashflows->sum('kredit');
+        
+            // Get the list of kode_rkat options
+            $rkatOptions = Rkat::pluck('kode_rkat', 'id');
+            $rkatDescriptions = Rkat::pluck('keterangan', 'id');
+    
+            return view('menu.cashflow.printlaporan', [
+                'title' => 'Laporan Cash Flow',
+                'section' => 'Menu',
+                'active' => 'Laporan Cash Flow',
+                'cashflows' => $cashflows,
+                'rkatOptions' => $rkatOptions,
+                'rkatDescriptions' => $rkatDescriptions,
+                'totalDebit' => $totalDebit,
+                'totalKredit' => $totalKredit,
+            ]);
+        }
     
 }
