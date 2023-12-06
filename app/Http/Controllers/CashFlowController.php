@@ -39,9 +39,19 @@ class CashFlowController extends Controller
             ->whereDate('tanggal', $today)
             ->get();
 
-        $rkatOptions = Rkat::pluck('kode_rkat', 'id'); // Get the list of kode_rkat options
+        // Calculate total debit and total kredit
+        $totalDebit = $cashflows->sum('debit');
+        $totalKredit = $cashflows->sum('kredit');
+
+        // Get the list of kode_rkat options
+        $rkatOptions = Rkat::pluck('kode_rkat', 'id'); 
         $rkatDescriptions = Rkat::pluck('keterangan', 'id');
         
+        // Fetch the value of "kas" from the "uang_kas" table
+        $kasModel = Kas::first(); // Ambil record pertama
+        // Access the "kas" field from the model
+        $totalKas = $kasModel ? $kasModel->kas : 0;
+
         return view('menu.cashflow.index', [
             'title' => 'Cash Flow',
             'section' => 'Menu',
@@ -49,6 +59,9 @@ class CashFlowController extends Controller
             'cashflows' => $cashflows,
             'rkatOptions' => $rkatOptions,
             'rkatDescriptions' => $rkatDescriptions,
+            'totalKas' => $totalKas,
+            'totalDebit' => $totalDebit,
+            'totalKredit' => $totalKredit,
         ]);
     }
 

@@ -17,7 +17,7 @@
                                         <div class="card-px pt-10 d-flex justify-content-between">
                                             <!--begin::Title-->
                                                 <div class="d-inline mt-2">
-                                                    <h2 class="fs-2x fw-bolder mb-0">{{ $title }}</h2>
+                                                    <h2 class="fs-2x fw-bolder mb-0">Kas : Rp. @currency($totalKas )</h2>
                                                 </div>
                                                 <div class="d-inline">
                                                     <a href="#" class="btn btn-sm btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#kt_modal_new_user">Tambah</a>
@@ -38,9 +38,9 @@
                                                         <th class="min-w-100px">Kode Anggaran</th>
                                                         <th class="min-w-100px">Transaksi</th>
                                                         <th class="min-w-100px">Ref</th>
-                                                        <th class="min-w-100px">Debit</th>
-                                                        <th class="min-w-100px">Kredit</th>
                                                         <th class="min-w-100px">Accounting</th>
+                                                        <th class="min-w-150px">Debit</th>
+                                                        <th class="min-w-150px">Kredit</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -56,14 +56,27 @@
                                                         <td>{{ $item->rkat->kode_rkat }}</td>
                                                         <td>{{ $item->transaksi }}</td>
                                                         <td>{{ $item->ref }}</td>
-                                                        <td>@currency($item->debit )</td>
-                                                        <td>@currency($item->kredit )</td>
                                                         <td>{{ $item->user->nama }}</td>
+                                                        <td>Rp. @currency($item->debit )</td>
+                                                        <td>Rp. @currency($item->kredit )</td>
                                                     </tr>
                                                     @php
                                                         $no++; // Tambahkan no setiap kali iterasi
                                                     @endphp
                                                     @endforeach
+                                                    <!-- Total rows after the loop -->
+                                                    <tr class="fw-bold fs-6 text-gray-800">
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td><strong>Total</strong></td>
+                                                        <td><strong>Rp. @currency($totalDebit)</strong></td>
+                                                        <td><strong>Rp. @currency($totalKredit)</strong></td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
