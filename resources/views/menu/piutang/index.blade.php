@@ -20,7 +20,7 @@
                                                     <h2 class="fs-2x fw-bolder mb-0">{{ $title }} (Total : Rp. @currency($totalPiutang))</h2>
                                                 </div>
                                                 <div class="d-inline">
-                                                    <a href="{{ route('printPiutang') }}" class="btn btn-sm btn-success fs-6">Cetak</a>
+                                                    <a href="{{ route('printPiutang') }}" target="blank" class="btn btn-sm btn-success fs-6">Cetak</a>
                                                     <a href="{{ route('riwayatPiutang') }}" class="btn btn-sm btn-warning text-dark fs-6">Riwayat</a>
                                                     <a href="#" class="btn btn-sm btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#kt_modal_new_utang">Tambah</a>
                                                 </div>
