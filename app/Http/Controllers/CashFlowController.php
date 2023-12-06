@@ -15,12 +15,43 @@ use Illuminate\Support\Facades\Auth;
 
 class CashFlowController extends Controller
 {
+    // public function index()
+    // {
+    //     $cashflows = CashFlow::with(['user:id,nama', 'rkat:id,kode_rkat'])->get();
+    //     $rkatOptions = Rkat::pluck('kode_rkat', 'id'); // Get the list of kode_rkat options
+    //     $rkatDescriptions = Rkat::pluck('keterangan', 'id');
+        
+    //     return view('menu.cashflow.index', [
+    //         'title' => 'Cash Flow',
+    //         'section' => 'Menu',
+    //         'active' => 'Cash Flow',
+    //         'cashflows' => $cashflows,
+    //         'rkatOptions' => $rkatOptions,
+    //         'rkatDescriptions' => $rkatDescriptions,
+    //     ]);
+    // }    
+    
     public function index()
     {
-        $cashflows = CashFlow::with(['user:id,nama', 'rkat:id,kode_rkat'])->get();
-        $rkatOptions = Rkat::pluck('kode_rkat', 'id'); // Get the list of kode_rkat options
+        $today = now()->format('Y-m-d'); // Get the current date in 'Y-m-d' format
+
+        $cashflows = CashFlow::with(['user:id,nama', 'rkat:id,kode_rkat'])
+            ->whereDate('tanggal', $today)
+            ->get();
+
+        // Calculate total debit and total kredit
+        $totalDebit = $cashflows->sum('debit');
+        $totalKredit = $cashflows->sum('kredit');
+
+        // Get the list of kode_rkat options
+        $rkatOptions = Rkat::pluck('kode_rkat', 'id'); 
         $rkatDescriptions = Rkat::pluck('keterangan', 'id');
         
+        // Fetch the value of "kas" from the "uang_kas" table
+        $kasModel = Kas::first(); // Ambil record pertama
+        // Access the "kas" field from the model
+        $totalKas = $kasModel ? $kasModel->kas : 0;
+
         return view('menu.cashflow.index', [
             'title' => 'Cash Flow',
             'section' => 'Menu',
@@ -28,8 +59,11 @@ class CashFlowController extends Controller
             'cashflows' => $cashflows,
             'rkatOptions' => $rkatOptions,
             'rkatDescriptions' => $rkatDescriptions,
+            'totalKas' => $totalKas,
+            'totalDebit' => $totalDebit,
+            'totalKredit' => $totalKredit,
         ]);
-    }    
+    }
 
     public function store(Request $request)
     {

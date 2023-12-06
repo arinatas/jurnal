@@ -17,7 +17,7 @@
                                         <div class="card-px pt-10 d-flex justify-content-between">
                                             <!--begin::Title-->
                                                 <div class="d-inline mt-2">
-                                                    <h2 class="fs-2x fw-bolder mb-0">{{ $title }}</h2>
+                                                    <h2 class="fs-2x fw-bolder mb-0">Kas : Rp. @currency($totalKas )</h2>
                                                 </div>
                                                 <div class="d-inline">
                                                     <a href="#" class="btn btn-sm btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#kt_modal_new_user">Tambah</a>
@@ -38,9 +38,9 @@
                                                         <th class="min-w-100px">Kode Anggaran</th>
                                                         <th class="min-w-100px">Transaksi</th>
                                                         <th class="min-w-100px">Ref</th>
-                                                        <th class="min-w-100px">Debit</th>
-                                                        <th class="min-w-100px">Kredit</th>
                                                         <th class="min-w-100px">Accounting</th>
+                                                        <th class="min-w-150px">Debit</th>
+                                                        <th class="min-w-150px">Kredit</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -56,14 +56,27 @@
                                                         <td>{{ $item->rkat->kode_rkat }}</td>
                                                         <td>{{ $item->transaksi }}</td>
                                                         <td>{{ $item->ref }}</td>
-                                                        <td>{{ $item->debit }}</td>
-                                                        <td>{{ $item->kredit }}</td>
                                                         <td>{{ $item->user->nama }}</td>
+                                                        <td>Rp. @currency($item->debit )</td>
+                                                        <td>Rp. @currency($item->kredit )</td>
                                                     </tr>
                                                     @php
                                                         $no++; // Tambahkan no setiap kali iterasi
                                                     @endphp
                                                     @endforeach
+                                                    <!-- Total rows after the loop -->
+                                                    <tr class="fw-bold fs-6 text-gray-800">
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td><strong>Total</strong></td>
+                                                        <td><strong>Rp. @currency($totalDebit)</strong></td>
+                                                        <td><strong>Rp. @currency($totalKredit)</strong></td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -190,15 +203,22 @@
                                                             <span class="required">Debit</span>
                                                         </label>
                                                         <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="debit" required value=""/>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">Rp</span>
+                                                            <input class="form-control form-control-solid" type="text" name="debit" required oninput="formatNumber(this)" onblur="removeFormat(this)"  onfocus="removeLeadingZeros(this)" value="0"/>
+                                                        </div>
                                                     </div>
+
                                                     <div class="d-flex flex-column mb-7 fv-row">
                                                         <!--begin::Label-->
                                                         <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
                                                             <span class="required">Kredit</span>
                                                         </label>
                                                         <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="kredit" required value=""/>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">Rp</span>
+                                                            <input class="form-control form-control-solid" type="text" name="kredit" required oninput="formatNumber(this)" onblur="removeFormat(this)" onfocus="removeLeadingZeros(this)" value="0"/>
+                                                        </div>
                                                     </div>
                                                     <!--end::Input group-->
                                                     <!--begin::Actions-->
@@ -238,6 +258,30 @@
 
                                     // Mencegah pengiriman berulang
                                     button.form.submit();
+                        }
+                        // Fungsi untuk menambahkan pemisah 3 digit pada input
+                        function formatNumber(input) {
+                            // Menghapus karakter selain angka
+                            let value = input.value.replace(/\D/g, '');
+
+                            // Menambahkan pemisah 3 digit
+                            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+                            // Memasukkan nilai yang telah diformat kembali ke input
+                            input.value = value;
+                        }
+
+                        // Fungsi untuk mengembalikan nilai tanpa pemisah saat disubmit
+                        function removeFormat(input) {
+                            input.value = input.value.replace(/\D/g, '');
+                        }
+                        // Fungsi untuk menghapus angka nol di depan saat input difokuskan
+                        function removeLeadingZeros(input) {
+                            let value = input.value;
+                            // Menghapus angka nol di depan
+                            value = value.replace(/^0+/, '');
+                            // Memasukkan nilai yang telah diformat kembali ke input
+                            input.value = value;
                         }
                     </script>
 @endsection
