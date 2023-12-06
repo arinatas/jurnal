@@ -24,41 +24,35 @@
 							<!--end::Title-->
                             <!--begin::Table-->
                             <div class="mt-15">
-                                <form action="" method="POST">
-                                {{-- <form action="{{ route('update.akun', $akun->id ) }}" method="POST"> --}}
+                                <form action="{{ route('update.realisasi', $piutang->id ) }}" method="POST">
                                     @csrf
                                     <div class="row">
                                         <div style="display: none;">
                                             <input type="text" name="id" value="{{ $piutang->id }}">
+                                            <input type="text" name="jumlah_piutang" value="{{ $piutang->jumlah_piutang }}">
                                         </div>
                                         <div class="mb-10 col-lg-4">
                                             <label for="exampleFormControlInput1" class="form-label">Tanggal</label>
-                                            <input type="text" value="{{ $piutang->tanggal }}" class="form-control form-control-solid" disabled name="nama"/>
+                                            <input type="text" value="{{ \Carbon\Carbon::parse($piutang->tanggal)->format('j F Y'); }}" class="form-control form-control-solid" disabled name="tanggal"/>
                                         </div>
                                         <div class="mb-10  col-lg-4">
-                                            <label for="exampleFormControlInput1" class="form-label">nama</label>
+                                            <label for="exampleFormControlInput1" class="form-label">Nama</label>
                                             <input type="text" value="{{ $piutang->nama }}" class="form-control form-control-solid" disabled name="nama"/>
                                         </div>
                                         <div class="mb-10  col-lg-4">
-                                            <label for="exampleFormControlInput1" class="form-label">jumlah_piutang</label>
+                                            <label for="exampleFormControlInput1" class="form-label">Jumlah Piutang</label>
                                             <input type="text" value="Rp. @currency( $piutang->jumlah_piutang)" class="form-control form-control-solid" disabled name="jumlah_piutang"/>
                                         </div>
                                         <div class="mb-10">
-                                            <label for="exampleFormControlInput1" class="form-label">keterangan</label>
+                                            <label for="exampleFormControlInput1" class="form-label">Keterangan</label>
                                             <input type="text" value="{{ $piutang->keterangan }}" class="form-control form-control-solid" disabled name="keterangan"/>
                                         </div>
                                         <div class="mb-10">
-                                            <label for="exampleFormControlInput1" class="required form-label">stts_reallisasi</label>
+                                            <label for="exampleFormControlInput1" class="required form-label">Status Realisasi</label>
                                             <select class="form-select form-select-solid" required data-control="select2" data-hide-search="true" data-placeholder="Pilih Status" name="stts_reallisasi">
                                                 <option value="">Pilih Status</option>
-                                                <option value="1"> Dengan Kembalian </option>
-                                                <option value="2"> Dana Kurang </option>
-                                                <option value="3"> Dana Pas </option>
+                                                <option value="1"> Selesai</option>
                                             </select>
-                                        </div>
-                                        <div class="mb-10">
-                                            <label for="exampleFormControlInput1" class="required form-label">Jumlah Dana Kurang / Pengembalian</label>
-                                            <input type="text" value="" class="form-control form-control-solid" required name="uang_realisasi"/>
                                         </div>
                                     </div>
                                     

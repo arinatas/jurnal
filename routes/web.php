@@ -35,8 +35,11 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('aut
 
 // Menu
 Route::get('/piutang', [PiutangController::class, 'index'])->middleware('auth')->name('piutang');
+Route::get('/riwayatPiutang', [PiutangController::class, 'riwayatPiutang'])->middleware('auth')->name('riwayatPiutang');
+Route::get('/printPiutang', [PiutangController::class, 'printPiutang'])->middleware('auth')->name('printPiutang');
 Route::post('/storePiutang', [PiutangController::class, 'storePiutang'])->middleware('auth')->name('insert.piutang');
 Route::get('/realisasiPiutang/{id}', [PiutangController::class, 'realisasiPiutang'])->middleware('auth')->name('realisasi.piutang');
+Route::post('/updaterealisasiPiutang/{id}', [PiutangController::class, 'realisasi'])->middleware('auth')->name('update.realisasi');
 
 
 // Menu Cash Flow

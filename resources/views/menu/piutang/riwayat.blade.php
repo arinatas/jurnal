@@ -17,12 +17,10 @@
                                         <div class="card-px pt-10 d-flex justify-content-between">
                                             <!--begin::Title-->
                                                 <div class="d-inline mt-2">
-                                                    <h2 class="fs-2x fw-bolder mb-0">{{ $title }} (Total : Rp. @currency($totalPiutang))</h2>
+                                                    <h2 class="fs-2x fw-bolder mb-0">{{ $title }}</h2>
                                                 </div>
                                                 <div class="d-inline">
-                                                    <a href="{{ route('printPiutang') }}" class="btn btn-sm btn-success fs-6">Cetak</a>
-                                                    <a href="{{ route('riwayatPiutang') }}" class="btn btn-sm btn-warning text-dark fs-6">Riwayat</a>
-                                                    <a href="#" class="btn btn-sm btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#kt_modal_new_utang">Tambah</a>
+                                                    <a href="{{ route('piutang') }}" class="btn btn-sm btn-warning text-dark fs-6">Kembali</a>
                                                 </div>
                                             <!--end::Title-->
                                         </div>
@@ -34,12 +32,12 @@
                                                 <thead>
                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                                         <th class="min-w-50px">No</th>
-                                                        <th class="min-w-100px">Tanggal</th>
+                                                        <th class="min-w-100px">Tanggal Piutang</th>
+                                                        <th class="min-w-100px">Tanggal Realisasi</th>
                                                         <th class="min-w-100px">Nama</th>
                                                         <th class="min-w-100px">Jumlah Piutang</th>
                                                         <th class="min-w-100px">Keterangan</th>
                                                         <th class="min-w-100px">Realisasi</th>
-                                                        <th class="min-w-100px">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -50,6 +48,7 @@
                                                     <tr>
                                                         <td>{{ $no }}</td>
                                                         <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('j F Y'); }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($item->updated_at)->format('j F Y'); }}</td>
                                                         <td>{{ $item->nama }}</td>
                                                         <td>Rp. @currency( $item->jumlah_piutang )</td>
                                                         <td>{{ $item->keterangan }}</td>
@@ -59,12 +58,6 @@
                                                             @elseif($item->stts_reallisasi == 1)
                                                             <span class="badge bg-primary">Selesai</span>
                                                             @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($item->stts_reallisasi == 0)
-                                                                <a href="{{ route('realisasi.piutang', $item->id ) }}" class="btn btn-sm btn-primary btn-action" data-toggle="tooltip" title="Realisasi"><i class="fas fa-pencil-alt"></i></a>
-                                                            @endif
-                                                            {{-- <a href="" class="btn btn-sm btn-warning btn-action" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a> --}}
                                                         </td>
                                                     </tr>
                                                     @php
