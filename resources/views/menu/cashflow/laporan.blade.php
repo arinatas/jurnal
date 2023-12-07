@@ -16,9 +16,15 @@
                                         <!--begin::Heading-->
                                         <div class="card-px pt-10 d-flex justify-content-between">
                                             <!--begin::Title-->
-                                                <div class="d-inline mt-2">
-                                                    <h2 class="fs-2x fw-bolder mb-0">{{$title}}</h2>
-                                                </div>
+                                                @if (request('start_date') && request('end_date'))
+                                                    <div class="d-inline mt-2">
+                                                        <h2 class="fs-2x fw-bolder mb-0">{{$title}}</h2>
+                                                    </div>
+                                                    <div class="d-inline">
+                                                        <a href="#" class="btn btn-sm btn-info">Export Excel</a>
+                                                        <a href="{{ route('printcashflow', ['start_date' => request('start_date'), 'end_date' => request('end_date')]) }}" class="btn btn-sm btn-success" title="Unduh Laporan">Print Laporan</a> 
+                                                    </div>
+                                                @endif
                                             <!--end::Title-->
                                         </div>
                                         <!--end::Heading-->
@@ -47,7 +53,7 @@
                                             <table class="table table-striped gy-7 gs-7">
                                                 <thead>
                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
-                                                        <th class="min-w-50px">No</th>
+                                                        <th class="min-w-50px" >No</th>
                                                         <th class="min-w-100px">Tanggal</th>
                                                         <th class="min-w-100px">No Bukti</th>
                                                         <th class="min-w-100px">PIC</th>
@@ -92,6 +98,18 @@
                                                         <td><strong>Total</strong></td>
                                                         <td><strong>Rp. @currency($totalDebit)</strong></td>
                                                         <td><strong>Rp. @currency($totalKredit)</strong></td>
+                                                    </tr>
+                                                    <tr class="fw-bold fs-6 text-gray-800">
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td style="text-align: left;"><strong>Saldo Akhir</strong></td>
+                                                        <td></td>
+                                                        <td style="text-align: left;"><strong>Rp. @currency($totalKas)</strong></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
