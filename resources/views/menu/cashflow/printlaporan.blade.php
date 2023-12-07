@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-9 text-center">
                         <h2>LAPORAN CASH FLOW</h2>
-                        <h1>PRIMAKARA UNIVERSITY</h1>
+                        <h1 style="margin-bottom: 5px; margin-top: 5px;">PRIMAKARA UNIVERSITY</h1>
                         @if ($start_date == $end_date)
                             <h6>Periode: {{ date('d F Y', strtotime($start_date)) }}</h6>
                         @else
@@ -70,7 +70,7 @@
                                     <td style="text-align: center;">{{ $no }}</td>
                                     <td style="text-align: center;">{{ $item->tanggal }}</td>
                                     <td style="text-align: center;">{{ $item->no_bukti }}</td>
-                                    <td>{{ $item->pic }}</td>
+                                    <td style="text-align: center;">{{ $item->pic }}</td>
                                     <td style="text-align: center; max-width: 50px;">{{ $item->rkat->kode_rkat }}</td>
                                     <td style="max-width: 150px;">{{ $item->transaksi }}</td>
                                     <td style="max-width: 50px;">{{ $item->ref }}</td>
@@ -144,7 +144,7 @@
                             Accounting</p>
                             <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" />
                             <br>
-                            <strong><u>Ida Ayu Shanti Dharmasari</u></strong><br>
+                            <strong><u>Ida Ayu Shanti Dharmasari, S.E., Ak.</u></strong><br>
                             <strong>NIK. 2021112212</strong><br>
                         </address>
                     </div>
