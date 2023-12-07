@@ -120,7 +120,7 @@
                     <div class="col-sm-4 invoice-col mt-5">
                         <address style="float: inline-end;" class="mr-5">
                             Mengetahui,<br>
-                            Waka II Bidang Keuangan & Sumber Daya</p>
+                            Warek II Bidang Keuangan & Sumber Daya</p>
                             <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" />
                             <br>
                             <strong><u>I Made Sudama, S.E., M.M. </u></strong><br>
