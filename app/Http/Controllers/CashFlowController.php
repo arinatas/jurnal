@@ -21,6 +21,7 @@ class CashFlowController extends Controller
 
         $cashflows = CashFlow::with(['user:id,nama', 'rkat:id,kode_rkat'])
             ->whereDate('tanggal', $today)
+            ->orderByDesc('id') // Sort by 'id' in descending order
             ->get();
 
         // Calculate total debit and total kredit
@@ -121,7 +122,7 @@ class CashFlowController extends Controller
             $cashflowsQuery->whereBetween('tanggal', [$startDate, $endDate]);
         }
     
-        // Execute the query
+        // Execute the query Sort the $cashflows collection by 'id' in descending order
         $cashflows = $cashflowsQuery->get();
     
         // Calculate total debit and total kredit
