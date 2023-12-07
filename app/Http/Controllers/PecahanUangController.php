@@ -114,6 +114,7 @@ class PecahanUangController extends Controller
         // Mencari data menggunakan dua klausa where
         $duplicateData = PecahanUang::where('jenis_uang', $request->jenis_uang)
                         ->where('pecahan', $pecahan)
+                        ->where('status', $request->status)
                         ->first();
 
         // cek jika ada data jenis pecahan dengan jumlah dan jenis yg sama maka lempar
