@@ -12,19 +12,36 @@ use Illuminate\Support\Facades\Hash;
 
 class RkatController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $rkats = Rkat::with('jurnalAkun')->get();
+        // Ambil data RKAT dengan relasi JurnalAkun
+        $rkats = Rkat::with('jurnalAkun');
+
+        // Ambil data periode unik dari tabel RKAT
+        $periodes = Rkat::distinct('periode')->pluck('periode');
+        // Menerima input periode
+        $periodeFilter = $request->input('periode');
+        
+        // Filter berdasarkan periode jika disediakan
+        if ($periodeFilter) {
+            $rkats->where('periode', $periodeFilter);
+        }
+        // Dapatkan data RKAT setelah penerapan filter
+        $filteredRkats = $rkats->get();
+    
         // Ambil data untuk select options
         $jurnalAkunOptions = JurnalAkun::pluck('nama_akun', 'no_akun');
+    
         return view('master.rkat.index', [
             'title' => 'RKAT',
             'section' => 'Master',
             'active' => 'RKAT',
-            'rkats' => $rkats,
+            'rkats' => $filteredRkats,
             'jurnalAkunOptions' => $jurnalAkunOptions,
+            'periodes' => $periodes,
+            'periodeFilter' => $periodeFilter,
         ]);
-    }
+    }    
 
     public function store(Request $request)
     {
