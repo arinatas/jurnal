@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\KasController;
 use App\Http\Controllers\CashFlowController;
 use App\Http\Controllers\JurnalAkunController;
+use App\Http\Controllers\RkatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,3 +69,10 @@ Route::post('/jurnalakun', [JurnalAkunController::class, 'store'])->middleware('
 Route::get('/editJurnalakun/{id}', [JurnalAkunController::class, 'edit'])->middleware('auth')->name('edit.jurnalakun');
 Route::post('/updateJurnalakun/{id}', [JurnalAkunController::class, 'update'])->middleware('auth')->name('update.jurnalakun');
 Route::delete('/deleteJurnalakun/{id}', [JurnalAkunController::class, 'destroy'])->middleware('auth')->name('destroy.jurnalakun');
+
+// Master RKAT
+Route::get('/rkat', [RkatController::class, 'index'])->middleware('auth')->name('rkat');
+Route::post('/rkat', [RkatController::class, 'store'])->middleware('auth')->name('insert.rkat');
+Route::get('/editRkat/{id}', [RkatController::class, 'edit'])->middleware('auth')->name('edit.rkat');
+Route::post('/updateRkat/{id}', [RkatController::class, 'update'])->middleware('auth')->name('update.rkat');
+Route::delete('/deleteRkat/{id}', [RkatController::class, 'destroy'])->middleware('auth')->name('destroy.rkat');

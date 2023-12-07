@@ -20,24 +20,23 @@
                                                     <h2 class="fs-2x fw-bolder mb-0">{{ $title }}</h2>
                                                 </div>
                                                 <div class="d-inline">
-                                                    <a href="#" class="btn btn-sm btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#kt_modal_new_jurnalakun">Tambah</a>
+                                                    <a href="#" class="btn btn-sm btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#kt_modal_rkat">Tambah</a>
                                                 </div>
                                             <!--end::Title-->
                                         </div>
                                         <!--end::Heading-->
                                         <!--begin::Table-->
-                                        @if ($jurnalakuns )
+                                        @if ($rkats )
                                         <div class="table-responsive my-10 mx-8">
                                             <table class="table table-striped gy-7 gs-7">
                                                 <thead>
                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                                         <th class="min-w-50px">No</th>
+                                                        <th class="min-w-100px">Kode RKAT</th>
+                                                        <th class="min-w-100px">Keterangan</th>
                                                         <th class="min-w-100px">No Akun</th>
-                                                        <th class="min-w-100px">Parent</th>
                                                         <th class="min-w-100px">Nama Akun</th>
-                                                        <th class="min-w-100px">Type Neraca</th>
-                                                        <th class="min-w-100px">Level</th>
-                                                        <th class="min-w-100px">Tipe Akun</th>
+                                                        <th class="min-w-100px">Periode</th>
                                                         <th class="min-w-100px">Action</th>
                                                     </tr>
                                                 </thead>
@@ -45,18 +44,17 @@
                                                     @php
                                                         $no = 1; // Inisialisasi no
                                                     @endphp
-                                                    @foreach ($jurnalakuns as $item)
+                                                    @foreach ($rkats as $item)
                                                     <tr>
                                                         <td>{{ $no }}</td>
+                                                        <td>{{ $item->kode_rkat }}</td>
+                                                        <td>{{ $item->keterangan }}</td>
                                                         <td>{{ $item->no_akun }}</td>
-                                                        <td>{{ $item->parent }}</td>
-                                                        <td>{{ $item->nama_akun }}</td>
-                                                        <td>{{ $item->type_neraca }}</td>
-                                                        <td>{{ $item->lvl }}</td>
-                                                        <td>{{ $item->tipe_akun }}</td>
+                                                        <td>{{ $item->jurnalAkun->nama_akun }}</td>
+                                                        <td>{{ $item->periode }}</td>
                                                         <td>
-                                                            <a href="{{ route('edit.jurnalakun', $item->no_akun ) }}" class="btn btn-sm btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                                            <form id="form-delete" action="{{ route('destroy.jurnalakun', $item->no_akun ) }}" method="POST"
+                                                            <a href="{{ route('edit.rkat', $item->id ) }}" class="btn btn-sm btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                                            <form id="form-delete" action="{{ route('destroy.rkat', $item->id ) }}" method="POST"
                                                             class="d-inline-block">
                                                             @csrf
                                                             @method('DELETE')
@@ -107,7 +105,7 @@
                                 </div>
                                 <!--end::Card-->
                                 <!--begin::Modal-->
-                                <div class="modal fade" id="kt_modal_new_jurnalakun" tabindex="-1" aria-hidden="true">
+                                <div class="modal fade" id="kt_modal_rkat" tabindex="-1" aria-hidden="true">
                                     <!--begin::Modal dialog-->
                                     <div class="modal-dialog modal-dialog-centered mw-650px">
                                         <!--begin::Modal content-->
@@ -134,56 +132,45 @@
                                             <!--begin::Modal body-->
                                             <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                                 <!--begin::Form-->
-                                                <form action="{{ route('insert.jurnalakun') }}" method="POST">
+                                                <form action="{{ route('insert.rkat') }}" method="POST">
                                                     @csrf
                                                     <!--begin::Input group-->
                                                     <div class="d-flex flex-column mb-7 fv-row">
                                                         <!--begin::Label-->
                                                         <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
+                                                            <span class="required">Kode RKAT</span>
+                                                        </label>
+                                                        <!--end::Label-->
+                                                        <input class="form-control form-control-solid" type="text" name="kode_rkat" required value=""/>
+                                                    </div>
+                                                    <div class="d-flex flex-column mb-7 fv-row">
+                                                        <!--begin::Label-->
+                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
+                                                            <span class="required">Keterangan</span>
+                                                        </label>
+                                                        <!--end::Label-->
+                                                        <input class="form-control form-control-solid" type="text" name="keterangan" required value=""/>
+                                                    </div>
+                                                    <div class="d-flex flex-column mb-7 fv-row">
+                                                        <!-- begin::Label -->
+                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
                                                             <span class="required">No Akun</span>
                                                         </label>
-                                                        <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="no_akun" required value=""/>
+                                                        <!-- end::Label -->
+                                                        <select class="form-select form-select-solid" name="no_akun" required>
+                                                            <option value="" disabled selected>Silahkan pilih jurnal akun</option>
+                                                            @foreach($jurnalAkunOptions as $no_akun => $nama_akun)
+                                                                <option value="{{ $no_akun }}">{{ $no_akun }} - {{ $nama_akun }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                     <div class="d-flex flex-column mb-7 fv-row">
                                                         <!--begin::Label-->
                                                         <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Parent</span>
+                                                            <span class="required">Periode</span>
                                                         </label>
                                                         <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="parent" required value=""/>
-                                                    </div>
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Nama Akun</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="nama_akun" required value=""/>
-                                                    </div>
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Type Neraca</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="type_neraca" required value=""/>
-                                                    </div>
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Level</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="lvl" required value=""/>
-                                                    </div>
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Tipe Akun</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="tipe_akun" required value=""/>
+                                                        <input class="form-control form-control-solid" type="text" name="periode" required value=""/>
                                                     </div>
                                                     <!--end::Input group-->
                                                     <!--begin::Actions-->
@@ -224,5 +211,13 @@
                                     // Mencegah pengiriman berulang
                                     button.form.submit();
                         }
+
+                            // Script to initialize Select2
+                            $(document).ready(function() {
+                                $('select[name="no_akun"]').select2({
+                                    placeholder: 'Silahkan pilih jurnal akun',
+                                    allowClear: true, // Adds a clear button
+                                });
+                            });
                     </script>
 @endsection

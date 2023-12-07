@@ -17,9 +17,16 @@ class Rkat extends Model
         'kode_rkat',
         'no_akun',
         'keterangan',
+        'periode',
     ];
 
     public $timestamps = true;
+
+    // Define the relationship
+    public function jurnalAkun()
+    {
+        return $this->belongsTo(JurnalAkun::class, 'no_akun', 'no_akun');
+    }
 
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
