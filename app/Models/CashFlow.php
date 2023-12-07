@@ -11,7 +11,6 @@ class CashFlow extends Model
 
     protected $table = 'cash_flow';
     protected $primaryKey = 'id';
-    protected $keyType = 'string';
 
     protected $fillable = [
         'tanggal',

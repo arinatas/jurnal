@@ -9,6 +9,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KasController;
+use App\Http\Controllers\PecahanUangController;
 use App\Http\Controllers\CashFlowController;
 
 /*
@@ -59,3 +60,12 @@ Route::post('/resetupdateUser/{id}', [UserController::class, 'resetupdate'])->mi
 
 // Master Kas
 Route::get('/kas', [KasController::class, 'index'])->middleware('auth')->name('kas');
+
+// Master Pecahan Uang
+Route::get('/pecahan', [PecahanUangController::class, 'index'])->middleware('auth')->name('pecahan');
+Route::post('/pecahan', [PecahanUangController::class, 'store'])->middleware('auth')->name('insert.pecahan');
+Route::get('/editPecahan/{id}', [PecahanUangController::class, 'edit'])->middleware('auth')->name('edit.pecahan');
+Route::post('/updatePecahan/{id}', [PecahanUangController::class, 'update'])->middleware('auth')->name('update.pecahan');
+Route::delete('/deletePecahan/{id}', [PecahanUangController::class, 'destroy'])->middleware('auth')->name('destroy.pecahan');
+
+

@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Rkat extends Model
+class PecahanUang extends Model
 {
     use HasFactory;
 
-    protected $table = 'rkat';
+    protected $table = 'pecahan_uang';
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'kode_rkat',
-        'no_akun',
-        'keterangan',
+        'jenis_uang',
+        'pecahan',
+        'status',
     ];
 
     public $timestamps = true;

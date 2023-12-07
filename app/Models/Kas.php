@@ -11,7 +11,6 @@ class Kas extends Model
 
     protected $table = 'uang_kas';
     protected $primaryKey = 'id';
-    protected $keyType = 'string';
 
     protected $fillable = [
         'kas'

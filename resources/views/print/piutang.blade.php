@@ -47,7 +47,6 @@
                                     <th>Tanggal</th>
                                     <th>Nama</th>
                                     <th>Keterangan</th>
-                                    <th>Realisasi</th>
                                     <th>Jumlah Piutang (Rp)</th>
                                 </tr>
                             </thead>
@@ -61,13 +60,6 @@
                                         <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('j F Y'); }}</td>
                                         <td>{{ $item->nama }}</td>
                                         <td>{{ $item->keterangan }}</td>
-                                        <td>
-                                            @if ($item->stts_reallisasi == 0)
-                                            <span class="badge bg-warning text-dark">Menunggu</span>
-                                            @elseif($item->stts_reallisasi == 1)
-                                            <span class="badge bg-primary">Selesai</span>
-                                            @endif
-                                        </td>
                                         <td>@currency( $item->jumlah_piutang )</td>
                                     </tr>
                                 @php
@@ -75,7 +67,6 @@
                                 @endphp
                                 @endforeach
                                 <tr>
-                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
