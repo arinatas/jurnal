@@ -40,6 +40,17 @@ class RkatController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
+
+        // Check if kode_rkat already exists for the given periode
+        $existingRkat = Rkat::where('kode_rkat', $request->kode_rkat)
+        ->where('periode', $request->periode)
+        ->exists();
+
+        // If kode_rkat already exists, show an error message
+        if ($existingRkat) {
+            $errorMessage = 'Kode RKAT ' . $request->kode_rkat . ' sudah digunakan dalam periode yang sama. Silakan gunakan Kode RKAT lain.';
+            return redirect()->back()->with('insertFail', $errorMessage);
+        }
     
         // simpan data ke database
         try {
@@ -100,6 +111,18 @@ class RkatController extends Controller
         // kalau ada error kembalikan error
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Check if kode_rkat already exists for the given periode excluding the current record
+        $existingRkat = Rkat::where('kode_rkat', $request->kode_rkat)
+            ->where('periode', $request->periode)
+            ->where('id', '!=', $id) // Exclude the current record
+            ->exists();
+
+        // If kode_rkat already exists, show an error message
+        if ($existingRkat) {
+            $errorMessage = 'Kode RKAT ' . $request->kode_rkat . ' sudah digunakan dalam periode yang sama. Silakan gunakan Kode RKAT lain.';
+            return redirect()->back()->with('updateFail', $errorMessage);
         }
 
         try{
