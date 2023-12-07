@@ -7,8 +7,10 @@ use App\Http\Controllers\DashboardController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 use App\Http\Controllers\PiutangController;
+use App\Http\Controllers\UangFisikController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KasController;
+use App\Http\Controllers\PecahanUangController;
 use App\Http\Controllers\CashFlowController;
 use App\Http\Controllers\JurnalAkunController;
 use App\Http\Controllers\RkatController;
@@ -35,13 +37,18 @@ Route::patch('password', [ChangePasswordController::class, 'update'])->name('pas
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
-// Menu
+// Menu Piutang
 Route::get('/piutang', [PiutangController::class, 'index'])->middleware('auth')->name('piutang');
 Route::get('/riwayatPiutang', [PiutangController::class, 'riwayatPiutang'])->middleware('auth')->name('riwayatPiutang');
 Route::get('/printPiutang', [PiutangController::class, 'printPiutang'])->middleware('auth')->name('printPiutang');
 Route::post('/storePiutang', [PiutangController::class, 'storePiutang'])->middleware('auth')->name('insert.piutang');
 Route::get('/realisasiPiutang/{id}', [PiutangController::class, 'realisasiPiutang'])->middleware('auth')->name('realisasi.piutang');
 Route::post('/updaterealisasiPiutang/{id}', [PiutangController::class, 'realisasi'])->middleware('auth')->name('update.realisasi');
+
+// Menu Uang Fisik
+Route::get('/uangFisik', [UangFisikController::class, 'index'])->middleware('auth')->name('uangFisik');
+Route::post('/storeUangFisik', [UangFisikController::class, 'store'])->middleware('auth')->name('insert.uangFisik');
+
 
 
 // Menu Cash Flow
@@ -79,3 +86,12 @@ Route::delete('/deleteRkat/{id}', [RkatController::class, 'destroy'])->middlewar
 Route::get('/import-rkat', [RkatController::class, 'showImportForm'])->name('import.rkat.view');
 Route::post('/import-rkat', [RkatController::class, 'importExcel'])->name('import.rkat');
 Route::get('download-example-excel', [RkatController::class, 'downloadExampleExcel'])->name('download.example.excel');
+
+// Master Pecahan Uang
+Route::get('/pecahan', [PecahanUangController::class, 'index'])->middleware('auth')->name('pecahan');
+Route::post('/pecahan', [PecahanUangController::class, 'store'])->middleware('auth')->name('insert.pecahan');
+Route::get('/editPecahan/{id}', [PecahanUangController::class, 'edit'])->middleware('auth')->name('edit.pecahan');
+Route::post('/updatePecahan/{id}', [PecahanUangController::class, 'update'])->middleware('auth')->name('update.pecahan');
+Route::delete('/deletePecahan/{id}', [PecahanUangController::class, 'destroy'])->middleware('auth')->name('destroy.pecahan');
+
+

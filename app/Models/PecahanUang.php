@@ -5,30 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Rkat extends Model
+class PecahanUang extends Model
 {
     use HasFactory;
 
-    protected $table = 'rkat';
+    protected $table = 'pecahan_uang';
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'kode_rkat',
-        'no_akun',
-        'keterangan',
-        'periode',
+        'jenis_uang',
+        'pecahan',
+        'status',
     ];
 
     public $timestamps = true;
 
-    // Define the relationship
-    public function jurnalAkun()
-    {
-        return $this->belongsTo(JurnalAkun::class, 'no_akun', 'no_akun');
-    }
-
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
+    public function uangPecahanDetails()
+    {
+        return $this->hasMany(UangFisikDetail::class);
+    }
 }
 

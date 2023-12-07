@@ -11,7 +11,6 @@ class TotalPiutang extends Model
 
     protected $table = 'total_piutang';
     protected $primaryKey = 'id';
-    protected $keyType = 'string';
 
     protected $fillable = [
         'total_piutang'
