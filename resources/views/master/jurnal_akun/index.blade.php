@@ -55,8 +55,8 @@
                                                         <td>{{ $item->lvl }}</td>
                                                         <td>{{ $item->tipe_akun }}</td>
                                                         <td>
-                                                            <a href="#" class="btn btn-sm btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                                            <form id="form-delete" action="#" method="POST"
+                                                            <a href="{{ route('edit.jurnalakun', $item->no_akun ) }}" class="btn btn-sm btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                                            <form id="form-delete" action="{{ route('destroy.jurnalakun', $item->no_akun ) }}" method="POST"
                                                             class="d-inline-block">
                                                             @csrf
                                                             @method('DELETE')

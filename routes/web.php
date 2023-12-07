@@ -65,3 +65,6 @@ Route::get('/kas', [KasController::class, 'index'])->middleware('auth')->name('k
 // Master Jurnal Akun
 Route::get('/jurnalakun', [JurnalAkunController::class, 'index'])->middleware('auth')->name('jurnalakun');
 Route::post('/jurnalakun', [JurnalAkunController::class, 'store'])->middleware('auth')->name('insert.jurnalakun');
+Route::get('/editJurnalakun/{id}', [JurnalAkunController::class, 'edit'])->middleware('auth')->name('edit.jurnalakun');
+Route::post('/updateJurnalakun/{id}', [JurnalAkunController::class, 'update'])->middleware('auth')->name('update.jurnalakun');
+Route::delete('/deleteJurnalakun/{id}', [JurnalAkunController::class, 'destroy'])->middleware('auth')->name('destroy.jurnalakun');
