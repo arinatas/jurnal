@@ -21,10 +21,55 @@
                                                 </div>
                                                 <div class="d-inline">
                                                     <a href="#" class="btn btn-sm btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#kt_modal_rkat">Tambah</a>
+                                                    <a href="{{ route('download.example.excel') }}" class="btn btn-sm btn-secondary">Download Contoh Excel</a>
                                                 </div>
                                             <!--end::Title-->
                                         </div>
                                         <!--end::Heading-->
+                                        <!--begin::Import Form-->
+                                        <div class="card-px mt-10 mt-5">
+                                            <h3 class="fs-4 fw-bolder mb-4">Import Data Excel</h3>
+                                            <form action="{{ route('import.rkat') }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="mb-3">
+                                                    <label for="excel_file" class="form-label">Pilih File Excel:</label>
+                                                    <input type="file" class="form-control" name="excel_file" id="excel_file" accept=".xls, .xlsx">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Import Data</button>
+                                            </form>
+                                            @if (session('importSuccess'))
+                                                <div class="alert alert-success mt-4">
+                                                    {{ session('importSuccess') }}
+                                                </div>
+                                            @endif
+
+                                            @if (session('importError'))
+                                                <div class="alert alert-danger mt-4">
+                                                    {{ session('importError') }}
+                                                </div>
+                                            @endif
+
+                                            @if (session('importErrors'))
+                                                <div class="alert alert-danger mt-4">
+                                                    <ul>
+                                                        @foreach(session('importErrors') as $errorMessage)
+                                                            <li>{{ $errorMessage }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                            @if (session('importValidationFailures'))
+                                                <div class="alert alert-danger mt-4">
+                                                    <p>Detail Kesalahan:</p>
+                                                    <ul>
+                                                        @foreach(session('importValidationFailures') as $failure)
+                                                            <li>Baris: {{ $failure->row() }}, Kolom: {{ $failure->attribute() }}, Pesan: {{ implode(', ', $failure->errors()) }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <!--End::Import Form-->
                                         <!-- Form Filter -->
                                         <div class="card-px mt-10">
                                             <form action="{{ route('rkat') }}" method="GET">

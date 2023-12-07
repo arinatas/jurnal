@@ -76,3 +76,6 @@ Route::post('/rkat', [RkatController::class, 'store'])->middleware('auth')->name
 Route::get('/editRkat/{id}', [RkatController::class, 'edit'])->middleware('auth')->name('edit.rkat');
 Route::post('/updateRkat/{id}', [RkatController::class, 'update'])->middleware('auth')->name('update.rkat');
 Route::delete('/deleteRkat/{id}', [RkatController::class, 'destroy'])->middleware('auth')->name('destroy.rkat');
+Route::get('/import-rkat', [RkatController::class, 'showImportForm'])->name('import.rkat.view');
+Route::post('/import-rkat', [RkatController::class, 'importExcel'])->name('import.rkat');
+Route::get('download-example-excel', [RkatController::class, 'downloadExampleExcel'])->name('download.example.excel');
