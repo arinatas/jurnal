@@ -12,6 +12,8 @@ use App\Models\User;
 use App\Models\Rkat;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Exports\CashFlowExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CashFlowController extends Controller
 {
@@ -193,6 +195,14 @@ class CashFlowController extends Controller
             'start_date' => $startDate,
             'end_date' => $endDate,
         ]);
+    }
+
+    // Metode untuk Export ke Excel
+    public function exportCashFlow(Request $request, $startDate, $endDate)
+    {
+        $export = new CashFlowExport($startDate, $endDate);
+
+        return Excel::download($export, 'laporan_cashflow.xlsx');
     }
     
 }

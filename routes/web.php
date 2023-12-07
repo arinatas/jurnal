@@ -46,7 +46,8 @@ Route::post('/updaterealisasiPiutang/{id}', [PiutangController::class, 'realisas
 Route::get('/cashflow', [CashFlowController::class, 'index'])->middleware('auth')->name('cashflow');
 Route::post('/cashflow', [CashFlowController::class, 'store'])->middleware('auth')->name('insert.cashflow');
 Route::get('/lapcashflow', [CashFlowController::class, 'laporan'])->middleware('auth')->name('lapcashflow'); // Laporan Cash Flow
-Route::get('/printcashflow/{start_date}/{end_date}', [CashFlowController::class, 'printCashFlow'])->middleware('auth')->name('printcashflow');
+Route::get('/printcashflow/{start_date}/{end_date}', [CashFlowController::class, 'printCashFlow'])->middleware('auth')->name('printcashflow'); // Print Laporan Cash Flow
+Route::get('/exportcashflow/{start_date}/{end_date}', [CashFlowController::class, 'exportCashFlow'])->middleware('auth')->name('exportcashflow'); // Export Excel Cash Flow
 
 // Master User
 Route::get('/user', [UserController::class, 'index'])->middleware('auth')->name('user');
