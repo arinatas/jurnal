@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PecahanUang extends Model
+class UangFisik extends Model
 {
     use HasFactory;
 
-    protected $table = 'pecahan_uang';
+    protected $table = 'uang_fisik';
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'jenis_uang',
-        'pecahan',
-        'status',
+        'tanggal',
+        'total',
     ];
 
     public $timestamps = true;
@@ -23,9 +22,10 @@ class PecahanUang extends Model
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-    public function uangPecahanDetails()
+    public function uangFisikDetails()
     {
-        return $this->hasMany(UangFisikDetail::class);
+        return $this->hasMany(UangFisikDetail::class, 'id_uang_fisik', 'id');
     }
+
 }
 
