@@ -35,6 +35,7 @@
                                                         <th class="min-w-100px">Tanggal</th>
                                                         <th class="min-w-100px">No Bukti</th>
                                                         <th class="min-w-100px">PIC</th>
+                                                        <th class="min-w-100px">Nama</th>
                                                         <th class="min-w-100px">Kode Anggaran</th>
                                                         <th class="min-w-100px">Transaksi</th>
                                                         <th class="min-w-100px">Ref</th>
@@ -53,6 +54,7 @@
                                                         <td>{{ $item->tanggal }}</td>
                                                         <td>{{ $item->no_bukti }}</td>
                                                         <td>{{ $item->pic }}</td>
+                                                        <td>{{ $item->nama }}</td>
                                                         <td>{{ $item->rkat->kode_rkat }}</td>
                                                         <td>{{ $item->transaksi }}</td>
                                                         <td>{{ $item->ref }}</td>
@@ -66,6 +68,7 @@
                                                     @endforeach
                                                     <!-- Total rows after the loop -->
                                                     <tr class="fw-bold fs-6 text-gray-800">
+                                                        <td></td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
@@ -167,6 +170,14 @@
                                                         </label>
                                                         <!--end::Label-->
                                                         <input class="form-control form-control-solid" type="text" name="pic" required value=""/>
+                                                    </div>
+                                                    <div class="d-flex flex-column mb-7 fv-row">
+                                                        <!--begin::Label-->
+                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
+                                                            <span class="required">Nama</span>
+                                                        </label>
+                                                        <!--end::Label-->
+                                                        <input class="form-control form-control-solid" type="text" name="nama" required value=""/>
                                                     </div>
                                                     <div class="d-flex flex-column mb-7 fv-row">
                                                         <!--begin::Label-->

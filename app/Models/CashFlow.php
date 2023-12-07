@@ -17,6 +17,7 @@ class CashFlow extends Model
         'tanggal',
         'no_bukti',
         'pic',
+        'nama',
         'kode_anggaran',
         'transaksi',
         'ref',
