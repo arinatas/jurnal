@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-9 text-center">
                         <h2>LAPORAN CASH FLOW</h2>
-                        <h1>PRIMAKARA UNIVERSITY</h1>
+                        <h1 style="margin-bottom: 5px; margin-top: 5px;">PRIMAKARA UNIVERSITY</h1>
                         @if ($start_date == $end_date)
                             <h6>Periode: {{ date('d F Y', strtotime($start_date)) }}</h6>
                         @else
@@ -54,6 +54,7 @@
                                     <th class="min-w-100px" style="text-align: center;">Tanggal</th>
                                     <th class="min-w-100px" style="text-align: center;">No Bukti</th>
                                     <th class="min-w-100px" style="text-align: center;">PIC</th>
+                                    <th class="min-w-100px" style="text-align: center;">Nama</th>
                                     <th class="min-w-50px" style="text-align: center;">Kode Anggaran</th>
                                     <th class="min-w-100px" style="text-align: center;">Transaksi</th>
                                     <th class="min-w-50px" style="text-align: center;">Ref</th>
@@ -70,7 +71,8 @@
                                     <td style="text-align: center;">{{ $no }}</td>
                                     <td style="text-align: center;">{{ $item->tanggal }}</td>
                                     <td style="text-align: center;">{{ $item->no_bukti }}</td>
-                                    <td>{{ $item->pic }}</td>
+                                    <td style="text-align: center;">{{ $item->pic }}</td>
+                                    <td style="text-align: center;">{{ $item->nama }}</td>
                                     <td style="text-align: center; max-width: 50px;">{{ $item->rkat->kode_rkat }}</td>
                                     <td style="max-width: 150px;">{{ $item->transaksi }}</td>
                                     <td style="max-width: 50px;">{{ $item->ref }}</td>
@@ -89,11 +91,13 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
                                     <td><strong>Total</strong></td>
                                     <td><strong>Rp. @currency($totalDebit)</strong></td>
                                     <td><strong>Rp. @currency($totalKredit)</strong></td>
                                 </tr>
                                 <tr class="fw-bold fs-6 text-gray-800">
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -116,7 +120,7 @@
                     <div class="col-sm-4 invoice-col mt-5">
                         <address style="float: inline-end;" class="mr-5">
                             Mengetahui,<br>
-                            Waka II Bidang Keuangan & Sumber Daya</p>
+                            Warek II Bidang Keuangan & Sumber Daya</p>
                             <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" />
                             <br>
                             <strong><u>I Made Sudama, S.E., M.M. </u></strong><br>
@@ -144,7 +148,7 @@
                             Accounting</p>
                             <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" />
                             <br>
-                            <strong><u>Ida Ayu Shanti Dharmasari</u></strong><br>
+                            <strong><u>Ida Ayu Shanti Dharmasari, S.E., Ak.</u></strong><br>
                             <strong>NIK. 2021112212</strong><br>
                         </address>
                     </div>

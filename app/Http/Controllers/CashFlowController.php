@@ -12,6 +12,8 @@ use App\Models\User;
 use App\Models\Rkat;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Exports\CashFlowExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CashFlowController extends Controller
 {
@@ -21,6 +23,7 @@ class CashFlowController extends Controller
 
         $cashflows = CashFlow::with(['user:id,nama', 'rkat:id,kode_rkat'])
             ->whereDate('tanggal', $today)
+            ->orderByDesc('id') // Sort by 'id' in descending order
             ->get();
 
         // Calculate total debit and total kredit
@@ -56,6 +59,7 @@ class CashFlowController extends Controller
             'tanggal' => 'required|date',
             'no_bukti' => 'required|string|max:100',
             'pic' => 'required|string|max:255',
+            'nama' => 'required|string|max:255',
             'kode_anggaran' => 'required|integer',
             'transaksi' => 'required|string|max:255',
             'ref' => 'required|string|max:100',
@@ -80,6 +84,7 @@ class CashFlowController extends Controller
                 'tanggal' => $request->tanggal,
                 'no_bukti' => $request->no_bukti,
                 'pic' => $request->pic,
+                'nama' => $request->nama,
                 'kode_anggaran' => $request->kode_anggaran,
                 'transaksi' => $request->transaksi,
                 'ref' => $request->ref,
@@ -119,7 +124,7 @@ class CashFlowController extends Controller
             $cashflowsQuery->whereBetween('tanggal', [$startDate, $endDate]);
         }
     
-        // Execute the query
+        // Execute the query Sort the $cashflows collection by 'id' in descending order
         $cashflows = $cashflowsQuery->get();
     
         // Calculate total debit and total kredit
@@ -150,46 +155,54 @@ class CashFlowController extends Controller
         ]);
     }
 
-        // Metode untuk Print PDF
-        public function printCashFlow($startDate, $endDate)
-        {
-            // Query for CashFlows with optional date filter
-            $cashflowsQuery = CashFlow::with(['user:id,nama', 'rkat:id,kode_rkat']);
-        
-            // Add date filter if start and end dates are provided
-            if ($startDate && $endDate) {
-                $cashflowsQuery->whereBetween('tanggal', [$startDate, $endDate]);
-            }
-        
-            // Execute the query
-            $cashflows = $cashflowsQuery->get();
-        
-            // Calculate total debit and total kredit
-            $totalDebit = $cashflows->sum('debit');
-            $totalKredit = $cashflows->sum('kredit');
-        
-            // Get the list of kode_rkat options
-            $rkatOptions = Rkat::pluck('kode_rkat', 'id');
-            $rkatDescriptions = Rkat::pluck('keterangan', 'id');
-
-            // Fetch the value of "kas" from the "uang_kas" table
-            $kasModel = Kas::first(); // Ambil record pertama
-            // Access the "kas" field from the model
-            $totalKas = $kasModel ? $kasModel->kas : 0;
-        
-            return view('menu.cashflow.printlaporan', [
-                'title' => 'Laporan Cash Flow',
-                'section' => 'Menu',
-                'active' => 'Laporan Cash Flow',
-                'cashflows' => $cashflows,
-                'rkatOptions' => $rkatOptions,
-                'rkatDescriptions' => $rkatDescriptions,
-                'totalDebit' => $totalDebit,
-                'totalKredit' => $totalKredit,
-                'totalKas' => $totalKas,
-                'start_date' => $startDate,
-                'end_date' => $endDate,
-            ]);
+    // Metode untuk Print PDF
+    public function printCashFlow($startDate, $endDate)
+    {
+        // Query for CashFlows with optional date filter
+        $cashflowsQuery = CashFlow::with(['user:id,nama', 'rkat:id,kode_rkat']);
+    
+        // Add date filter if start and end dates are provided
+        if ($startDate && $endDate) {
+            $cashflowsQuery->whereBetween('tanggal', [$startDate, $endDate]);
         }
+    
+        // Execute the query
+        $cashflows = $cashflowsQuery->get();
+    
+        // Calculate total debit and total kredit
+        $totalDebit = $cashflows->sum('debit');
+        $totalKredit = $cashflows->sum('kredit');
+    
+        // Get the list of kode_rkat options
+        $rkatOptions = Rkat::pluck('kode_rkat', 'id');
+        $rkatDescriptions = Rkat::pluck('keterangan', 'id');
+
+        // Fetch the value of "kas" from the "uang_kas" table
+        $kasModel = Kas::first(); // Ambil record pertama
+        // Access the "kas" field from the model
+        $totalKas = $kasModel ? $kasModel->kas : 0;
+    
+        return view('menu.cashflow.printlaporan', [
+            'title' => 'Laporan Cash Flow',
+            'section' => 'Menu',
+            'active' => 'Laporan Cash Flow',
+            'cashflows' => $cashflows,
+            'rkatOptions' => $rkatOptions,
+            'rkatDescriptions' => $rkatDescriptions,
+            'totalDebit' => $totalDebit,
+            'totalKredit' => $totalKredit,
+            'totalKas' => $totalKas,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+        ]);
+    }
+
+    // Metode untuk Export ke Excel
+    public function exportCashFlow(Request $request, $startDate, $endDate)
+    {
+        $export = new CashFlowExport($startDate, $endDate);
+
+        return Excel::download($export, 'laporan_cashflow.xlsx');
+    }
     
 }

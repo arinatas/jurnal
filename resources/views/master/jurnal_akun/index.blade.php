@@ -17,69 +17,59 @@
                                         <div class="card-px pt-10 d-flex justify-content-between">
                                             <!--begin::Title-->
                                                 <div class="d-inline mt-2">
-                                                    <h2 class="fs-2x fw-bolder mb-0">Kas : Rp. @currency($totalKas )</h2>
+                                                    <h2 class="fs-2x fw-bolder mb-0">{{ $title }}</h2>
                                                 </div>
                                                 <div class="d-inline">
-                                                    <a href="#" class="btn btn-sm btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#kt_modal_new_user">Tambah</a>
+                                                    <a href="#" class="btn btn-sm btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#kt_modal_new_jurnalakun">Tambah</a>
                                                 </div>
                                             <!--end::Title-->
                                         </div>
                                         <!--end::Heading-->
                                         <!--begin::Table-->
-                                        @if ($cashflows )
+                                        @if ($jurnalakuns )
                                         <div class="table-responsive my-10 mx-8">
                                             <table class="table table-striped gy-7 gs-7">
                                                 <thead>
                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                                         <th class="min-w-50px">No</th>
-                                                        <th class="min-w-100px">Tanggal</th>
-                                                        <th class="min-w-100px">No Bukti</th>
-                                                        <th class="min-w-100px">PIC</th>
-                                                        <th class="min-w-100px">Nama</th>
-                                                        <th class="min-w-100px">Kode Anggaran</th>
-                                                        <th class="min-w-100px">Transaksi</th>
-                                                        <th class="min-w-100px">Ref</th>
-                                                        <th class="min-w-100px">Accounting</th>
-                                                        <th class="min-w-150px">Debit</th>
-                                                        <th class="min-w-150px">Kredit</th>
+                                                        <th class="min-w-100px">No Akun</th>
+                                                        <th class="min-w-100px">Parent</th>
+                                                        <th class="min-w-100px">Nama Akun</th>
+                                                        <th class="min-w-100px">Type Neraca</th>
+                                                        <th class="min-w-100px">Level</th>
+                                                        <th class="min-w-100px">Tipe Akun</th>
+                                                        <th class="min-w-100px">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @php
                                                         $no = 1; // Inisialisasi no
                                                     @endphp
-                                                    @foreach ($cashflows as $item)
+                                                    @foreach ($jurnalakuns as $item)
                                                     <tr>
                                                         <td>{{ $no }}</td>
-                                                        <td>{{ $item->tanggal }}</td>
-                                                        <td>{{ $item->no_bukti }}</td>
-                                                        <td>{{ $item->pic }}</td>
-                                                        <td>{{ $item->nama }}</td>
-                                                        <td>{{ $item->rkat->kode_rkat }}</td>
-                                                        <td>{{ $item->transaksi }}</td>
-                                                        <td>{{ $item->ref }}</td>
-                                                        <td>{{ $item->user->nama }}</td>
-                                                        <td>Rp. @currency($item->debit )</td>
-                                                        <td>Rp. @currency($item->kredit )</td>
+                                                        <td>{{ $item->no_akun }}</td>
+                                                        <td>{{ $item->parent }}</td>
+                                                        <td>{{ $item->nama_akun }}</td>
+                                                        <td>{{ $item->type_neraca }}</td>
+                                                        <td>{{ $item->lvl }}</td>
+                                                        <td>{{ $item->tipe_akun }}</td>
+                                                        <td>
+                                                            <a href="{{ route('edit.jurnalakun', $item->no_akun ) }}" class="btn btn-sm btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                                            <form id="form-delete" action="{{ route('destroy.jurnalakun', $item->no_akun ) }}" method="POST"
+                                                            class="d-inline-block">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button id="submit-btn" type="submit" data-toggle="tooltip" data-original-title="Hapus bagian"
+                                                                class="btn btn-sm btn-danger btn-action" onclick="confirmDelete(event)"
+                                                                ><i class="fas fa-trash"></i></i></button>
+                                                            </form>
+                                                        </td>
                                                     </tr>
                                                     @php
                                                         $no++; // Tambahkan no setiap kali iterasi
                                                     @endphp
                                                     @endforeach
-                                                    <!-- Total rows after the loop -->
-                                                    <tr class="fw-bold fs-6 text-gray-800">
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td><strong>Total</strong></td>
-                                                        <td><strong>Rp. @currency($totalDebit)</strong></td>
-                                                        <td><strong>Rp. @currency($totalKredit)</strong></td>
-                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -117,7 +107,7 @@
                                 </div>
                                 <!--end::Card-->
                                 <!--begin::Modal-->
-                                <div class="modal fade" id="kt_modal_new_user" tabindex="-1" aria-hidden="true">
+                                <div class="modal fade" id="kt_modal_new_jurnalakun" tabindex="-1" aria-hidden="true">
                                     <!--begin::Modal dialog-->
                                     <div class="modal-dialog modal-dialog-centered mw-650px">
                                         <!--begin::Modal content-->
@@ -144,92 +134,56 @@
                                             <!--begin::Modal body-->
                                             <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                                 <!--begin::Form-->
-                                                <form action="{{ route('insert.cashflow') }}" method="POST">
+                                                <form action="{{ route('insert.jurnalakun') }}" method="POST">
                                                     @csrf
                                                     <!--begin::Input group-->
                                                     <div class="d-flex flex-column mb-7 fv-row">
                                                         <!--begin::Label-->
                                                         <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Tanggal</span>
+                                                            <span class="required">No Akun</span>
                                                         </label>
                                                         <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="date" name="tanggal" required value=""/>
+                                                        <input class="form-control form-control-solid" type="text" name="no_akun" required value=""/>
                                                     </div>
                                                     <div class="d-flex flex-column mb-7 fv-row">
                                                         <!--begin::Label-->
                                                         <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">No Bukti</span>
+                                                            <span class="required">Parent</span>
                                                         </label>
                                                         <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="no_bukti" required value=""/>
+                                                        <input class="form-control form-control-solid" type="text" name="parent" required value=""/>
                                                     </div>
                                                     <div class="d-flex flex-column mb-7 fv-row">
                                                         <!--begin::Label-->
                                                         <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">PIC</span>
+                                                            <span class="required">Nama Akun</span>
                                                         </label>
                                                         <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="pic" required value=""/>
+                                                        <input class="form-control form-control-solid" type="text" name="nama_akun" required value=""/>
                                                     </div>
                                                     <div class="d-flex flex-column mb-7 fv-row">
                                                         <!--begin::Label-->
                                                         <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Nama</span>
+                                                            <span class="required">Type Neraca</span>
                                                         </label>
                                                         <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="nama" required value=""/>
+                                                        <input class="form-control form-control-solid" type="text" name="type_neraca" required value=""/>
                                                     </div>
                                                     <div class="d-flex flex-column mb-7 fv-row">
                                                         <!--begin::Label-->
                                                         <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Kode Anggaran</span>
+                                                            <span class="required">Level</span>
                                                         </label>
                                                         <!--end::Label-->
-                                                        <select class="form-control form-control-solid" name="kode_anggaran" required>
-                                                            <option value="">Pilih Kode Anggaran</option>
-                                                            @foreach($rkatOptions as $id => $kode_rkat)
-                                                                <option value="{{ $id }}">{{ $kode_rkat }} - {{ $rkatDescriptions[$id] }}</option>
-                                                            @endforeach
-                                                        </select>
+                                                        <input class="form-control form-control-solid" type="text" name="lvl" required value=""/>
                                                     </div>
                                                     <div class="d-flex flex-column mb-7 fv-row">
                                                         <!--begin::Label-->
                                                         <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Transaksi</span>
+                                                            <span class="required">Tipe Akun</span>
                                                         </label>
                                                         <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="transaksi" required value=""/>
-                                                    </div>
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Ref</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="ref" required value=""/>
-                                                    </div>
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Debit</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <div class="input-group">
-                                                            <span class="input-group-text">Rp</span>
-                                                            <input class="form-control form-control-solid" type="text" name="debit" required oninput="formatNumber(this)" onblur="removeFormat(this)"  onfocus="removeLeadingZeros(this)" value="0"/>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Kredit</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <div class="input-group">
-                                                            <span class="input-group-text">Rp</span>
-                                                            <input class="form-control form-control-solid" type="text" name="kredit" required oninput="formatNumber(this)" onblur="removeFormat(this)" onfocus="removeLeadingZeros(this)" value="0"/>
-                                                        </div>
+                                                        <input class="form-control form-control-solid" type="text" name="tipe_akun" required value=""/>
                                                     </div>
                                                     <!--end::Input group-->
                                                     <!--begin::Actions-->
@@ -269,30 +223,6 @@
 
                                     // Mencegah pengiriman berulang
                                     button.form.submit();
-                        }
-                        // Fungsi untuk menambahkan pemisah 3 digit pada input
-                        function formatNumber(input) {
-                            // Menghapus karakter selain angka
-                            let value = input.value.replace(/\D/g, '');
-
-                            // Menambahkan pemisah 3 digit
-                            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-                            // Memasukkan nilai yang telah diformat kembali ke input
-                            input.value = value;
-                        }
-
-                        // Fungsi untuk mengembalikan nilai tanpa pemisah saat disubmit
-                        function removeFormat(input) {
-                            input.value = input.value.replace(/\D/g, '');
-                        }
-                        // Fungsi untuk menghapus angka nol di depan saat input difokuskan
-                        function removeLeadingZeros(input) {
-                            let value = input.value;
-                            // Menghapus angka nol di depan
-                            value = value.replace(/^0+/, '');
-                            // Memasukkan nilai yang telah diformat kembali ke input
-                            input.value = value;
                         }
                     </script>
 @endsection

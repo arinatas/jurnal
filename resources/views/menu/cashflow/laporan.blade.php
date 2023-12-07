@@ -21,7 +21,7 @@
                                                         <h2 class="fs-2x fw-bolder mb-0">{{$title}}</h2>
                                                     </div>
                                                     <div class="d-inline">
-                                                        <a href="#" class="btn btn-sm btn-info">Export Excel</a>
+                                                        <a href="{{ route('exportcashflow', ['start_date' => request('start_date'), 'end_date' => request('end_date')]) }}" class="btn btn-sm btn-info" title="Export Excel">Export Excel</a>
                                                         <a href="{{ route('printcashflow', ['start_date' => request('start_date'), 'end_date' => request('end_date')]) }}" class="btn btn-sm btn-success" title="Unduh Laporan">Print Laporan</a> 
                                                     </div>
                                                 @endif
@@ -57,6 +57,7 @@
                                                         <th class="min-w-100px">Tanggal</th>
                                                         <th class="min-w-100px">No Bukti</th>
                                                         <th class="min-w-100px">PIC</th>
+                                                        <th class="min-w-100px">Nama</th>
                                                         <th class="min-w-100px">Kode Anggaran</th>
                                                         <th class="min-w-100px">Transaksi</th>
                                                         <th class="min-w-100px">Ref</th>
@@ -75,6 +76,7 @@
                                                         <td>{{ $item->tanggal }}</td>
                                                         <td>{{ $item->no_bukti }}</td>
                                                         <td>{{ $item->pic }}</td>
+                                                        <td>{{ $item->nama }}</td>
                                                         <td>{{ $item->rkat->kode_rkat }}</td>
                                                         <td>{{ $item->transaksi }}</td>
                                                         <td>{{ $item->ref }}</td>
@@ -95,11 +97,13 @@
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
+                                                        <td></td>
                                                         <td><strong>Total</strong></td>
                                                         <td><strong>Rp. @currency($totalDebit)</strong></td>
                                                         <td><strong>Rp. @currency($totalKredit)</strong></td>
                                                     </tr>
                                                     <tr class="fw-bold fs-6 text-gray-800">
+                                                        <td></td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
@@ -157,133 +161,7 @@
                                     </div>
                                     <!--end::Card body-->
                                 </div>
-                                <!--end::Card-->
-                                <!--begin::Modal-->
-                                <div class="modal fade" id="kt_modal_new_user" tabindex="-1" aria-hidden="true">
-                                    <!--begin::Modal dialog-->
-                                    <div class="modal-dialog modal-dialog-centered mw-650px">
-                                        <!--begin::Modal content-->
-                                        <div class="modal-content">
-                                            <!--begin::Modal header-->
-                                            <div class="modal-header">
-                                                <!--begin::Modal title-->
-                                                <h2>Tambah {{ $title }}</h2>
-                                                <!--end::Modal title-->
-                                                <!--begin::Close-->
-                                                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                                                    <span class="svg-icon svg-icon-1">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
-                                                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
-                                                        </svg>
-                                                    </span>
-                                                    <!--end::Svg Icon-->
-                                                </div>
-                                                <!--end::Close-->
-                                            </div>
-                                            <!--end::Modal header-->
-                                            <!--begin::Modal body-->
-                                            <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                                                <!--begin::Form-->
-                                                <form action="{{ route('insert.cashflow') }}" method="POST">
-                                                    @csrf
-                                                    <!--begin::Input group-->
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Tanggal</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="date" name="tanggal" required value=""/>
-                                                    </div>
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">No Bukti</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="no_bukti" required value=""/>
-                                                    </div>
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">PIC</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="pic" required value=""/>
-                                                    </div>
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Kode Anggaran</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <select class="form-control form-control-solid" name="kode_anggaran" required>
-                                                            <option value="">Pilih Kode Anggaran</option>
-                                                            @foreach($rkatOptions as $id => $kode_rkat)
-                                                                <option value="{{ $id }}">{{ $kode_rkat }} - {{ $rkatDescriptions[$id] }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Transaksi</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="transaksi" required value=""/>
-                                                    </div>
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Ref</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="ref" required value=""/>
-                                                    </div>
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Debit</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <div class="input-group">
-                                                            <span class="input-group-text">Rp</span>
-                                                            <input class="form-control form-control-solid" type="text" name="debit" required oninput="formatNumber(this)" onblur="removeFormat(this)"  onfocus="removeLeadingZeros(this)" value="0"/>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Kredit</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <div class="input-group">
-                                                            <span class="input-group-text">Rp</span>
-                                                            <input class="form-control form-control-solid" type="text" name="kredit" required oninput="formatNumber(this)" onblur="removeFormat(this)" onfocus="removeLeadingZeros(this)" value="0"/>
-                                                        </div>
-                                                    </div>
-                                                    <!--end::Input group-->
-                                                    <!--begin::Actions-->
-                                                    <div class="text-center pt-15">
-                                                        <button type="reset" data-bs-dismiss="modal" class="btn btn-light me-3">Cancel</button>
-                                                        <button type="submit" onclick="submitForm(this)" class="btn btn-primary">
-                                                            <span class="indicator-label">Submit</span>
-                                                        </button>
-                                                    </div>
-                                                    <!--end::Actions-->
-                                                </form>
-                                                <!--end::Form-->
-                                            </div>
-                                            <!--end::Modal body-->
-                                        </div>
-                                        <!--end::Modal content-->
-                                    </div>
-                                    <!--end::Modal dialog-->
-                                </div>
-                                <!--end::Modal-->
+                                <!--end::Card-->                                            
 							</div>
 							<!--end::Container-->
 						</div>
