@@ -10,6 +10,7 @@ use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KasController;
 use App\Http\Controllers\CashFlowController;
+use App\Http\Controllers\JurnalAkunController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,3 +61,7 @@ Route::post('/resetupdateUser/{id}', [UserController::class, 'resetupdate'])->mi
 
 // Master Kas
 Route::get('/kas', [KasController::class, 'index'])->middleware('auth')->name('kas');
+
+// Master Jurnal Akun
+Route::get('/jurnalakun', [JurnalAkunController::class, 'index'])->middleware('auth')->name('jurnalakun');
+Route::post('/jurnalakun', [JurnalAkunController::class, 'store'])->middleware('auth')->name('insert.jurnalakun');
