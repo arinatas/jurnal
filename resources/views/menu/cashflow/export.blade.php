@@ -39,6 +39,7 @@
                 <th style="text-align: center;">PIC</th>
                 <th style="text-align: center;">Nama</th>
                 <th style="text-align: center;">Kode Anggaran</th>
+                <th style="text-align: center;">Id RKAT</th>
                 <th style="text-align: center;">Transaksi</th>
                 <th style="text-align: center;">Ref</th>
                 <th style="text-align: center;">Debit</th>
@@ -53,6 +54,7 @@
                     <td style="text-align: center;">{{ $cashflow->no_bukti }}</td>
                     <td style="text-align: center;">{{ $cashflow->pic }}</td>
                     <td style="text-align: center;">{{ $cashflow->nama }}</td>
+                    <td style="text-align: center;">{{ $cashflow->rkat->kode_rkat }}</td>
                     <td style="text-align: center;">{{ $cashflow->kode_anggaran }}</td>
                     <td style="text-align: left;">{{ $cashflow->transaksi }}</td>
                     <td style="text-align: left;">{{ $cashflow->ref }}</td>

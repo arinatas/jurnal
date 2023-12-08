@@ -41,6 +41,7 @@ class CashFlowExport implements FromView, WithHeadings, ShouldAutoSize
             'PIC',
             'Nama',
             'Kode Anggaran',
+            'Id RKAT',
             'Transaksi',
             'Ref',
             'Debit',
