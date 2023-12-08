@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Piutang {{ \Carbon\Carbon::parse(date("Y-m-d h:i:sa"))->format('j F Y'); }}</title>
+        <title>Laporan Banding {{ \Carbon\Carbon::parse(date("Y-m-d h:i:sa"))->format('j F Y'); }}</title>
 		<link rel="shortcut icon" href="/assets/media/logos/smallprimakara.png" />
 
         <!-- Tell the browser to be responsive to screen width -->
