@@ -165,9 +165,9 @@
                                                     class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
                                                     <!--begin::Content-->
                                                     <div class="mb-3 mb-md-0 fw-bold">
-                                                        <h4 class="text-gray-900 fw-bolder">Silakan filter terlebih dahulu berdasarkan tanggal awal & tanggal akhir
+                                                        <h4 class="text-gray-900 fw-bolder">Silakan filter terlebih dahulu berdasarkan periode
                                                         </h4>
-                                                        <div class="fs-6 text-gray-700 pe-7">Pilih tanggal awal & tanggal akhir pada formulir di atas untuk melihat
+                                                        <div class="fs-6 text-gray-700 pe-7">Pilih periode pada formulir di atas untuk melihat
                                                             data.</div>
                                                     </div>
                                                     <!--end::Content-->
