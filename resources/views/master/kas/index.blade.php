@@ -24,26 +24,16 @@
                                         <!--end::Heading-->
                                         <!--begin::Table-->
                                         @if ($kass )
-                                        <div class="table-responsive my-10 mx-8">
+                                        <div class="table-responsive my-5 mx-4">
                                             <table class="table table-striped gy-7 gs-7">
                                                 <thead>
-                                                    <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
-                                                        <th class="min-w-50px">No</th>
-                                                        <th class="min-w-100px">Kas</th>
-                                                    </tr>
+        
                                                 </thead>
                                                 <tbody>
-                                                    @php
-                                                        $no = 1; // Inisialisasi no
-                                                    @endphp
                                                     @foreach ($kass as $item)
-                                                    <tr>
-                                                        <td>{{ $no }}</td>
+                                                    <tr class="fw-bold fs-1">
                                                         <td>Rp. @currency($item->kas )</td>
                                                     </tr>
-                                                    @php
-                                                        $no++; // Tambahkan no setiap kali iterasi
-                                                    @endphp
                                                     @endforeach
                                                 </tbody>
                                             </table>
