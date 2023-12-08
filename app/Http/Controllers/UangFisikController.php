@@ -14,12 +14,14 @@ class UangFisikController extends Controller
 {
     public function index()
     {
-        $uangFisik = UangFisik::all();
+        $uangFisik = UangFisik::with('uangFisikDetails', 'uangFisikDetails.pecahanDetails')
+                    ->orderBy('tanggal', 'desc')
+                    ->paginate(5);
         $pecahanUang = PecahanUang::where('status', 1)
                     ->orderBy('pecahan', 'desc')
                     ->get();
 
-        // ddd($pecahanUang);
+        // ddd($uangFisik);
             return view('menu.uang_fisik.index', [
                 'title' => 'Uang Fisik',
                 'section' => 'Menu',
@@ -31,6 +33,14 @@ class UangFisikController extends Controller
 
     public function store(Request $request)
     {
+        // cek jika sudah ada input pada tanggal itu
+        $duplicateData = UangFisik::where('tanggal', $request->tanggal)
+                        ->first();
+        
+        if ($duplicateData) {
+            return redirect()->back()->with('updateFail', 'Datanya udah ada Woy');
+        }
+
         // ambil pecahan untuk validasi request yg msk
         $pecahanUang = PecahanUang::where('status', 1)
                     ->orderBy('pecahan', 'desc')
@@ -128,121 +138,26 @@ class UangFisikController extends Controller
             return redirect()->back()->with('insertFail', 'Failed to create.');
         }
 
-        // // Mencari data menggunakan dua klausa where
-        // $duplicateData = PecahanUang::where('jenis_uang', $request->jenis_uang)
-        //                 ->where('pecahan', $pecahan)
-        //                 ->first();
-
-        // // cek jika ada data jenis pecahan dengan jumlah dan jenis yg sama maka lempar
-        // if ($duplicateData) {
-        //     return redirect()->back()->with('updateFail', 'Datanya udah ada Woy');
-        // } else {
-        //     // simpan data ke database
-        //     try {
-        //         DB::beginTransaction();
-    
-        //         // insert ke tabel positions
-        //         PecahanUang::create([
-        //             'jenis_uang' => $request->jenis_uang,
-        //             'pecahan' => $pecahan,
-        //             'status' => $request->status
-        //         ]);
-    
-        //         DB::commit();
-    
-        //         return redirect()->back()->with('insertSuccess', 'Data berhasil di Inputkan');
-    
-        //     } catch(Exception $e) {
-        //         DB::rollBack();
-        //         // dd($e->getMessage());
-        //         return redirect()->back()->with('insertFail', $e->getMessage());
-        //     }
-        // }
-
     }
 
-    // public function edit($id)
-    // {
-    //     $pecahanUang = PecahanUang::find($id);
-
-    //     if (!$pecahanUang) {
-    //         return redirect()->back()->with('dataNotFound', 'Data tidak ditemukan');
-    //     }
-
-    //     return view('master.pecahan_uang.edit', [
-    //         'title' => 'Uang Fisik',
-    //         'secction' => 'Master',
-    //         'active' => 'Uang Fisik',
-    //         'pecahanUang' => $pecahanUang,
-    //     ]);
-    // }
-
-    // public function update(Request $request, $id)
-    // {
-    //     $pecahanUang = PecahanUang::find($id);
-
-    //     if (!$pecahanUang) {
-    //         return redirect()->back()->with('dataNotFound', 'Data tidak ditemukan');
-    //     }
-
-    //     // validasi input yang didapatkan dari request
-    //     $validator = Validator::make($request->all(), [
-    //         'jenis_uang' => 'required|integer|between:0,1',
-    //         'pecahan' => 'required',
-    //         'status' => 'required|integer|between:0,1'
-    //     ]);
-
-    //     // kalau ada error kembalikan error
-    //     if ($validator->fails()) {
-    //         return redirect()->back()->withErrors($validator)->withInput();
-    //     }
-
-    //     // Menghilangkan karakter non-digit
-    //     $pecahan = (int)preg_replace('/[^0-9]/', '', $request->pecahan);
-
-    //     // Mencari data menggunakan dua klausa where
-    //     $duplicateData = PecahanUang::where('jenis_uang', $request->jenis_uang)
-    //                     ->where('pecahan', $pecahan)
-    //                     ->first();
-
-    //     // cek jika ada data jenis pecahan dengan jumlah dan jenis yg sama maka lempar
-    //     if ($duplicateData) {
-    //         return redirect()->back()->with('updateFail', 'Datanya udah ada Woy');
-    //     } else {
-    //         // simpan data ke database
-    //         try {
-    //             DB::beginTransaction();
+    public function destroy($id)
+    {
+        try {
+            DB::beginTransaction();
     
-    //             $pecahanUang->jenis_uang = $request->jenis_uang;
-    //             $pecahanUang->pecahan = $pecahan ;
-    //             $pecahanUang->status = $request->status;
+            // Menghapus data uangFisik beserta detailnya
+            $uangFisik = UangFisik::findOrFail($id);
+            $uangFisik->uangFisikDetails()->delete();
+            $uangFisik->delete();
     
-    //             $pecahanUang->save();
+            DB::commit();
     
-    //             DB::commit();
-
-    //             return redirect('/pecahan')->with('updateSuccess', 'Data berhasil di Update');
-    
-    //         } catch(Exception $e) {
-    //             DB::rollBack();
-    //             // dd($e->getMessage());
-    //             return redirect()->back()->with('updateFail', 'Data gagal di Update');
-    //         }
-    //     }
-    // }
-
-    // public function destroy($id)
-    // {
-    //     // Cari data pengguna berdasarkan ID
-    //     $pecahanUang = PecahanUang::find($id);
-
-    //     try {
-    //         // Hapus data pengguna
-    //         $pecahanUang->delete();
-    //         return redirect()->back()->with('deleteSuccess', 'Data berhasil dihapus!');
-    //     } catch (\Exception $e) {
-    //         return redirect()->back()->with('deleteFail', $e->getMessage());
-    //     }
-    // }
+            return redirect('/uangFisik')->with('deleteSuccess', 'Deleted successfully.');
+        } catch (Exception $e) {
+            DB::rollBack();
+            // dd($e->getMessage());
+            return redirect()->back()->with('deleteFail', $e->getMessage());
+        }
+    }
 
 }

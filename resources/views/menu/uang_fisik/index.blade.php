@@ -22,7 +22,7 @@
                                                 <div class="d-inline">
                                                     {{-- <a href="{{ route('printPiutang') }}" target="blank" class="btn btn-sm btn-success fs-6">Cetak</a> --}}
                                                     {{-- <a href="{{ route('riwayatPiutang') }}" class="btn btn-sm btn-warning text-dark fs-6">Riwayat</a> --}}
-                                                    <a href="#" class="btn btn-sm btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#kt_modal_new_utang">Tambah</a>
+                                                    <a href="#" class="btn btn-sm btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#kt_modal_new_uang_fisik">Tambah</a>
                                                 </div>
                                             <!--end::Title-->
                                         </div>
@@ -53,7 +53,83 @@
                                                             {{-- @if ($item->stts_reallisasi == 0)
                                                                 <a href="{{ route('realisasi.piutang', $item->id ) }}" class="btn btn-sm btn-primary btn-action" data-toggle="tooltip" title="Realisasi"><i class="fas fa-pencil-alt"></i></a>
                                                             @endif --}}
-                                                            <a href="" class="btn btn-sm btn-warning btn-action" data-toggle="tooltip" title="Detail"><i class="fas fa-eye"></i></a>
+                                                            <a href="" class="btn btn-sm btn-warning btn-action" data-bs-toggle="modal" data-bs-target="#detailModal{{ $item->id }}"><i class="fas fa-eye"></i></a>
+
+                                                            @if (\Carbon\Carbon::parse($item->created_at)->format('j F Y') == \Carbon\Carbon::parse(date("Y-m-d h:i:sa"))->format('j F Y'))
+                                                                <form id="form-delete" action="{{ route('destroy.uangFisik', $item->id ) }}" method="POST"
+                                                                    class="d-inline-block">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button id="submit-btn" type="submit" data-toggle="tooltip" data-original-title="Hapus bagian"
+                                                                        class="btn btn-sm btn-danger btn-action" onclick="confirmDelete(event)"
+                                                                        ><i class="fas fa-trash"></i></i></button>
+                                                                </form>
+                                                            @endif
+                                                
+                                                            <!--begin::Modal - New Card-->
+                                                            <div class="modal fade" id="detailModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
+                                                                <!--begin::Modal dialog-->
+                                                                <div class="modal-dialog modal-dialog-centered mw-850px">
+                                                                    <!--begin::Modal content-->
+                                                                    <div class="modal-content">
+                                                                        <!--begin::Modal header-->
+                                                                        <div class="modal-header">
+                                                                            <!--begin::Modal title-->
+                                                                            <h2>Detail Uang Fisik #{{ $item->id }}</h2>
+                                                                            <!--end::Modal title-->
+                                                                            <!--begin::Close-->
+                                                                            <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                                                                <span class="svg-icon svg-icon-1">
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+                                                                                        <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+                                                                                    </svg>
+                                                                                </span>
+                                                                                <!--end::Svg Icon-->
+                                                                            </div>
+                                                                            <!--end::Close-->
+                                                                        </div>
+                                                                        <!--end::Modal header-->
+                                                                        <!--begin::Modal body-->
+                                                                        <div class="modal-body scroll-y mx-xl-8">
+                                                                            <!--begin::content modal body-->
+                                                                            <div class="table-responsive">
+                                                                                <table id="kt_datatable_detail_uang_fisik" class="table table-row-bordered gy-5">
+                                                                                    <thead>
+                                                                                        <tr class="fw-bold fs-4 text-muted">
+                                                                                            <th>Pecahan</th>
+                                                                                            <th>Jumlah</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        @foreach($item->uangFisikDetails as $uang)
+                                                                                            @if($item->id == $uang->id_uang_fisik)
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    {{-- {{$uang->pecahanDetails->jenis_uang == 1 ? '(Kertas)' : '(Logam)'}} @currency($uang->pecahanDetails->pecahan) --}}
+                                                                                                    @if ($uang->pecahanDetails->jenis_uang == 1)
+                                                                                                        <span class="badge bg-success">Kertas</span> &nbsp;&nbsp;&nbsp; @currency($uang->pecahanDetails->pecahan)
+                                                                                                    @else
+                                                                                                        <span class="badge bg-secondary text-dark">Logam</span> &nbsp;&nbsp;&nbsp; @currency($uang->pecahanDetails->pecahan)
+                                                                                                    @endif
+                                                                                                </td>
+                                                                                                <td>{{ $uang->jumlah }}</td>
+                                                                                            </tr>
+                                                                                            @endif
+                                                                                        @endforeach
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <!--end::content modal body-->
+                                                                        </div>
+                                                                        <!--end::Modal body-->
+                                                                    </div>
+                                                                    <!--end::Modal content-->
+                                                                </div>
+                                                                <!--end::Modal dialog-->
+                                                            </div>
+                                                            <!--end::Modal - New Card-->
                                                         </td>
                                                     </tr>
                                                     @php
@@ -62,6 +138,8 @@
                                                     @endforeach
                                                 </tbody>
                                             </table>
+							                {{ $uangFisik->appends(request()->input())->links() }}
+
                                         </div>
                                         @else
                                         <div class="my-10 mx-15">
@@ -97,7 +175,7 @@
                                 </div>
                                 <!--end::Card-->
                                 <!--begin::Modal-->
-                                <div class="modal fade" id="kt_modal_new_utang" tabindex="-1" aria-hidden="true">
+                                <div class="modal fade" id="kt_modal_new_uang_fisik" tabindex="-1" aria-hidden="true">
                                     <!--begin::Modal dialog-->
                                     <div class="modal-dialog modal-dialog-centered mw-650px">
                                         <!--begin::Modal content-->

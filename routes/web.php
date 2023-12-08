@@ -48,8 +48,7 @@ Route::post('/updaterealisasiPiutang/{id}', [PiutangController::class, 'realisas
 // Menu Uang Fisik
 Route::get('/uangFisik', [UangFisikController::class, 'index'])->middleware('auth')->name('uangFisik');
 Route::post('/storeUangFisik', [UangFisikController::class, 'store'])->middleware('auth')->name('insert.uangFisik');
-
-
+Route::delete('/deleteUangFisik/{id}', [UangFisikController::class, 'destroy'])->middleware('auth')->name('destroy.uangFisik');
 
 // Menu Cash Flow
 Route::get('/cashflow', [CashFlowController::class, 'index'])->middleware('auth')->name('cashflow');

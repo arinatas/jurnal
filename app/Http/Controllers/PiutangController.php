@@ -15,7 +15,7 @@ class PiutangController extends Controller
 {
     public function index()
     {
-        $piutang = Piutang::where('stts_reallisasi', 0)->get();
+        $piutang = Piutang::where('stts_reallisasi', 0)->paginate(10);
         $totalPiutang = TotalPiutang::findOrFail("1");
             return view('menu.piutang.index', [
                 'title' => 'Piutang',
@@ -42,7 +42,7 @@ class PiutangController extends Controller
     public function riwayatPiutang(){
         $piutang = Piutang::where('stts_reallisasi', 1)
         ->orderBy('tanggal', 'desc')
-        ->get();
+        ->paginate(10);
             return view('menu.piutang.riwayat', [
                 'title' => 'Riwayat Piutang',
                 'section' => 'Menu',

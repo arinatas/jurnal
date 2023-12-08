@@ -30,7 +30,7 @@ class UangFisikDetail extends Model
 
     public function pecahanDetails()
     {
-        return $this->belongsTo(PecahanUang::class, 'id', 'id_pecahan_uang');
+        return $this->belongsTo(PecahanUang::class, 'id_pecahan_uang', 'id');
     }
 }
 

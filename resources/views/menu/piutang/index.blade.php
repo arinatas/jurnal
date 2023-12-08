@@ -73,6 +73,8 @@
                                                     @endforeach
                                                 </tbody>
                                             </table>
+							                {{ $piutang->appends(request()->input())->links() }}
+
                                         </div>
                                         @else
                                         <div class="my-10 mx-15">
