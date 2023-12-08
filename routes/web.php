@@ -10,6 +10,7 @@ use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\UangFisikController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KasController;
+use App\Http\Controllers\CompareController;
 use App\Http\Controllers\PecahanUangController;
 use App\Http\Controllers\CashFlowController;
 use App\Http\Controllers\JurnalAkunController;
@@ -49,6 +50,11 @@ Route::post('/updaterealisasiPiutang/{id}', [PiutangController::class, 'realisas
 Route::get('/uangFisik', [UangFisikController::class, 'index'])->middleware('auth')->name('uangFisik');
 Route::post('/storeUangFisik', [UangFisikController::class, 'store'])->middleware('auth')->name('insert.uangFisik');
 Route::delete('/deleteUangFisik/{id}', [UangFisikController::class, 'destroy'])->middleware('auth')->name('destroy.uangFisik');
+
+// menu compare
+Route::get('/compare', [CompareController::class, 'index'])->middleware('auth')->name('compare');
+Route::get('/printCompare', [CompareController::class, 'printCompare'])->middleware('auth')->name('printCompare');
+
 
 // Menu Cash Flow
 Route::get('/cashflow', [CashFlowController::class, 'index'])->middleware('auth')->name('cashflow');

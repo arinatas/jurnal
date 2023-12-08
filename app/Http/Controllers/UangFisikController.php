@@ -7,16 +7,24 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\UangFisik;
-use App\Models\UangFisikDetail;
 use App\Models\PecahanUang;
+use Carbon\Carbon;
 
 class UangFisikController extends Controller
 {
     public function index()
     {
+        // ambil tanggal hari ini
+        $dateNow = Carbon::now()->toDateString();
+
+        // ambil seluruh data uang fisik
         $uangFisik = UangFisik::with('uangFisikDetails', 'uangFisikDetails.pecahanDetails')
                     ->orderBy('tanggal', 'desc')
                     ->paginate(5);
+
+        $uangFisikToday = UangFisik::where('tanggal', $dateNow)
+                    ->first();
+
         $pecahanUang = PecahanUang::where('status', 1)
                     ->orderBy('pecahan', 'desc')
                     ->get();
@@ -28,6 +36,7 @@ class UangFisikController extends Controller
                 'active' => 'Uang Fisik',
                 'uangFisik' => $uangFisik,
                 'pecahanUang' => $pecahanUang,
+                'uangFisikToday' => $uangFisikToday,
             ]);
     }
 
