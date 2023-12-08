@@ -30,11 +30,14 @@
         
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($kass as $item)
-                                                    <tr class="fw-bold fs-1">
-                                                        <td>Rp. @currency($item->kas )</td>
-                                                    </tr>
-                                                    @endforeach
+                                                @foreach ($kass as $item)
+                                                <tr class="fw-bold fs-1">
+                                                    <td>Rp @currency($item->kas),-</td>
+                                                </tr>
+                                                <tr class="fw-bold fs-1">
+                                                    <td>Terbilang : ({{ $terbilang($item->kas) }} Rupiah)</td>
+                                                </tr>
+                                                @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
