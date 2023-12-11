@@ -15,6 +15,7 @@ use App\Http\Controllers\PecahanUangController;
 use App\Http\Controllers\CashFlowController;
 use App\Http\Controllers\JurnalAkunController;
 use App\Http\Controllers\RkatController;
+use App\Http\Controllers\JurnalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +63,16 @@ Route::post('/cashflow', [CashFlowController::class, 'store'])->middleware('auth
 Route::get('/lapcashflow', [CashFlowController::class, 'laporan'])->middleware('auth')->name('lapcashflow'); // Laporan Cash Flow
 Route::get('/printcashflow/{start_date}/{end_date}', [CashFlowController::class, 'printCashFlow'])->middleware('auth')->name('printcashflow'); // Print Laporan Cash Flow
 Route::get('/exportcashflow/{start_date}/{end_date}', [CashFlowController::class, 'exportCashFlow'])->middleware('auth')->name('exportcashflow'); // Export Excel Cash Flow
+
+// Menu Jurnal
+Route::get('/jurnal', [JurnalController::class, 'index'])->middleware('auth')->name('jurnal');
+Route::post('/jurnal', [JurnalController::class, 'store'])->middleware('auth')->name('insert.jurnal');
+Route::get('/editRkat/{id}', [JurnalController::class, 'edit'])->middleware('auth')->name('edit.jurnal');
+Route::post('/updateJurnal/{id}', [JurnalController::class, 'update'])->middleware('auth')->name('update.jurnal');
+Route::delete('/deleteJurnal/{id}', [JurnalController::class, 'destroy'])->middleware('auth')->name('destroy.jurnal');
+Route::get('/import-jurnal', [JurnalController::class, 'showImportForm'])->name('import.jurnal.view');
+Route::post('/import-jurnal', [JurnalController::class, 'importExcel'])->name('import.jurnal');
+Route::get('download-example-excel-jurnal', [JurnalController::class, 'downloadExampleExcel'])->name('download.example.excel.jurnal');
 
 // Master User
 Route::get('/user', [UserController::class, 'index'])->middleware('auth')->name('user');
