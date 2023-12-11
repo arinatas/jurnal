@@ -33,9 +33,11 @@
                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
                                                         <th class="min-w-50px">No</th>
                                                         <th class="min-w-100px">Periode</th>
-                                                        <th class="min-w-100px">Tipe Jurnal</th>
-                                                        <th class="min-w-100px">ID RKAT</th>
+                                                        <th class="min-w-50px">Tipe Jurnal</th>
                                                         <th class="min-w-100px">Uraian</th>
+                                                        <th class="min-w-100px">RKAT</th>
+                                                        <th class="min-w-100px">Kode Rekening</th>
+                                                        <th class="min-w-100px">Nama Rekening</th>
                                                         <th class="min-w-100px">No Bukti</th>
                                                         <th class="min-w-100px">Debit</th>
                                                         <th class="min-w-100px">Kredit</th>
@@ -48,23 +50,30 @@
                                                     @foreach ($jurnals as $item)
                                                     <tr>
                                                         <td>{{ $no }}</td>
-                                                        <td>{{ $item->periode_jurnal }}</td>
-                                                        <td>
-                                                            <?php
-                                                                if($item->type_jurnal == 'ju') {
-                                                                    echo 'Jurnal Umum';
-                                                                } elseif($item->type_jurnal == 'jp') {
-                                                                    echo 'Jurnal Penyesuaian';
-                                                                } else {
-                                                                    echo '-';
-                                                                }
-                                                            ?>
+                                                        <td>{{ \Carbon\Carbon::parse($item->periode_jurnal)->format('j F Y'); }}</td>
+                                                        <td class="text-center">
+                                                        @if($item->type_jurnal == 'ju')
+                                                            <span class="badge bg-success">Umum</span>
+                                                        @elseif($item->type_jurnal == 'jp')
+                                                            <span class="badge bg-warning text-dark">Penyesuaian</span>
+                                                        @else
+                                                            <span class="badge bg-danger">-</span>
+                                                        @endif
                                                         </td>
-                                                        <td>{{ $item->rkat->kode_rkat }}</td>
                                                         <td>{{ $item->uraian }}</td>
+                                                        <td>{{ $item->rkat->kode_rkat }}</td>
+                                                        @foreach ($item->jurnalAkun as $jurnalAkun)
+                                                            <td>{{ $jurnalAkun->no_akun }}</td>
+                                                            <td>{{ $jurnalAkun->nama_akun }}</td>
+                                                        @endforeach
                                                         <td>{{ $item->no_bukti }}</td>
                                                         <td>{{ $item->debit }}</td>
                                                         <td>{{ $item->kredit }}</td>
+                                                        <!-- <td>
+                                                            @foreach ($item->jurnalAkun as $jurnalAkun)
+                                                                {{ $jurnalAkun->no_akun }} - {{ $jurnalAkun->nama_akun }}<br>
+                                                            @endforeach
+                                                        </td> -->
                                                     </tr>
                                                     @php
                                                         $no++; // Tambahkan no setiap kali iterasi

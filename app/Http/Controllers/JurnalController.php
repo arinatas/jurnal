@@ -17,13 +17,12 @@ class JurnalController extends Controller
 {
     public function index()
     {
-        $jurnals = Jurnal::with('rkat:id,kode_rkat')
-            ->get();
-
+        $jurnals = Jurnal::with('rkat:id,kode_rkat')->with('jurnalAkun')->get();
+    
         // Get the list of kode_rkat options
-        $rkatOptions = Rkat::pluck('kode_rkat', 'id'); 
+        $rkatOptions = Rkat::pluck('kode_rkat', 'id');
         $rkatDescriptions = Rkat::pluck('keterangan', 'id');
-
+    
         return view('menu.jurnal.index', [
             'title' => 'Jurnal',
             'section' => 'Menu',
