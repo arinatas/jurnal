@@ -51,7 +51,7 @@
                                                     @foreach ($cashflows as $item)
                                                     <tr>
                                                         <td>{{ $no }}</td>
-                                                        <td>{{ $item->tanggal }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('j F Y'); }}</td>
                                                         <td>{{ $item->no_bukti }}</td>
                                                         <td>{{ $item->pic }}</td>
                                                         <td>{{ $item->nama }}</td>

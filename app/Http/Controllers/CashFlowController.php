@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\CashFlowExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class CashFlowController extends Controller
 {
@@ -202,7 +203,11 @@ class CashFlowController extends Controller
     {
         $export = new CashFlowExport($startDate, $endDate);
 
-        return Excel::download($export, 'laporan_cashflow.xlsx');
+        $currentDate = Carbon::now()->format('d-m-y'); // Format the current date as desired
+
+        $fileName = 'laporan_cashflow_' . $currentDate . '.xlsx';
+
+        return Excel::download($export, $fileName);
     }
     
 }
