@@ -21,7 +21,7 @@
                                                 </div>
                                                 <div class="d-inline">
                                                     <a href="#" class="btn btn-sm btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#kt_modal_rkat">Tambah</a>
-                                                    <a href="{{ route('download.example.excel') }}" class="btn btn-sm btn-secondary">Download Contoh Excel</a>
+                                                    <a href="{{ route('download.example.excel.jurnal') }}" class="btn btn-sm btn-secondary">Download Contoh Excel</a>
                                                 </div>
                                             <!--end::Title-->
                                         </div>
