@@ -33,9 +33,13 @@
                                                 @csrf
                                                 <div class="mb-3">
                                                     <label for="excel_file" class="form-label">Pilih File Excel:</label>
-                                                    <input type="file" class="form-control" name="excel_file" id="excel_file" accept=".xls, .xlsx">
+                                                    <div class="input-group">
+                                                        <input type="file" class="form-control" name="excel_file" id="excel_file" accept=".xls, .xlsx">
+                                                        <div style="margin-left: 10px;"> <!-- Tambahkan margin di sini -->
+                                                            <button type="submit" class="btn btn-primary">Import Data</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <button type="submit" class="btn btn-primary">Import Data</button>
                                             </form>
                                             @if (session('importSuccess'))
                                                 <div class="alert alert-success mt-4">
