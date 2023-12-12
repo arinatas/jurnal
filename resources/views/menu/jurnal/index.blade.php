@@ -20,6 +20,7 @@
                                                     <h2 class="fs-2x fw-bolder mb-0">{{ $title }}</h2>
                                                 </div>
                                                 <div class="d-inline">
+                                                    <a href="{{ route('input.jurnal') }}" class="btn btn-sm btn-primary fs-6">Input</a>
                                                     <a href="#" class="btn btn-sm btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#kt_modal_new_jurnal">Tambah</a>
                                                     <a href="{{ route('download.example.excel.jurnal') }}" class="btn btn-sm btn-secondary">Download Contoh Excel</a>
                                                 </div>

@@ -67,9 +67,8 @@ Route::get('/exportcashflow/{start_date}/{end_date}', [CashFlowController::class
 // Menu Jurnal
 Route::get('/jurnal', [JurnalController::class, 'index'])->middleware('auth')->name('jurnal');
 Route::post('/jurnal', [JurnalController::class, 'store'])->middleware('auth')->name('insert.jurnal');
-Route::get('/editRkat/{id}', [JurnalController::class, 'edit'])->middleware('auth')->name('edit.jurnal');
-Route::post('/updateJurnal/{id}', [JurnalController::class, 'update'])->middleware('auth')->name('update.jurnal');
-Route::delete('/deleteJurnal/{id}', [JurnalController::class, 'destroy'])->middleware('auth')->name('destroy.jurnal');
+Route::get('/inputJurnal', [JurnalController::class, 'input'])->middleware('auth')->name('input.jurnal');
+Route::post('/jurnalStore', [JurnalController::class, 'storeJurnal'])->middleware('auth')->name('store.jurnal');
 Route::get('/import-jurnal', [JurnalController::class, 'showImportForm'])->name('import.jurnal.view');
 Route::post('/import-jurnal', [JurnalController::class, 'importExcel'])->name('import.jurnal');
 Route::get('download-example-excel-jurnal', [JurnalController::class, 'downloadExampleExcel'])->name('download.example.excel.jurnal');

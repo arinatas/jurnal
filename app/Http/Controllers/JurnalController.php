@@ -106,52 +106,6 @@ class JurnalController extends Controller
     {
         return view('import'); // Menampilkan tampilan untuk mengunggah file Excel
     }
-
-    // public function importExcel(Request $request)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'excel_file' => 'required|mimes:xls,xlsx',
-    //     ]);
-    
-    //     if ($validator->fails()) {
-    //         return redirect()->back()->withErrors($validator)->withInput();
-    //     }
-    
-    //     DB::beginTransaction();
-    
-    //     try {
-    //         $import = new JurnalImport(Auth::user());
-    
-    //         // Import data Excel
-    //         Excel::import($import, $request->file('excel_file'));
-    
-    //         DB::commit();
-    
-    //         return redirect()->back()->with('importSuccess', 'Data berhasil diimpor.');
-    //     } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-    //         DB::rollBack();
-    //         $failures = $e->failures();
-    //         $errorMessages = [];
-    
-    //         foreach ($failures as $failure) {
-    //             $rowNumber = $failure->row();
-    //             $column = $failure->attribute();
-    //             $errorMessages[] = "Baris $rowNumber, Kolom $column: " . implode(', ', $failure->errors());
-    //         }
-    
-    //         return redirect()->back()
-    //             ->with('importValidationFailures', $failures)
-    //             ->with('importErrors', $errorMessages)
-    //             ->withInput();
-    //     } catch (\Exception $e) {
-    //         DB::rollBack();
-    //         $errorMessage = $e->getMessage();
-    
-    //         \Log::error($errorMessage);
-    
-    //         return redirect()->back()->with('importError', $errorMessage);
-    //     }
-    // }
     
     public function downloadExampleExcel()
     {
@@ -223,4 +177,96 @@ class JurnalController extends Controller
             return redirect()->back()->with('importError', $errorMessage);
         }
     }
+
+    public function input()
+    {
+        // Fetch Jurnal entries created today
+        $jurnals = Jurnal::with('rkat:id,kode_rkat')
+            ->with('jurnalAkun')
+            ->get();
+        
+        // Get the list of kode_rkat options
+        $rkatOptions = Rkat::pluck('kode_rkat', 'id');
+        $rkatDescriptions = Rkat::pluck('keterangan', 'id');
+
+        return view('menu.jurnal.inputJurnal', [
+            'title' => 'Input Jurnal',
+            'section' => 'Menu',
+            'active' => 'Jurnal',
+            'jurnals' => $jurnals,
+            'rkatOptions' => $rkatOptions,
+            'rkatDescriptions' => $rkatDescriptions,
+        ]);
+    }
+
+    public function storeJurnal(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'periode_jurnal' => 'required|date',
+            'type_jurnal' => 'required|string|max:100',
+            'id_rkat1' => 'required|integer',
+            'id_rkat2' => 'required|integer',
+            'uraian' => 'required|string|max:255',
+            'no_bukti1' => 'required|string|max:100',
+            'debit1' => 'required|integer',
+            'kredit1' => 'required|integer',
+            'no_bukti2' => 'required|string|max:100',
+            'debit2' => 'required|integer',
+            'kredit2' => 'required|integer',
+            'tt' => 'nullable|string|max:100',
+            'korek' => 'nullable|string|max:255',
+            'ku' => 'nullable|string|max:100',
+            'unit_usaha' => 'nullable|string|max:100',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $user = Auth::user();
+
+            // Insert the first row into the jurnal table
+            Jurnal::create([
+                'periode_jurnal' => $request->periode_jurnal,
+                'type_jurnal' => $request->type_jurnal,
+                'id_rkat' => $request->id_rkat1,
+                'uraian' => $request->uraian,
+                'no_bukti' => $request->no_bukti1,
+                'debit' => $request->debit1,
+                'kredit' => $request->kredit1,
+                'tt' => $request->tt,
+                'korek' => $request->korek,
+                'ku' => $request->ku,
+                'unit_usaha' => $request->unit_usaha,
+                'created_by' => $user->id
+            ]);
+
+            // Insert the second row into the jurnal table
+            Jurnal::create([
+                'periode_jurnal' => $request->periode_jurnal,
+                'type_jurnal' => $request->type_jurnal,
+                'id_rkat' => $request->id_rkat2,
+                'uraian' => $request->uraian,
+                'no_bukti' => $request->no_bukti2,
+                'debit' => $request->debit2, // Use the appropriate field name for the second row
+                'kredit' => $request->kredit2, // Use the appropriate field name for the second row
+                'tt' => $request->tt,
+                'korek' => $request->korek,
+                'ku' => $request->ku,
+                'unit_usaha' => $request->unit_usaha,
+                'created_by' => $user->id
+            ]);
+
+            DB::commit();
+
+            return redirect()->back()->with('insertSuccess', 'Data berhasil di Inputkan');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('insertFail', $e->getMessage());
+        }
+    }
 }
+
