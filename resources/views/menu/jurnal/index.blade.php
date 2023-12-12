@@ -80,16 +80,16 @@
                                             <table class="table table-striped gy-7 gs-7">
                                                 <thead>
                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
-                                                        <th class="min-w-50px">No</th>
-                                                        <th class="min-w-100px">Periode</th>
-                                                        <th class="min-w-50px">Tipe Jurnal</th>
-                                                        <th class="min-w-100px">Uraian</th>
-                                                        <th class="min-w-100px">RKAT</th>
-                                                        <th class="min-w-100px">Kode Rekening</th>
-                                                        <th class="min-w-100px">Nama Rekening</th>
-                                                        <th class="min-w-100px">No Bukti</th>
-                                                        <th class="min-w-100px">Debit</th>
-                                                        <th class="min-w-100px">Kredit</th>
+                                                        <th class="min-w-50px text-center">No</th>
+                                                        <th class="min-w-100px text-center">Periode</th>
+                                                        <th class="min-w-50px text-center">Tipe Jurnal</th>
+                                                        <th class="min-w-100px text-center">Uraian</th>
+                                                        <th class="min-w-100px text-center">RKAT</th>
+                                                        <th class="min-w-100px text-center">Kode Rekening</th>
+                                                        <th class="min-w-100px text-center">Nama Rekening</th>
+                                                        <th class="min-w-100px text-center">No Bukti</th>
+                                                        <th class="min-w-150px text-center">Debit</th>
+                                                        <th class="min-w-150px text-center">Kredit</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -98,7 +98,7 @@
                                                     @endphp
                                                     @foreach ($jurnals as $item)
                                                     <tr>
-                                                        <td>{{ $no }}</td>
+                                                        <td class="text-center">{{ $no }}</td>
                                                         <td>{{ \Carbon\Carbon::parse($item->periode_jurnal)->format('j F Y'); }}</td>
                                                         <td class="text-center">
                                                         @if($item->type_jurnal == 'ju')
@@ -110,14 +110,14 @@
                                                         @endif
                                                         </td>
                                                         <td>{{ $item->uraian }}</td>
-                                                        <td>{{ $item->rkat->kode_rkat }}</td>
+                                                        <td class="text-center">{{ $item->rkat->kode_rkat }}</td>
                                                         @foreach ($item->jurnalAkun as $jurnalAkun)
-                                                            <td>{{ $jurnalAkun->no_akun }}</td>
+                                                            <td class="text-center">{{ $jurnalAkun->no_akun }}</td>
                                                             <td>{{ $jurnalAkun->nama_akun }}</td>
                                                         @endforeach
-                                                        <td>{{ $item->no_bukti }}</td>
-                                                        <td>{{ $item->debit }}</td>
-                                                        <td>{{ $item->kredit }}</td>
+                                                        <td class="text-center">{{ $item->no_bukti }}</td>
+                                                        <td class="text-center">@if($item->debit != 0) Rp. @currency($item->debit) @else - @endif</td>
+                                                        <td class="text-center">@if($item->kredit != 0) Rp. @currency($item->kredit) @else - @endif</td>
                                                         <!-- <td>
                                                             @foreach ($item->jurnalAkun as $jurnalAkun)
                                                                 {{ $jurnalAkun->no_akun }} - {{ $jurnalAkun->nama_akun }}<br>
@@ -128,6 +128,19 @@
                                                         $no++; // Tambahkan no setiap kali iterasi
                                                     @endphp
                                                     @endforeach
+                                                    <!-- Total rows after the loop -->
+                                                    <tr class="fw-bold fs-6 text-gray-800">
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td class="text-center"><strong>Total</strong></td>
+                                                        <td class="text-center"><strong>Rp. @currency($totalDebit)</strong></td>
+                                                        <td class="text-center"><strong>Rp. @currency($totalKredit)</strong></td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>

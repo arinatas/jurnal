@@ -13,12 +13,24 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Imports\JurnalImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class JurnalController extends Controller
 {
     public function index()
     {
-        $jurnals = Jurnal::with('rkat:id,kode_rkat')->with('jurnalAkun')->get();
+        // Get the current date
+        $today = Carbon::now()->format('Y-m-d');
+    
+        // Fetch Jurnal entries created today
+        $jurnals = Jurnal::with('rkat:id,kode_rkat')
+            ->with('jurnalAkun')
+            ->whereDate('created_at', $today)
+            ->get();
+    
+        // Calculate total debit and total kredit
+        $totalDebit = $jurnals->sum('debit');
+        $totalKredit = $jurnals->sum('kredit');
     
         // Get the list of kode_rkat options
         $rkatOptions = Rkat::pluck('kode_rkat', 'id');
@@ -31,8 +43,10 @@ class JurnalController extends Controller
             'jurnals' => $jurnals,
             'rkatOptions' => $rkatOptions,
             'rkatDescriptions' => $rkatDescriptions,
+            'totalDebit' => $totalDebit,
+            'totalKredit' => $totalKredit,
         ]);
-    }
+    }    
 
     public function store(Request $request)
     {
