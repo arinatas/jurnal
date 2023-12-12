@@ -107,51 +107,51 @@ class JurnalController extends Controller
         return view('import'); // Menampilkan tampilan untuk mengunggah file Excel
     }
 
-    public function importExcel(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'excel_file' => 'required|mimes:xls,xlsx',
-        ]);
+    // public function importExcel(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'excel_file' => 'required|mimes:xls,xlsx',
+    //     ]);
     
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
+    //     if ($validator->fails()) {
+    //         return redirect()->back()->withErrors($validator)->withInput();
+    //     }
     
-        DB::beginTransaction();
+    //     DB::beginTransaction();
     
-        try {
-            $import = new JurnalImport(Auth::user());
+    //     try {
+    //         $import = new JurnalImport(Auth::user());
     
-            // Import data Excel
-            Excel::import($import, $request->file('excel_file'));
+    //         // Import data Excel
+    //         Excel::import($import, $request->file('excel_file'));
     
-            DB::commit();
+    //         DB::commit();
     
-            return redirect()->back()->with('importSuccess', 'Data berhasil diimpor.');
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-            DB::rollBack();
-            $failures = $e->failures();
-            $errorMessages = [];
+    //         return redirect()->back()->with('importSuccess', 'Data berhasil diimpor.');
+    //     } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+    //         DB::rollBack();
+    //         $failures = $e->failures();
+    //         $errorMessages = [];
     
-            foreach ($failures as $failure) {
-                $rowNumber = $failure->row();
-                $column = $failure->attribute();
-                $errorMessages[] = "Baris $rowNumber, Kolom $column: " . implode(', ', $failure->errors());
-            }
+    //         foreach ($failures as $failure) {
+    //             $rowNumber = $failure->row();
+    //             $column = $failure->attribute();
+    //             $errorMessages[] = "Baris $rowNumber, Kolom $column: " . implode(', ', $failure->errors());
+    //         }
     
-            return redirect()->back()
-                ->with('importValidationFailures', $failures)
-                ->with('importErrors', $errorMessages)
-                ->withInput();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            $errorMessage = $e->getMessage();
+    //         return redirect()->back()
+    //             ->with('importValidationFailures', $failures)
+    //             ->with('importErrors', $errorMessages)
+    //             ->withInput();
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+    //         $errorMessage = $e->getMessage();
     
-            \Log::error($errorMessage);
+    //         \Log::error($errorMessage);
     
-            return redirect()->back()->with('importError', $errorMessage);
-        }
-    }
+    //         return redirect()->back()->with('importError', $errorMessage);
+    //     }
+    // }
     
     public function downloadExampleExcel()
     {
@@ -167,4 +167,60 @@ class JurnalController extends Controller
             return redirect()->back()->with('downloadFail', 'File contoh tidak ditemukan.');
         }
     } 
+
+    public function importExcel(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'excel_file' => 'required|mimes:xls,xlsx',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $import = new JurnalImport(auth()->user());
+
+            // Import data Excel
+            Excel::import($import, $request->file('excel_file'));
+
+            // Get total debit and credit after import
+            $totalDebit = $import->getTotalDebit();
+            $totalKredit = $import->getTotalKredit();
+
+            // Check if totals are balanced
+            if ($totalDebit !== $totalKredit) {
+                DB::rollBack();
+                return redirect()->back()->with('importError', 'Data total debit dan kredit belum balance.');
+            }
+
+            DB::commit();
+
+            return redirect()->back()->with('importSuccess', 'Data berhasil diimpor.');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            DB::rollBack();
+            $failures = $e->failures();
+            $errorMessages = [];
+
+            foreach ($failures as $failure) {
+                $rowNumber = $failure->row();
+                $column = $failure->attribute();
+                $errorMessages[] = "Baris $rowNumber, Kolom $column: " . implode(', ', $failure->errors());
+            }
+
+            return redirect()->back()
+                ->with('importValidationFailures', $failures)
+                ->with('importErrors', $errorMessages)
+                ->withInput();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $errorMessage = $e->getMessage();
+
+            \Log::error($errorMessage);
+
+            return redirect()->back()->with('importError', $errorMessage);
+        }
+    }
 }
