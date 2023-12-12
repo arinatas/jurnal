@@ -12,9 +12,16 @@ class JurnalImport implements ToModel, WithHeadingRow, WithValidation
 {
     use Importable;
 
+    protected $user;
+
+    public function __construct($user)
+    {
+        $this->user = $user;
+    }
+
     public function model(array $row)
     {
-        // Logika untuk memasukkan data ke dalam model Jurnal
+        // Logic to insert data into the Jurnal model
         return new Jurnal([
             'periode_jurnal' => $row['periode_jurnal'],
             'type_jurnal' => $row['type_jurnal'],
@@ -23,14 +30,14 @@ class JurnalImport implements ToModel, WithHeadingRow, WithValidation
             'no_bukti' => $row['no_bukti'],
             'debit' => $row['debit'],
             'kredit' => $row['kredit'],
-            'created_by' => $row['created_by']
+            'created_by' => $this->user->id,
         ]);
     }
 
     public function rules(): array
     {
         return [
-            // Sesuaikan aturan validasi dengan kunci (header) yang Anda tetapkan
+            // Validation rules
             'periode_jurnal' => 'required|date_format:Y-m-d',
             'type_jurnal' => 'required|string|max:100',
             'id_rkat' => 'required|integer',
@@ -38,7 +45,7 @@ class JurnalImport implements ToModel, WithHeadingRow, WithValidation
             'no_bukti' => 'required|string|max:100',
             'debit' => 'required|integer',
             'kredit' => 'required|integer',
-            'created_by' => 'required|integer'
         ];
     }
 }
+

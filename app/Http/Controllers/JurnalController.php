@@ -103,19 +103,19 @@ class JurnalController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
     
-        DB::beginTransaction(); // Memulai transaksi database
+        DB::beginTransaction();
     
         try {
-            $import = new JurnalImport;
+            $import = new JurnalImport(Auth::user());
     
             // Import data Excel
             Excel::import($import, $request->file('excel_file'));
     
-            DB::commit(); // Jika tidak ada kesalahan, lakukan commit untuk menyimpan perubahan ke database
+            DB::commit();
     
             return redirect()->back()->with('importSuccess', 'Data berhasil diimpor.');
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-            DB::rollBack(); // Rollback jika terjadi kesalahan validasi
+            DB::rollBack();
             $failures = $e->failures();
             $errorMessages = [];
     
@@ -125,22 +125,20 @@ class JurnalController extends Controller
                 $errorMessages[] = "Baris $rowNumber, Kolom $column: " . implode(', ', $failure->errors());
             }
     
-            // Simpan detail kesalahan validasi dalam sesi
             return redirect()->back()
                 ->with('importValidationFailures', $failures)
                 ->with('importErrors', $errorMessages)
                 ->withInput();
         } catch (\Exception $e) {
-            DB::rollBack(); // Rollback jika terjadi kesalahan umum selama impor
-            $errorMessage = $e->getMessage(); // Tampilkan pesan error lebih spesifik
+            DB::rollBack();
+            $errorMessage = $e->getMessage();
     
-            \Log::error($errorMessage); // Simpan pesan error dalam log Laravel
+            \Log::error($errorMessage);
     
             return redirect()->back()->with('importError', $errorMessage);
         }
     }
-     
-
+    
     public function downloadExampleExcel()
     {
         $filePath = public_path('contoh-excel/jurnal.xlsx'); // Sesuaikan dengan path file Excel contoh Anda
