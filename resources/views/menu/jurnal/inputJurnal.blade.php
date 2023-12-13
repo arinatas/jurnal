@@ -21,6 +21,18 @@
 						</div>
 						<!--end::Title-->
 					</div>
+                    <!-- Display error message with SweetAlert -->
+                    @if(session('error'))
+                        <script>
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: '{{ session('error') }}',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'OK',
+                            });
+                        </script>
+                    @endif
 					<div class="card-body pb-10">
 						<!--Begin::Table-->
 						<form id="my-form" action="{{ route('store.jurnal') }}" enctype="multipart/form-data" method="POST">
@@ -48,7 +60,7 @@
 											<!--end::Svg Icon-->
 											<!--end::Icon-->
 											<!--begin::Datepicker-->
-											<input class="form-control form-control-solid ps-12" required type="date" placeholder="Select a date" id="periode_jurnal" name="periode_jurnal" />
+											<input class="form-control form-control-solid ps-12" required type="date" placeholder="Select a date" id="periode_jurnal" name="periode_jurnal" value="{{ old('periode_jurnal') }}"/>
 											<!--end::Datepicker-->
 										</div>
 										<!--end::Input-->
@@ -58,15 +70,15 @@
 									<div class="d-flex flex-column mb-7 col-lg-6">
 										<label class="required fs-6 fw-bold mb-2">Type Jurnal</label>
 										<select class="form-select form-select-solid" required data-control="select2" data-hide-search="true" data-placeholder="Type Jurnal" name="type_jurnal">
-											<option value="ju">Jurnal Umum</option>
-											<option value="jp">Jurnal Penyesuaian</option>
+											<option value="ju" {{ old('type_jurnal') == 'ju' ? 'selected' : '' }}>Jurnal Umum</option>
+											<option value="jp" {{ old('type_jurnal') == 'jp' ? 'selected' : '' }}>Jurnal Penyesuaian</option>
 										</select>
 									</div>
 									<!--end::Input group-->
 									<!--begin::Input group-->
 									<div class="d-flex flex-column mb-7">
 										<label class="required fs-6 fw-bold mb-2">Uraian</label>
-										<textarea class="form-control form-control-solid" required rows="3" name="uraian" placeholder="Tuliskan Uraian"></textarea>
+										<textarea class="form-control form-control-solid" required rows="3" name="uraian" placeholder="Tuliskan Uraian">{{ old('uraian') }}</textarea>
 									</div>
 									<!--end::Input group-->
 								<!--begin::Col-->
@@ -78,7 +90,7 @@
 												<tr class="fw-semibold fs-6 text-muted">
 													<th class="text-dark required fs-6 fw-bold mb-2">Kode/Nama Akun RKAT</th>
 													<th class="text-dark required fs-6 fw-bold mb-2">No Bukti</th>
-													<th class="text-dark required fs-6 fw-bold mb-2">Debet (Db)</th>
+													<th class="text-dark required fs-6 fw-bold mb-2">Debit (Db)</th>
 													<th class="text-dark required fs-6 fw-bold mb-2">Kredit (Cr)</th>
 												</tr>
 											</thead>
@@ -89,23 +101,23 @@
 													<select name="id_rkat1" required class="form-select form-select-solid" data-control="select2" data-hide-search="false" data-placeholder="Pilih Kode/Nama Akun RKAT">
 														<option value="">Pilih Kode/Nama Akun</option>
 														@foreach($rkatOptions as $id => $kode_rkat)
-															<option value="{{ $id }}">{{ $kode_rkat }} - {{ $rkatDescriptions[$id] }}</option>
+															<option value="{{ $id }}" {{ old('id_rkat1') == $id ? 'selected' : '' }}>{{ $kode_rkat }} - {{ $rkatDescriptions[$id] }}</option>
 														@endforeach
 													</select>
 												</td>
 												<td>
-													<input type="text" class="form-control form-control-solid" placeholder="No Bukti" name="no_bukti1" />
+													<input type="text" class="form-control form-control-solid" placeholder="No Bukti" name="no_bukti1" value="{{ old('no_bukti1') }}" />
 												</td>
 												<td>
 													<div class="input-group">
 														<span class="input-group-text">Rp</span>
-														<input class="form-control form-control-solid" type="text" name="debit1" required oninput="formatNumber(this);" onblur="removeFormat(this)" onfocus="removeLeadingZeros(this)" value="0"/>
+														<input class="form-control form-control-solid" type="text" name="debit1" required oninput="formatNumber(this);" onblur="removeFormat(this)" onfocus="removeLeadingZeros(this)" value="{{ old('debit1', '0') }}"/>
 													</div>
 												</td>
 												<td>
 													<div class="input-group">
 														<span class="input-group-text">Rp</span>
-														<input class="form-control form-control-solid" type="text" name="kredit1" required oninput="formatNumber(this); " onblur="removeFormat(this)" onfocus="removeLeadingZeros(this)" value="0"/>
+														<input class="form-control form-control-solid" type="text" name="kredit1" required oninput="formatNumber(this);" onblur="removeFormat(this)" onfocus="removeLeadingZeros(this)" value="{{ old('kredit1', '0') }}"/>
 													</div>
 												</td>
 											</tr>
@@ -116,23 +128,23 @@
 													<select name="id_rkat2" required class="form-select form-select-solid" data-control="select2" data-hide-search="false" data-placeholder="Pilih Kode/Nama Akun RKAT">
 														<option value="">Pilih Kode/Nama Akun</option>
 														@foreach($rkatOptions as $id => $kode_rkat)
-															<option value="{{ $id }}">{{ $kode_rkat }} - {{ $rkatDescriptions[$id] }}</option>
+															<option value="{{ $id }}" {{ old('id_rkat2') == $id ? 'selected' : '' }}>{{ $kode_rkat }} - {{ $rkatDescriptions[$id] }}</option>
 														@endforeach
 													</select>
 												</td>
 												<td>
-													<input type="text" class="form-control form-control-solid" placeholder="No Bukti" name="no_bukti2" />
+													<input type="text" class="form-control form-control-solid" placeholder="No Bukti" name="no_bukti2" value="{{ old('no_bukti2') }}" />
 												</td>
 												<td>
 													<div class="input-group">
 														<span class="input-group-text">Rp</span>
-														<input class="form-control form-control-solid" type="text" name="debit2" required oninput="formatNumber(this);  onblur="removeFormat(this)" onfocus="removeLeadingZeros(this)" value="0"/>
+														<input class="form-control form-control-solid" type="text" name="debit2" required oninput="formatNumber(this);" onblur="removeFormat(this)" onfocus="removeLeadingZeros(this)" value="{{ old('debit2', '0') }}"/>
 													</div>
 												</td>
 												<td>
 													<div class="input-group">
 														<span class="input-group-text">Rp</span>
-														<input class="form-control form-control-solid" type="text" name="kredit2" required oninput="formatNumber(this);  onblur="removeFormat(this)" onfocus="removeLeadingZeros(this)" value="0"/>
+														<input class="form-control form-control-solid" type="text" name="kredit2" required oninput="formatNumber(this);" onblur="removeFormat(this)" onfocus="removeLeadingZeros(this)" value="{{ old('kredit2', '0') }}"/>
 													</div>
 												</td>
 											</tr>
@@ -152,7 +164,7 @@
 										<!--begin::Wrapper-->
 										<div class="d-flex flex-column">
 											<!--begin::Title-->
-											<h3 class="my-1 text-dark text-center" id="debitTotal">Total Debit : Rp 0</h3>
+											<h3 class="my-1 text-dark text-center" id="debitTotal">Total Debit : </h3>
 											<!--end::Title-->
 										</div>
 										<!--end::Wrapper-->
@@ -165,7 +177,7 @@
 										<!--begin::Wrapper-->
 										<div class="d-flex flex-column">
 											<!--begin::Title-->
-											<h3 class="my-1 text-dark text-center" id="creditTotal">Total Kredit : Rp 0</h3>
+											<h3 class="my-1 text-dark text-center" id="creditTotal">Total Kredit : </h3>
 											<!--end::Title-->
 										</div>
 										<!--end::Wrapper-->
@@ -233,6 +245,38 @@
             // Memasukkan nilai yang telah diformat kembali ke input
             input.value = value;
         }
+
+		// Fungsi untuk menghitung dan memperbarui total debit dan kredit
+		function hitungTotal() {
+			let totalDebit = 0;
+			let totalKredit = 0;
+
+			// Iterasi melalui baris pada tabel
+			document.querySelectorAll('#input-table tbody tr').forEach((baris) => {
+				// Dapatkan nilai debit dan kredit dari baris saat ini
+				const nilaiDebit = parseFloat(baris.querySelector('[name^="debit"]').value.replace(/,/g, '') || 0);
+				const nilaiKredit = parseFloat(baris.querySelector('[name^="kredit"]').value.replace(/,/g, '') || 0);
+
+				// Perbarui nilai total
+				totalDebit += nilaiDebit;
+				totalKredit += nilaiKredit;
+			});
+
+			// Tampilkan nilai total
+			document.getElementById('debitTotal').innerText = 'Total Debit:  ' + formatCurrency(totalDebit);
+			document.getElementById('creditTotal').innerText = 'Total Kredit:  ' + formatCurrency(totalKredit);
+		}
+
+		// Fungsi untuk memformat mata uang dengan tanda koma
+		function formatCurrency(nilai) {
+			return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(nilai);
+		}
+
+		// Menyisipkan fungsi hitungTotal ke peristiwa yang relevan (mis., perubahan input)
+		document.addEventListener('input', hitungTotal);
+
+		// Panggil hitungTotal secara awal untuk menampilkan total pada saat halaman dimuat
+		hitungTotal();
     </script>
 	
 @endsection

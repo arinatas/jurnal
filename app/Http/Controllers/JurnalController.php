@@ -228,6 +228,14 @@ class JurnalController extends Controller
 
             $user = Auth::user();
 
+            // Mendapatkan total debit dan kredit dari formulir
+            $totalDebit = $request->input('debit1') + $request->input('debit2');
+            $totalKredit = $request->input('kredit1') + $request->input('kredit2');
+
+            // Memeriksa apakah total debit dan kredit seimbang
+            if ($totalDebit != $totalKredit) {
+                return redirect()->back()->withInput()->with('error', 'Total Debit dan Kredit harus seimbang.');
+            }
             // Insert the first row into the jurnal table
             Jurnal::create([
                 'periode_jurnal' => $request->periode_jurnal,
