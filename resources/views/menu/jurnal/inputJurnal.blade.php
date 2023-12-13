@@ -21,18 +21,6 @@
 						</div>
 						<!--end::Title-->
 					</div>
-                    <!-- Display error message with SweetAlert -->
-                    @if(session('error'))
-                        <script>
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error!',
-                                text: '{{ session('error') }}',
-                                confirmButtonColor: '#3085d6',
-                                confirmButtonText: 'OK',
-                            });
-                        </script>
-                    @endif
 					<div class="card-body pb-10">
 						<!--Begin::Table-->
 						<form id="my-form" action="{{ route('store.jurnal') }}" enctype="multipart/form-data" method="POST">
@@ -187,7 +175,7 @@
 							</div>
 							<!--begin::Actions-->
 							<div class="d-flex flex-center flex-row-fluid pt-12">
-								{{-- <a href="{{url('jurnal')}}" class="btn btn-light me-3">Batal</a> --}}
+								<a href="{{url('jurnal')}}" class="btn btn-warning me-3">Kembali</a>
 								<button type="submit" onclick="submitForm(this)" class="btn btn-primary">
                                     <span class="indicator-label">Submit</span>
                                 </button>

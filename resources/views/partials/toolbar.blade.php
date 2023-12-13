@@ -96,3 +96,15 @@
     )
 </script>
 @endif
+<!-- Display error message with SweetAlert -->
+@if(session('error'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: '{{ session('error') }}',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK',
+    });
+</script>
+@endif

@@ -185,9 +185,11 @@ class JurnalController extends Controller
             ->with('jurnalAkun')
             ->get();
         
-        // Get the list of kode_rkat options
-        $rkatOptions = Rkat::pluck('kode_rkat', 'id');
-        $rkatDescriptions = Rkat::pluck('keterangan', 'id');
+        // Get the latest periode from the rkat table
+        $latestPeriode = Rkat::max('periode');
+        // Get the list of kode_rkat options for the latest periode
+        $rkatOptions = Rkat::where('periode', $latestPeriode)->pluck('kode_rkat', 'id');
+        $rkatDescriptions = Rkat::where('periode', $latestPeriode)->pluck('keterangan', 'id');
 
         return view('menu.jurnal.inputJurnal', [
             'title' => 'Input Jurnal',
@@ -220,7 +222,7 @@ class JurnalController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Data Masih ada yang kosong');
         }
 
         try {
