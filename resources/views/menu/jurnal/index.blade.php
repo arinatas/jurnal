@@ -75,7 +75,7 @@
                                         </div>
                                         <!--End::Import Form-->
                                         <!--begin::Table-->
-                                        @if ($jurnals )
+                                        @if ($jurnals->count())
                                         <div class="table-responsive my-10 mx-8">
                                             <table class="table table-striped gy-7 gs-7">
                                                 <thead>
@@ -93,12 +93,9 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @php
-                                                        $no = 1; // Inisialisasi no
-                                                    @endphp
                                                     @foreach ($jurnals as $item)
                                                     <tr>
-                                                        <td class="text-center">{{ $no }}</td>
+                                                        <td class="text-center">{{ $jurnals->firstItem() + $loop->index }}</td>
                                                         <td>{{ \Carbon\Carbon::parse($item->periode_jurnal)->format('j F Y'); }}</td>
                                                         <td class="text-center">
                                                         @if($item->type_jurnal == 'ju')
@@ -124,25 +121,41 @@
                                                             @endforeach
                                                         </td> -->
                                                     </tr>
-                                                    @php
-                                                        $no++; // Tambahkan no setiap kali iterasi
-                                                    @endphp
                                                     @endforeach
-                                                    <!-- Total rows after the loop -->
-                                                    <tr class="fw-bold fs-6 text-gray-800">
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td class="text-center"><strong>Total</strong></td>
-                                                        <td class="text-center"><strong>Rp. @currency($totalDebit)</strong></td>
-                                                        <td class="text-center"><strong>Rp. @currency($totalKredit)</strong></td>
-                                                    </tr>
                                                 </tbody>
                                             </table>
+                                        </div>
+                                        <!-- Add pagination links below the table -->
+                                        <div class="d-flex justify-content-center">
+                                            {{ $jurnals->links() }}
+                                        </div>
+                                        <div class="row mt-8">
+                                            <div class="col-lg-6">
+                                                <!--begin::Alert-->
+                                                <div class="alert alert-primary">
+                                                    <!--begin::Wrapper-->
+                                                    <div class="d-flex flex-column">
+                                                        <!--begin::Title-->
+                                                        <h3 class="my-1 text-dark text-center">Total Debit : @currency($totalDebit)</h3>
+                                                        <!--end::Title-->
+                                                    </div>
+                                                    <!--end::Wrapper-->
+                                                </div>
+                                                <!--end::Alert-->
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <!--begin::Alert-->
+                                                <div class="alert alert-primary">
+                                                    <!--begin::Wrapper-->
+                                                    <div class="d-flex flex-column">
+                                                        <!--begin::Title-->
+                                                        <h3 class="my-1 text-dark text-center">Total Kredit : @currency($totalKredit) </h3>
+                                                        <!--end::Title-->
+                                                    </div>
+                                                    <!--end::Wrapper-->
+                                                </div>
+                                                <!--end::Alert-->
+                                            </div>
                                         </div>
                                         @else
                                         <div class="my-10 mx-15">

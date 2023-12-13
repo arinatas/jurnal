@@ -26,11 +26,17 @@ class JurnalController extends Controller
         $jurnals = Jurnal::with('rkat:id,kode_rkat')
             ->with('jurnalAkun')
             ->whereDate('created_at', $today)
-            ->get();
+            ->paginate(10); // Menambahkan pagination untuk 50 data perhalaman
     
         // Calculate total debit and total kredit
-        $totalDebit = $jurnals->sum('debit');
-        $totalKredit = $jurnals->sum('kredit');
+        // Fetch Jurnal entries created today without pagination
+        $jurnalsAll = Jurnal::with('rkat:id,kode_rkat')
+        ->with('jurnalAkun')
+        ->whereDate('created_at', $today)
+        ->get();
+
+        $totalDebit = $jurnalsAll->sum('debit');
+        $totalKredit = $jurnalsAll->sum('kredit');
     
         // Get the list of kode_rkat options
         $rkatOptions = Rkat::pluck('kode_rkat', 'id');
