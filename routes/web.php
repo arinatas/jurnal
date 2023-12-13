@@ -66,7 +66,6 @@ Route::get('/exportcashflow/{start_date}/{end_date}', [CashFlowController::class
 
 // Menu Jurnal
 Route::get('/jurnal', [JurnalController::class, 'index'])->middleware('auth')->name('jurnal');
-Route::post('/jurnal', [JurnalController::class, 'store'])->middleware('auth')->name('insert.jurnal');
 Route::get('/inputJurnal', [JurnalController::class, 'input'])->middleware('auth')->name('input.jurnal');
 Route::post('/jurnalStore', [JurnalController::class, 'storeJurnal'])->middleware('auth')->name('store.jurnal');
 Route::get('/import-jurnal', [JurnalController::class, 'showImportForm'])->name('import.jurnal.view');

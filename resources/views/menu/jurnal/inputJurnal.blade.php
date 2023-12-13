@@ -97,10 +97,16 @@
 													<input type="text" class="form-control form-control-solid" placeholder="No Bukti" name="no_bukti1" />
 												</td>
 												<td>
-													<input type="text" class="form-control form-control-solid" name="debit1" oninput="formatCurrency(this)">
+													<div class="input-group">
+														<span class="input-group-text">Rp</span>
+														<input class="form-control form-control-solid" type="text" name="debit1" required oninput="formatNumber(this);" onblur="removeFormat(this)" onfocus="removeLeadingZeros(this)" value="0"/>
+													</div>
 												</td>
 												<td>
-													<input type="text" class="form-control form-control-solid" name="kredit1" oninput="formatCurrency(this)">
+													<div class="input-group">
+														<span class="input-group-text">Rp</span>
+														<input class="form-control form-control-solid" type="text" name="kredit1" required oninput="formatNumber(this); " onblur="removeFormat(this)" onfocus="removeLeadingZeros(this)" value="0"/>
+													</div>
 												</td>
 											</tr>
 
@@ -118,10 +124,16 @@
 													<input type="text" class="form-control form-control-solid" placeholder="No Bukti" name="no_bukti2" />
 												</td>
 												<td>
-													<input type="text" class="form-control form-control-solid" name="debit2" oninput="formatCurrency(this)">
+													<div class="input-group">
+														<span class="input-group-text">Rp</span>
+														<input class="form-control form-control-solid" type="text" name="debit2" required oninput="formatNumber(this);  onblur="removeFormat(this)" onfocus="removeLeadingZeros(this)" value="0"/>
+													</div>
 												</td>
 												<td>
-													<input type="text" class="form-control form-control-solid" name="kredit2" oninput="formatCurrency(this)">
+													<div class="input-group">
+														<span class="input-group-text">Rp</span>
+														<input class="form-control form-control-solid" type="text" name="kredit2" required oninput="formatNumber(this);  onblur="removeFormat(this)" onfocus="removeLeadingZeros(this)" value="0"/>
+													</div>
 												</td>
 											</tr>
 											</tbody>
