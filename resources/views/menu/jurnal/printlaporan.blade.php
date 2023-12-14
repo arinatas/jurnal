@@ -142,10 +142,7 @@
 
                     <div class="col-sm-4 invoice-col mt-4">
                         <address style="float: inline-end;" class="mr-5">
-                        @php
-                            $formattedMonth = date('F', strtotime($selectedYear . '-' . $selectedMonth . '-01'));
-                        @endphp
-                        <p>Denpasar, 01 {{ $formattedMonth }} {{ $selectedYear }}<br>
+                            <p>Denpasar, {{ date('d F Y') }}<br>
                             Dibuat Oleh,<br>
                             Accounting</p>
                             <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" />
