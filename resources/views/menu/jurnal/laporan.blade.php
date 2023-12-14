@@ -17,28 +17,32 @@
                                         <div class="card-px pt-10 d-flex justify-content-between">
                                             <!--begin::Title-->
                                                 <div class="d-inline mt-2">
-                                                    <h2 class="fs-2x fw-bolder mb-0">{{$title}}</h2>
+                                                    <h2 class="fs-2x fw-bolder mb-0">{{ $title }}</h2>
                                                 </div>
-                                                @if (request('start_date') && request('end_date'))
-                                                    <div class="d-inline">
-                                                        <a href="{{ route('exportcashflow', ['start_date' => request('start_date'), 'end_date' => request('end_date')]) }}" class="btn btn-sm btn-info" title="Export Excel">Export Excel</a>
-                                                        <a href="{{ route('printcashflow', ['start_date' => request('start_date'), 'end_date' => request('end_date')]) }}" class="btn btn-sm btn-success" title="Unduh Laporan">Print Laporan</a> 
-                                                    </div>
-                                                @endif
                                             <!--end::Title-->
                                         </div>
                                         <!--end::Heading-->
                                         <!-- Form Filter -->
                                         <div class="card-px mt-10">                                            
-                                            <form action="{{ route('lapcashflow') }}" method="GET">
+                                            <form action="{{ route('laporan.jurnal') }}" method="GET">
                                                 <div class="row mb-3">
                                                     <div class="col-md-3">
-                                                        <label for="start_date" class="form-label">Tanggal Awal:</label>
-                                                        <input type="date" class="form-control" id="start_date" name="start_date" value="{{ request('start_date') }}">
-                                                   </div>
-                                                    <div class="col-md-3">
-                                                        <label for="end_date" class="form-label">Tanggal Akhir:</label>
-                                                        <input type="date" class="form-control" id="end_date" name="end_date" value="{{ request('end_date') }}">
+                                                        <label for="bulan" class="form-label">Bulan :</label>
+                                                        <select class="form-control" id="bulan" name="bulan">
+                                                            <option value="">Pilih Bulan</option>
+                                                            @for ($i = 1; $i <= 12; $i++)
+                                                                <option value="{{ $i }}" {{ request('bulan') == $i ? 'selected' : '' }}>{{ date('F', mktime(0, 0, 0, $i, 1)) }}</option>
+                                                            @endfor
+                                                        </select>
+                                                    </div>
+                                                   <div class="col-md-3">
+                                                        <label for="tahun" class="form-label">Tahun :</label>
+                                                        <select class="form-control" id="tahun" name="tahun">
+                                                            <option value="">Pilih Tahun</option>
+                                                            @foreach($years as $year)
+                                                                <option value="{{ $year }}" {{ request('tahun') == $year ? 'selected' : '' }}>{{ $year }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                    <div class="col-md-3 mt-4">
                                                         <button type="submit" class="btn btn-primary mt-4">Filter</button>
@@ -48,81 +52,94 @@
                                         </div>
                                         <!-- End Form Filter -->
                                         <!--begin::Table-->
-                                        @if ($start_date && $end_date && $cashflows )
+                                        @if ($selectedMonth && $selectedYear && $jurnals )
                                         <div class="table-responsive my-10 mx-8">
                                             <table class="table table-striped gy-7 gs-7">
                                                 <thead>
                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
-                                                        <th class="min-w-50px" >No</th>
-                                                        <th class="min-w-100px">Tanggal</th>
-                                                        <th class="min-w-100px">No Bukti</th>
-                                                        <th class="min-w-100px">PIC</th>
-                                                        <th class="min-w-100px">Nama</th>
-                                                        <th class="min-w-100px">Kode Anggaran</th>
-                                                        <th class="min-w-100px">Transaksi</th>
-                                                        <th class="min-w-100px">Ref</th>
-                                                        <th class="min-w-100px">Accounting</th>
-                                                        <th class="min-w-150px">Debit</th>
-                                                        <th class="min-w-150px">Kredit</th>
+                                                        <th class="min-w-50px text-center">No</th>
+                                                        <th class="min-w-100px text-center">Periode</th>
+                                                        <th class="min-w-50px text-center">Tipe Jurnal</th>
+                                                        <th class="min-w-100px text-center">Uraian</th>
+                                                        <th class="min-w-100px text-center">RKAT</th>
+                                                        <th class="min-w-100px text-center">Kode Rekening</th>
+                                                        <th class="min-w-100px text-center">Nama Rekening</th>
+                                                        <th class="min-w-100px text-center">No Bukti</th>
+                                                        <th class="min-w-150px text-center">Debit</th>
+                                                        <th class="min-w-150px text-center">Kredit</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @php
                                                         $no = 1; // Inisialisasi no
                                                     @endphp
-                                                    @foreach ($cashflows as $item)
+                                                    @foreach ($jurnals as $item)
                                                     <tr>
                                                         <td>{{ $no }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('j F Y'); }}</td>
-                                                        <td>{{ $item->no_bukti }}</td>
-                                                        <td>{{ $item->pic }}</td>
-                                                        <td>{{ $item->nama }}</td>
-                                                        <td>{{ $item->rkat->kode_rkat }}</td>
-                                                        <td>{{ $item->transaksi }}</td>
-                                                        <td>{{ $item->ref }}</td>
-                                                        <td>{{ $item->user->nama }}</td>
-                                                        <td>Rp. @currency($item->debit )</td>
-                                                        <td>Rp. @currency($item->kredit )</td>
+                                                        <td>{{ \Carbon\Carbon::parse($item->periode_jurnal)->format('j F Y'); }}</td>
+                                                        <td class="text-center">
+                                                        @if($item->type_jurnal == 'ju')
+                                                            <span class="badge bg-success">Umum</span>
+                                                        @elseif($item->type_jurnal == 'jp')
+                                                            <span class="badge bg-warning text-dark">Penyesuaian</span>
+                                                        @else
+                                                            <span class="badge bg-danger">-</span>
+                                                        @endif
+                                                        </td>
+                                                        <td>{{ $item->uraian }}</td>
+                                                        <td class="text-center">{{ $item->rkat->kode_rkat }}</td>
+                                                        @foreach ($item->jurnalAkun as $jurnalAkun)
+                                                            <td class="text-center">{{ $jurnalAkun->no_akun }}</td>
+                                                            <td>{{ $jurnalAkun->nama_akun }}</td>
+                                                        @endforeach
+                                                        <td class="text-center">{{ $item->no_bukti }}</td>
+                                                        <td class="text-center">@if($item->debit != 0) Rp. @currency($item->debit) @else - @endif</td>
+                                                        <td class="text-center">@if($item->kredit != 0) Rp. @currency($item->kredit) @else - @endif</td>
+                                                        <!-- <td>
+                                                            @foreach ($item->jurnalAkun as $jurnalAkun)
+                                                                {{ $jurnalAkun->no_akun }} - {{ $jurnalAkun->nama_akun }}<br>
+                                                            @endforeach
+                                                        </td> -->
                                                     </tr>
                                                     @php
                                                         $no++; // Tambahkan no setiap kali iterasi
                                                     @endphp
                                                     @endforeach
-                                                    <!-- Total rows after the loop -->
-                                                    <tr class="fw-bold fs-6 text-gray-800">
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td><strong>Total</strong></td>
-                                                        <td><strong>Rp. @currency($totalDebit)</strong></td>
-                                                        <td><strong>Rp. @currency($totalKredit)</strong></td>
-                                                    </tr>
-                                                    <tr class="fw-bold fs-6 text-gray-800">
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td style="text-align: left;"><strong>Saldo Akhir</strong></td>
-                                                        <td></td>
-                                                        <td style="text-align: left;"><strong>Rp. @currency($totalKas)</strong></td>
-                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <div class="row mt-8">
+                                            <div class="col-lg-6">
+                                                <!--begin::Alert-->
+                                                <div class="alert alert-primary">
+                                                    <!--begin::Wrapper-->
+                                                    <div class="d-flex flex-column">
+                                                        <!--begin::Title-->
+                                                        <h3 class="my-1 text-dark text-center">Total Debit : @currency($totalDebit)</h3>
+                                                        <!--end::Title-->
+                                                    </div>
+                                                    <!--end::Wrapper-->
+                                                </div>
+                                                <!--end::Alert-->
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <!--begin::Alert-->
+                                                <div class="alert alert-primary">
+                                                    <!--begin::Wrapper-->
+                                                    <div class="d-flex flex-column">
+                                                        <!--begin::Title-->
+                                                        <h3 class="my-1 text-dark text-center">Total Kredit : @currency($totalKredit) </h3>
+                                                        <!--end::Title-->
+                                                    </div>
+                                                    <!--end::Wrapper-->
+                                                </div>
+                                                <!--end::Alert-->
+                                            </div>
+                                        </div>
                                         @endif
                                         <!--end::Table-->
-
                                         <!--begin::Notice-->
-                                        @if (!$start_date || !$end_date)
+                                        @if (!$selectedMonth || !$selectedYear)
                                         <div class="my-10 mx-15">
                                             <!--begin::Notice-->
                                             <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6">
@@ -161,7 +178,7 @@
                                     </div>
                                     <!--end::Card body-->
                                 </div>
-                                <!--end::Card-->                                            
+                                <!--end::Card-->
 							</div>
 							<!--end::Container-->
 						</div>

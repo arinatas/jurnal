@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\CashFlowExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class CashFlowController extends Controller
 {
@@ -30,9 +31,11 @@ class CashFlowController extends Controller
         $totalDebit = $cashflows->sum('debit');
         $totalKredit = $cashflows->sum('kredit');
 
-        // Get the list of kode_rkat options
-        $rkatOptions = Rkat::pluck('kode_rkat', 'id'); 
-        $rkatDescriptions = Rkat::pluck('keterangan', 'id');
+        // Get the latest periode from the rkat table
+        $latestPeriode = Rkat::max('periode');
+        // Get the list of kode_rkat options for the latest periode
+        $rkatOptions = Rkat::where('periode', $latestPeriode)->pluck('kode_rkat', 'id');
+        $rkatDescriptions = Rkat::where('periode', $latestPeriode)->pluck('keterangan', 'id');
         
         // Fetch the value of "kas" from the "uang_kas" table
         $kasModel = Kas::first(); // Ambil record pertama
@@ -203,7 +206,11 @@ class CashFlowController extends Controller
     {
         $export = new CashFlowExport($startDate, $endDate);
 
-        return Excel::download($export, 'laporan_cashflow.xlsx');
+        $currentDate = Carbon::now()->format('d-m-y'); // Format the current date as desired
+
+        $fileName = 'laporan_cashflow_' . $currentDate . '.xlsx';
+
+        return Excel::download($export, $fileName);
     }
     
 }

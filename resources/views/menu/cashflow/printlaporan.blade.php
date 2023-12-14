@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Laporan Cash Flow</title>
+        <title>Laporan Cash Flow {{ \Carbon\Carbon::parse(date("Y-m-d h:i:sa"))->format('j F Y'); }}</title>
 		<link rel="shortcut icon" href="/assets/media/logos/smallprimakara.png">
 
         <!-- Tell the browser to be responsive to screen width -->
@@ -69,7 +69,7 @@
                                 @foreach ($cashflows as $item)
                                 <tr>
                                     <td style="text-align: center;">{{ $no }}</td>
-                                    <td style="text-align: center;">{{ $item->tanggal }}</td>
+                                    <td style="text-align: center;">{{ \Carbon\Carbon::parse($item->tanggal)->format('j F Y'); }}</td>
                                     <td style="text-align: center;">{{ $item->no_bukti }}</td>
                                     <td style="text-align: center;">{{ $item->pic }}</td>
                                     <td style="text-align: center;">{{ $item->nama }}</td>

@@ -51,7 +51,7 @@
                                                     @foreach ($cashflows as $item)
                                                     <tr>
                                                         <td>{{ $no }}</td>
-                                                        <td>{{ $item->tanggal }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('j F Y'); }}</td>
                                                         <td>{{ $item->no_bukti }}</td>
                                                         <td>{{ $item->pic }}</td>
                                                         <td>{{ $item->nama }}</td>
@@ -185,7 +185,7 @@
                                                             <span class="required">Kode Anggaran</span>
                                                         </label>
                                                         <!--end::Label-->
-                                                        <select class="form-control form-control-solid" name="kode_anggaran" required>
+                                                        <select class="form-control form-control-solid" name="kode_anggaran" data-control="select2" data-dropdown-parent="#kt_modal_new_user" required>
                                                             <option value="">Pilih Kode Anggaran</option>
                                                             @foreach($rkatOptions as $id => $kode_rkat)
                                                                 <option value="{{ $id }}">{{ $kode_rkat }} - {{ $rkatDescriptions[$id] }}</option>
