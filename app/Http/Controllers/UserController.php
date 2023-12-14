@@ -33,7 +33,8 @@ class UserController extends Controller
 
         // kalau ada error kembalikan error
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            $validatorErrors = implode('<br>', $validator->errors()->all());
+            return redirect()->back()->with('validatorFail', $validatorErrors);
         }
 
         // simpan data ke database
@@ -94,7 +95,8 @@ class UserController extends Controller
 
         // kalau ada error kembalikan error
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            $validatorErrors = implode('<br>', $validator->errors()->all());
+            return redirect()->back()->with('validatorFail', $validatorErrors);
         }
 
         try{
@@ -157,7 +159,8 @@ class UserController extends Controller
 
         // kalau ada error kembalikan error
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            $validatorErrors = implode('<br>', $validator->errors()->all());
+            return redirect()->back()->with('validatorFail', $validatorErrors);
         }
 
         try{

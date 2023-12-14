@@ -108,3 +108,14 @@
     });
 </script>
 @endif
+@if (\Session::has('validatorFail'))
+<script>
+    Swal.fire(
+    'Gagal!',
+    '{!! \Session::get('validatorFail') !!}',
+    'error'
+    )
+</script>
+@endif
+
+

@@ -69,8 +69,8 @@ class UangFisikController extends Controller
 
         // kalau ada error kembalikan error
         if ($validator->fails()) {
-            // return redirect()->back()->withErrors($validator)->withInput();
-            return redirect()->back()->with('insertFail', 'Datanya Harus Lengkap Woy');
+            $validatorErrors = implode('<br>', $validator->errors()->all());
+            return redirect()->back()->with('validatorFail', $validatorErrors);
         }
 
         // ambil data dari request

@@ -57,7 +57,8 @@ class RkatController extends Controller
     
         // kalau ada error kembalikan error
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            $validatorErrors = implode('<br>', $validator->errors()->all());
+            return redirect()->back()->with('validatorFail', $validatorErrors);
         }
 
         // Check if kode_rkat already exists for the given periode
@@ -129,7 +130,8 @@ class RkatController extends Controller
 
         // kalau ada error kembalikan error
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            $validatorErrors = implode('<br>', $validator->errors()->all());
+            return redirect()->back()->with('validatorFail', $validatorErrors);
         }
 
         // Check if kode_rkat already exists for the given periode excluding the current record
@@ -185,7 +187,8 @@ class RkatController extends Controller
         ]);
     
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            $validatorErrors = implode('<br>', $validator->errors()->all());
+            return redirect()->back()->with('validatorFail', $validatorErrors);
         }
     
         $file = $request->file('excel_file');
