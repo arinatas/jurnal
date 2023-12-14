@@ -67,7 +67,8 @@ class PiutangController extends Controller
 
         // kalau ada error kembalikan error
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            $validatorErrors = implode('<br>', $validator->errors()->all());
+            return redirect()->back()->with('validatorFail', $validatorErrors);
         }
 
         // Menghilangkan karakter non-digit
@@ -147,7 +148,8 @@ class PiutangController extends Controller
 
         // kalau ada error kembalikan error
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            $validatorErrors = implode('<br>', $validator->errors()->all());
+            return redirect()->back()->with('validatorFail', $validatorErrors);
         }
 
         $jumlah_piutang = (int)$request->jumlah_piutang;
