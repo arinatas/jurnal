@@ -24,11 +24,20 @@
                                         <!--end::Heading-->
                                         <!-- Form Filter -->
                                         <div class="card-px mt-10">                                            
-                                            <form action="{{ route('laporan.jurnal') }}" method="GET">
+                                            <form action="{{ route('laporanBukuBesar') }}" method="GET">
                                                 <div class="row mb-3">
                                                     <div class="col-md-3">
+                                                        <label for="jurnal_akun" class="form-label">Jurnal Akun :</label>
+                                                        <select class="form-control" id="jurnal_akun" name="jurnal_akun" data-control="select2" data-hide-search="false">
+                                                            <option value="">Pilih Jurnal Akun</option>
+                                                            @foreach ($jurnalakuns as $jurnal)
+                                                                <option value="{{ $jurnal->no_akun }}">{{ $jurnal->no_akun }} - {{ $jurnal->nama_akun }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
                                                         <label for="bulan" class="form-label">Bulan :</label>
-                                                        <select class="form-control" id="bulan" name="bulan">
+                                                        <select class="form-control" id="bulan" name="bulan" data-control="select2" data-hide-search="false">
                                                             <option value="">Pilih Bulan</option>
                                                             @for ($i = 1; $i <= 12; $i++)
                                                                 <option value="{{ $i }}" {{ request('bulan') == $i ? 'selected' : '' }}>{{ date('F', mktime(0, 0, 0, $i, 1)) }}</option>
@@ -37,7 +46,7 @@
                                                     </div>
                                                    <div class="col-md-3">
                                                         <label for="tahun" class="form-label">Tahun :</label>
-                                                        <select class="form-control" id="tahun" name="tahun">
+                                                        <select class="form-control" id="tahun" name="tahun" data-control="select2" data-hide-search="false">
                                                             <option value="">Pilih Tahun</option>
                                                             @foreach($years as $year)
                                                                 <option value="{{ $year }}" {{ request('tahun') == $year ? 'selected' : '' }}>{{ $year }}</option>
