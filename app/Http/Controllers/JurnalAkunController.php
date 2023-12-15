@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\JurnalAkun;
@@ -29,9 +30,19 @@ class JurnalAkunController extends Controller
             'no_akun' => 'required|string|max:100',
             'parent' => 'required|string|max:100',
             'nama_akun' => 'required|string|max:255',
-            'type_neraca' => 'required|string|max:30',
+            'type_neraca' => [
+                'required',
+                'string',
+                'max:30',
+                Rule::in(['AKTIVA', 'PASIVA', 'LIABILITAS', 'EKUITAS']),
+            ],
+            'sub_type' => [
+                'string',
+                'max:30',
+                Rule::in(['Kas & Bank', 'Piutang', 'Liabilitas Jangka Pendek', 'Liabilitas Jangka Panjang']),
+            ],
             'lvl' => 'required|integer',
-            'tipe_akun' => 'required|integer',
+            'tipe_akun' => 'required',
         ]);
     
         // kalau ada error kembalikan error
@@ -58,6 +69,7 @@ class JurnalAkunController extends Controller
                 'parent' => $request->parent,
                 'nama_akun' => $request->nama_akun,
                 'type_neraca' => $request->type_neraca,
+                'sub_type' => $request->sub_type,
                 'lvl' => $request->lvl,
                 'tipe_akun' => $request->tipe_akun,
             ]);
@@ -100,9 +112,19 @@ class JurnalAkunController extends Controller
             'no_akun' => 'required|string|max:100',
             'parent' => 'required|string|max:100',
             'nama_akun' => 'required|string|max:255',
-            'type_neraca' => 'required|string|max:30',
+            'type_neraca' => [
+                'required',
+                'string',
+                'max:30',
+                Rule::in(['AKTIVA', 'PASIVA', 'LIABILITAS', 'EKUITAS']),
+            ],
+            'sub_type' => [
+                'string',
+                'max:30',
+                Rule::in(['Kas & Bank', 'Piutang', 'Liabilitas Jangka Pendek', 'Liabilitas Jangka Panjang']),
+            ],
             'lvl' => 'required|integer',
-            'tipe_akun' => 'required|integer',
+            'tipe_akun' => 'required',
         ]);
 
         // kalau ada error kembalikan error
@@ -116,6 +138,7 @@ class JurnalAkunController extends Controller
             $jurnalakun->parent = $request->parent;
             $jurnalakun->nama_akun = $request->nama_akun;
             $jurnalakun->type_neraca = $request->type_neraca;
+            $jurnalakun->sub_type = $request->sub_type;
             $jurnalakun->lvl = $request->lvl;
             $jurnalakun->tipe_akun = $request->tipe_akun;
 

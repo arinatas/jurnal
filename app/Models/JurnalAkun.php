@@ -18,6 +18,7 @@ class JurnalAkun extends Model
         'parent',
         'nama_akun',
         'type_neraca',
+        'sub_type',
         'lvl',
         'tipe_akun',
     ];
