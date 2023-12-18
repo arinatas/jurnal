@@ -16,28 +16,24 @@
                                         <!--begin::Heading-->
                                         <div class="card-px pt-10 d-flex justify-content-between">
                                             <!--begin::Title-->
-                                                <div class="d-inline mt-2">
-                                                    <h2 class="fs-2x fw-bolder mb-0">{{ $title }}</h2>
-                                                </div>
+                                            <div class="d-inline mt-2">
+                                                <h2 class="fs-2x fw-bolder mb-0">{{ $title }}</h2>
+                                            </div>
                                             <!--end::Title-->
+                                            @if (request('bulan') && request('tahun') && $jurnals && count($jurnals) > 0)
+                                            <div class="d-inline">
+                                                <a href="{{ route('printjurnal', ['selectedYear' => request('tahun'), 'selectedMonth' => request('bulan')]) }}" class="btn btn-sm btn-success" title="Unduh Laporan">Print Laporan</a> 
+                                            </div>
+                                            @endif
                                         </div>
                                         <!--end::Heading-->
                                         <!-- Form Filter -->
                                         <div class="card-px mt-10">                                            
-                                            <form action="{{ route('laporanBukuBesar') }}" method="GET">
+                                            <form action="{{ route('laporan.jurnal') }}" method="GET">
                                                 <div class="row mb-3">
                                                     <div class="col-md-3">
-                                                        <label for="jurnal_akun" class="form-label">Jurnal Akun :</label>
-                                                        <select class="form-control" id="jurnal_akun" name="jurnal_akun" data-control="select2" data-hide-search="false">
-                                                            <option value="">Pilih Jurnal Akun</option>
-                                                            @foreach ($jurnalakuns as $jurnal)
-                                                                <option value="{{ $jurnal->no_akun }}">{{ $jurnal->no_akun }} - {{ $jurnal->nama_akun }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-3">
                                                         <label for="bulan" class="form-label">Bulan :</label>
-                                                        <select class="form-control" id="bulan" name="bulan" data-control="select2" data-hide-search="false">
+                                                        <select class="form-control" id="bulan" name="bulan">
                                                             <option value="">Pilih Bulan</option>
                                                             @for ($i = 1; $i <= 12; $i++)
                                                                 <option value="{{ $i }}" {{ request('bulan') == $i ? 'selected' : '' }}>{{ date('F', mktime(0, 0, 0, $i, 1)) }}</option>
@@ -46,7 +42,7 @@
                                                     </div>
                                                    <div class="col-md-3">
                                                         <label for="tahun" class="form-label">Tahun :</label>
-                                                        <select class="form-control" id="tahun" name="tahun" data-control="select2" data-hide-search="false">
+                                                        <select class="form-control" id="tahun" name="tahun">
                                                             <option value="">Pilih Tahun</option>
                                                             @foreach($years as $year)
                                                                 <option value="{{ $year }}" {{ request('tahun') == $year ? 'selected' : '' }}>{{ $year }}</option>
@@ -61,7 +57,7 @@
                                         </div>
                                         <!-- End Form Filter -->
                                         <!--begin::Table-->
-                                        @if ($selectedMonth && $selectedYear && $jurnals )
+                                        @if ($selectedMonth && $selectedYear && $jurnals && count($jurnals) > 0 )
                                         <div class="table-responsive my-10 mx-8">
                                             <table class="table table-striped gy-7 gs-7">
                                                 <thead>
@@ -145,10 +141,9 @@
                                                 <!--end::Alert-->
                                             </div>
                                         </div>
-                                        @endif
+                                        @else
                                         <!--end::Table-->
                                         <!--begin::Notice-->
-                                        @if (!$selectedMonth || !$selectedYear)
                                         <div class="my-10 mx-15">
                                             <!--begin::Notice-->
                                             <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6">
@@ -168,14 +163,18 @@
                                                 <!--end::Svg Icon-->
                                                 <!--end::Icon-->
                                                 <!--begin::Wrapper-->
-                                                <div
-                                                    class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+                                                <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
                                                     <!--begin::Content-->
                                                     <div class="mb-3 mb-md-0 fw-bold">
-                                                        <h4 class="text-gray-900 fw-bolder">Silakan filter terlebih dahulu berdasarkan tanggal awal & tanggal akhir
-                                                        </h4>
-                                                        <div class="fs-6 text-gray-700 pe-7">Pilih tanggal awal & tanggal akhir pada formulir di atas untuk melihat
-                                                            data.</div>
+                                                        @if (!$selectedMonth || !$selectedYear)
+                                                            <h4 class="text-gray-900 fw-bolder">Silakan filter terlebih dahulu berdasarkan tanggal awal & tanggal akhir
+                                                            </h4>
+                                                            <div class="fs-6 text-gray-700 pe-7">Pilih tanggal awal & tanggal akhir pada formulir di atas untuk melihat
+                                                                data.</div>
+                                                        @else
+                                                            <h4 class="text-gray-900 fw-bolder">Data periode ini tidak tersedia</h4>
+                                                            <div class="fs-6 text-gray-700 pe-7">Pilih tanggal awal & tanggal akhir yang berbeda untuk melihat data lainnya.</div>
+                                                        @endif
                                                     </div>
                                                     <!--end::Content-->
                                                 </div>

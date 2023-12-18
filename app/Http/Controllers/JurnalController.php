@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Jurnal;
-use App\Models\JurnalAkun;
+use App\Models\User;
 use App\Models\Rkat;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Imports\JurnalImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -284,18 +285,14 @@ class JurnalController extends Controller
         }
     }
 
-    public function laporanBukuBesar(Request $request)
+    public function laporanJurnal(Request $request)
     {
-        // get all jurnal account
-        $jurnalakuns = JurnalAkun::all();
-
         // Get the unique years from the "periode_jurnal" field
         $years = Jurnal::distinct()->select(DB::raw('YEAR(periode_jurnal) as year'))->pluck('year');
     
         // Get the selected year and month from the request
         $selectedYear = $request->input('tahun');
         $selectedMonth = $request->input('bulan');
-        $selectedJurnalAccount = $request->input('jurnal_akun');
     
         // Fetch Jurnal entries based on selected month and year
         $jurnalsQuery = Jurnal::with('rkat:id,kode_rkat')
@@ -308,15 +305,9 @@ class JurnalController extends Controller
         if ($selectedMonth) {
             $jurnalsQuery->whereMonth('periode_jurnal', $selectedMonth);
         }
-
-        if ($selectedJurnalAccount) {
-            $jurnalsQuery->whereHas('rkat.jurnalAkun', function ($query) use ($selectedJurnalAccount) {
-                $query->where('no_akun', $selectedJurnalAccount);
-            });
-        }
     
         $jurnals = $jurnalsQuery->get();
-
+    
         // Calculate total debit and total kredit
         $totalDebit = $jurnals->sum('debit');
         $totalKredit = $jurnals->sum('kredit');
@@ -325,12 +316,11 @@ class JurnalController extends Controller
         $rkatOptions = Rkat::pluck('kode_rkat', 'id');
         $rkatDescriptions = Rkat::pluck('keterangan', 'id');
     
-        return view('menu.jurnal.buku_besar', [
-            'title' => 'Buku Besar',
+        return view('menu.jurnal.laporan', [
+            'title' => 'Laporan Jurnal',
             'section' => 'Laporan',
-            'active' => 'Buku Besar',
+            'active' => 'Laporan Jurnal',
             'jurnals' => $jurnals,
-            'jurnalakuns' => $jurnalakuns,
             'rkatOptions' => $rkatOptions,
             'rkatDescriptions' => $rkatDescriptions,
             'totalDebit' => $totalDebit,
@@ -339,6 +329,46 @@ class JurnalController extends Controller
             'selectedYear' => $selectedYear, 
             'selectedMonth' => $selectedMonth, 
         ]);
-    }   
+    }
+
+    // Metode untuk Print PDF
+    public function printJurnal($selectedYear, $selectedMonth)
+    {
+        // Query for CashFlows with optional date filter
+        $jurnalsQuery = Jurnal::with('rkat:id,kode_rkat')
+            ->with('jurnalAkun');
+    
+            if ($selectedYear) {
+                $jurnalsQuery->whereYear('periode_jurnal', $selectedYear);
+            }
+        
+            if ($selectedMonth) {
+                $jurnalsQuery->whereMonth('periode_jurnal', $selectedMonth);
+            }
+
+        // Execute the query
+        $jurnals = $jurnalsQuery->get();
+    
+        // Calculate total debit and total kredit
+        $totalDebit = $jurnals->sum('debit');
+        $totalKredit = $jurnals->sum('kredit');
+    
+        // Get the list of kode_rkat options
+        $rkatOptions = Rkat::pluck('kode_rkat', 'id');
+        $rkatDescriptions = Rkat::pluck('keterangan', 'id');
+    
+        return view('menu.jurnal.printlaporan', [
+            'title' => 'Laporan Jurnal',
+            'section' => 'Laporan',
+            'active' => 'Laporan Jurnal',
+            'jurnals' => $jurnals,
+            'rkatOptions' => $rkatOptions,
+            'rkatDescriptions' => $rkatDescriptions,
+            'totalDebit' => $totalDebit,
+            'totalKredit' => $totalKredit,
+            'selectedYear' => $selectedYear, 
+            'selectedMonth' => $selectedMonth, 
+        ]);
+    }
 }
 

@@ -42,23 +42,7 @@
                                 </div>
 								<div class="mb-10">
                                     <label for="exampleFormControlInput1" class="required form-label">Type Neraca</label>
-									<select class="form-select form-select-solid" required data-control="select2" data-hide-search="true" data-placeholder="Pilih Type Neraca" name="type_neraca">
-										<option value="">Pilih Type Neraca</option>
-										<option value="AKTIVA" {{$jurnalakun->type_neraca == "AKTIVA" ? 'selected' : ''}}>AKTIVA</option>
-										<option value="PASIVA" {{$jurnalakun->type_neraca == "PASIVA" ? 'selected' : ''}}>PASIVA</option>
-										<option value="LIABILITAS" {{$jurnalakun->type_neraca == "LIABILITAS" ? 'selected' : ''}}>LIABILITAS</option>
-										<option value="EKUITAS" {{$jurnalakun->type_neraca == "EKUITAS" ? 'selected' : ''}}>EKUITAS</option>
-									</select>
-                                </div>
-								<div class="mb-10">
-                                    <label for="exampleFormControlInput1" class="required form-label">Sub Type</label>
-									<select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Pilih Sub Type" name="sub_type">
-										<option value="">Pilih Sub Type</option>
-										<option value="Kas & Bank" {{$jurnalakun->sub_type == "Kas & Bank" ? 'selected' : ''}}>Kas & Bank</option>
-										<option value="Piutang" {{$jurnalakun->sub_type == "Piutang" ? 'selected' : ''}}>Piutang</option>
-										<option value="Liabilitas Jangka Pendek" {{$jurnalakun->sub_type == "Liabilitas Jangka Pendek" ? 'selected' : ''}}>Liabilitas Jangka Pendek</option>
-										<option value="Liabilitas Jangka Panjang" {{$jurnalakun->sub_type == "Liabilitas Jangka Panjang" ? 'selected' : ''}}>Liabilitas Jangka Panjang</option>
-									</select>
+                                    <input type="text" value="{{$jurnalakun->type_neraca}}" class="form-control form-control-solid" required name="type_neraca"/>
                                 </div>
 								<div class="mb-10">
                                     <label for="exampleFormControlInput1" class="required form-label">Level</label>
@@ -66,11 +50,7 @@
                                 </div>
 								<div class="mb-10">
                                     <label for="exampleFormControlInput1" class="required form-label">Tipe Akun</label>
-									<select class="form-select form-select-solid" required data-control="select2" data-hide-search="true" data-placeholder="Pilih Tipe Akun" name="tipe_akun">
-										<option value="">Pilih Tipe Akun</option>
-										<option value="HEADER" {{$jurnalakun->tipe_akun == "HEADER" ? 'selected' : ''}}>HEADER</option>
-										<option value="DETAIL" {{$jurnalakun->tipe_akun == "DETAIL" ? 'selected' : ''}}>DETAIL</option>
-									</select>
+                                    <input type="text" value="{{$jurnalakun->tipe_akun}}" class="form-control form-control-solid" required name="tipe_akun"/>
                                 </div>
                                 <div class="d-flex justify-content-end">
                                     <!--begin::Actions-->

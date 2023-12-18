@@ -162,8 +162,8 @@
                         <span class="menu-title">Laporan Cash Flow</span>
                     </a>
                 </div>
-                <div class="menu-item {{ ($active === "Buku Besar") ? 'here show' : '' }}">
-                    <a class="menu-link" href="{{ url('laporanBukuBesar') }}">
+                <div class="menu-item {{ ($active === "Laporan Jurnal") ? 'here show' : '' }}">
+                    <a class="menu-link" href="{{ url('laporanJurnal') }}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -176,7 +176,7 @@
                             </span>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-title">Buku Besar</span>
+                        <span class="menu-title">Laporan Jurnal</span>
                     </a>
                 </div>
                 

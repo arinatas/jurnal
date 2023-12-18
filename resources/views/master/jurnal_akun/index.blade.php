@@ -36,7 +36,6 @@
                                                         <th class="min-w-100px">Parent</th>
                                                         <th class="min-w-100px">Nama Akun</th>
                                                         <th class="min-w-100px">Type Neraca</th>
-                                                        <th class="min-w-100px">Sub Type</th>
                                                         <th class="min-w-100px">Level</th>
                                                         <th class="min-w-100px">Tipe Akun</th>
                                                         <th class="min-w-100px">Action</th>
@@ -53,7 +52,6 @@
                                                         <td>{{ $item->parent }}</td>
                                                         <td>{{ $item->nama_akun }}</td>
                                                         <td>{{ $item->type_neraca }}</td>
-                                                        <td>{{ $item->sub_type }}</td>
                                                         <td>{{ $item->lvl }}</td>
                                                         <td>{{ $item->tipe_akun }}</td>
                                                         <td>
@@ -169,27 +167,7 @@
                                                             <span class="required">Type Neraca</span>
                                                         </label>
                                                         <!--end::Label-->
-                                                        <select class="form-select form-select-solid" required data-control="select2" data-hide-search="true" data-placeholder="Pilih Type Neraca" name="type_neraca">
-                                                            <option value="">Pilih Type Neraca</option>
-                                                            <option value="AKTIVA">AKTIVA</option>
-                                                            <option value="PASIVA">PASIVA</option>
-                                                            <option value="LIABILITAS">LIABILITAS</option>
-                                                            <option value="EKUITAS">EKUITAS</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="">Sub Type</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Pilih Sub Type" name="sub_type">
-                                                            <option value="">Pilih Sub Type</option>
-                                                            <option value="Kas & Bank">Kas & Bank</option>
-                                                            <option value="Piutang">Piutang</option>
-                                                            <option value="Liabilitas Jangka Pendek">Liabilitas Jangka Pendek</option>
-                                                            <option value="Liabilitas Jangka Panjang">Liabilitas Jangka Panjang</option>
-                                                        </select>
+                                                        <input class="form-control form-control-solid" type="text" name="type_neraca" required value=""/>
                                                     </div>
                                                     <div class="d-flex flex-column mb-7 fv-row">
                                                         <!--begin::Label-->
@@ -205,11 +183,7 @@
                                                             <span class="required">Tipe Akun</span>
                                                         </label>
                                                         <!--end::Label-->
-                                                        <select class="form-select form-select-solid" required data-control="select2" data-hide-search="true" data-placeholder="Pilih Tipe Akun" name="tipe_akun">
-                                                            <option value="">Pilih Tipe Akun</option>
-                                                            <option value="HEADER">HEADER</option>
-                                                            <option value="DETAIL">DETAIL</option>
-                                                        </select>
+                                                        <input class="form-control form-control-solid" type="text" name="tipe_akun" required value=""/>
                                                     </div>
                                                     <!--end::Input group-->
                                                     <!--begin::Actions-->
