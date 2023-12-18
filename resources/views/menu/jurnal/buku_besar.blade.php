@@ -36,7 +36,9 @@
                                                         <select class="form-control" id="jurnal_akun" name="jurnal_akun" data-control="select2" data-hide-search="false">
                                                             <option value="">Pilih Jurnal Akun</option>
                                                             @foreach ($jurnalakuns as $jurnal)
-                                                                <option value="{{ $jurnal->no_akun }}">{{ $jurnal->no_akun }} - {{ $jurnal->nama_akun }}</option>
+                                                                <option value="{{ $jurnal->no_akun }}" {{ request('jurnal_akun') == $jurnal->no_akun ? 'selected' : '' }}>
+                                                                    {{ $jurnal->no_akun }} - {{ $jurnal->nama_akun }}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
