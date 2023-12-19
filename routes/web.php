@@ -72,7 +72,8 @@ Route::get('/import-jurnal', [JurnalController::class, 'showImportForm'])->name(
 Route::post('/import-jurnal', [JurnalController::class, 'importExcel'])->name('import.jurnal');
 Route::get('download-example-excel-jurnal', [JurnalController::class, 'downloadExampleExcel'])->name('download.example.excel.jurnal');
 Route::get('/laporanBukuBesar', [JurnalController::class, 'laporanBukuBesar'])->middleware('auth')->name('laporanBukuBesar');
-Route::get('/printjurnal/{selectedYear}/{selectedMonth}/{selectedJurnalAccount}', [JurnalController::class, 'printJurnal'])->middleware('auth')->name('printjurnal');
+Route::get('/printjurnal/{selectedYear}/{selectedMonth}', [JurnalController::class, 'printJurnal'])->middleware('auth')->name('printjurnal');
+Route::get('/printbukubesar/{selectedYear}/{selectedMonth}/{selectedJurnalAccount}', [JurnalController::class, 'printBukuBesar'])->middleware('auth')->name('printbukubesar');
 
 // Master User
 Route::get('/user', [UserController::class, 'index'])->middleware('auth')->name('user');

@@ -22,7 +22,11 @@
                                             <!--end::Title-->
                                             @if (request('bulan') && request('tahun') && request('jurnal_akun') && $jurnals && count($jurnals) > 0)
                                             <div class="d-inline">
-                                                <a href="{{ route('printjurnal', ['selectedYear' => request('tahun'), 'selectedMonth' => request('bulan'), 'selectedJurnalAccount' => request('jurnal_akun'),]) }}" class="btn btn-sm btn-success" title="Unduh Laporan">Print Laporan</a> 
+                                                <a href="{{ route('printbukubesar', ['selectedYear' => request('tahun'), 'selectedMonth' => request('bulan'), 'selectedJurnalAccount' => request('jurnal_akun')]) }}" class="btn btn-sm btn-success" title="Unduh Laporan">Print Laporan</a> 
+                                            </div>
+                                            @elseif (request('bulan') && request('tahun') && $jurnals && count($jurnals) > 0)
+                                            <div class="d-inline">
+                                                <a href="{{ route('printjurnal', ['selectedYear' => request('tahun'), 'selectedMonth' => request('bulan')]) }}" class="btn btn-sm btn-success" title="Unduh Laporan">Print Laporan</a> 
                                             </div>
                                             @endif
                                         </div>
