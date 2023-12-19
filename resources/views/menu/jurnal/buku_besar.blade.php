@@ -72,7 +72,7 @@
                                         </div>
                                         <!-- End Form Filter -->
                                         <!--begin::Table-->
-                                        @if ($selectedMonth && $selectedYear && $jurnals )
+                                        @if ($selectedMonth && $selectedYear && $jurnals && count($jurnals) > 0)
                                         <div class="table-responsive my-10 mx-8">
                                             <table class="table table-striped gy-7 gs-7">
                                                 <thead>
@@ -156,10 +156,9 @@
                                                 <!--end::Alert-->
                                             </div>
                                         </div>
-                                        @endif
+                                        @else
                                         <!--end::Table-->
                                         <!--begin::Notice-->
-                                        @if (!$selectedMonth || !$selectedYear)
                                         <div class="my-10 mx-15">
                                             <!--begin::Notice-->
                                             <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6">
@@ -183,10 +182,15 @@
                                                     class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
                                                     <!--begin::Content-->
                                                     <div class="mb-3 mb-md-0 fw-bold">
-                                                        <h4 class="text-gray-900 fw-bolder">Silakan filter terlebih dahulu berdasarkan tanggal awal & tanggal akhir
-                                                        </h4>
-                                                        <div class="fs-6 text-gray-700 pe-7">Pilih tanggal awal & tanggal akhir pada formulir di atas untuk melihat
-                                                            data.</div>
+                                                        @if (!$selectedMonth || !$selectedYear)
+                                                            <h4 class="text-gray-900 fw-bolder">Silakan filter terlebih dahulu berdasarkan Bulan & Tahun
+                                                            </h4>
+                                                            <div class="fs-6 text-gray-700 pe-7">Pilih Bulan & Tahun pada formulir di atas untuk melihat
+                                                                data.</div>
+                                                        @else
+                                                            <h4 class="text-gray-900 fw-bolder">Data periode ini tidak tersedia</h4>
+                                                            <div class="fs-6 text-gray-700 pe-7">Pilih Bulan & Tahun yang berbeda untuk melihat data lainnya.</div>
+                                                        @endif
                                                     </div>
                                                     <!--end::Content-->
                                                 </div>

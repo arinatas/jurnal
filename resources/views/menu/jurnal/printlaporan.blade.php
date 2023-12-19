@@ -37,9 +37,6 @@
                             $formattedMonth = strtoupper(date('F', strtotime($selectedYear . '-' . $selectedMonth . '-01')));
                         @endphp
                         <h6>PERIODE {{ $formattedMonth }} {{ $selectedYear }}</h6>
-
-
-                        
                     </div>
                     <!-- /.col -->
                 </div>
