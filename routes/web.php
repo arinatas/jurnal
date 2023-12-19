@@ -103,6 +103,7 @@ Route::delete('/deleteRkat/{id}', [RkatController::class, 'destroy'])->middlewar
 Route::get('/import-rkat', [RkatController::class, 'showImportForm'])->name('import.rkat.view');
 Route::post('/import-rkat', [RkatController::class, 'importExcel'])->name('import.rkat');
 Route::get('download-example-excel', [RkatController::class, 'downloadExampleExcel'])->name('download.example.excel');
+Route::get('/exportrkat/{periode}', [RkatController::class, 'exportRkat'])->middleware('auth')->name('exportrkat');
 
 // Master Pecahan Uang
 Route::get('/pecahan', [PecahanUangController::class, 'index'])->middleware('auth')->name('pecahan');

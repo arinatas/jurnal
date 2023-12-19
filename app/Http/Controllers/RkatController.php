@@ -9,8 +9,10 @@ use Illuminate\Http\Request;
 use App\Models\JurnalAkun;
 use App\Models\Rkat;
 use Illuminate\Support\Facades\Hash;
-use App\Imports\RkatImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\RkatImport;
+use App\Exports\RkatExport;
+use Carbon\Carbon;
 
 class RkatController extends Controller
 {
@@ -261,6 +263,18 @@ class RkatController extends Controller
         } else {
             return redirect()->back()->with('downloadFail', 'File contoh tidak ditemukan.');
         }
-    } 
+    }
+
+    // Metode untuk Export ke Excel
+    public function exportRkat(Request $request, $periode)
+    {
+        $export = new RkatExport($periode);
+
+        $currentDate = Carbon::now()->format('d-m-y'); // Format the current date as desired
+
+        $fileName = 'data_rkat_' . $currentDate . '.xlsx';
+
+        return Excel::download($export, $fileName);
+    }
     
 }
