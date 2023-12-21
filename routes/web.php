@@ -72,7 +72,8 @@ Route::get('/import-jurnal', [JurnalController::class, 'showImportForm'])->name(
 Route::post('/import-jurnal', [JurnalController::class, 'importExcel'])->name('import.jurnal');
 Route::get('download-example-excel-jurnal', [JurnalController::class, 'downloadExampleExcel'])->name('download.example.excel.jurnal');
 Route::get('/laporanBukuBesar', [JurnalController::class, 'laporanBukuBesar'])->middleware('auth')->name('laporanBukuBesar');
-Route::get('/printjurnal/{selectedYear}/{selectedMonth}/{selectedJurnalAccount}', [JurnalController::class, 'printJurnal'])->middleware('auth')->name('printjurnal');
+Route::get('/printjurnal/{selectedYear}/{selectedMonth}', [JurnalController::class, 'printJurnal'])->middleware('auth')->name('printjurnal');
+Route::get('/printbukubesar/{selectedYear}/{selectedMonth}/{selectedJurnalAccount}', [JurnalController::class, 'printBukuBesar'])->middleware('auth')->name('printbukubesar');
 
 // Master User
 Route::get('/user', [UserController::class, 'index'])->middleware('auth')->name('user');
@@ -102,6 +103,7 @@ Route::delete('/deleteRkat/{id}', [RkatController::class, 'destroy'])->middlewar
 Route::get('/import-rkat', [RkatController::class, 'showImportForm'])->name('import.rkat.view');
 Route::post('/import-rkat', [RkatController::class, 'importExcel'])->name('import.rkat');
 Route::get('download-example-excel', [RkatController::class, 'downloadExampleExcel'])->name('download.example.excel');
+Route::get('/exportrkat/{periode}', [RkatController::class, 'exportRkat'])->middleware('auth')->name('exportrkat');
 
 // Master Pecahan Uang
 Route::get('/pecahan', [PecahanUangController::class, 'index'])->middleware('auth')->name('pecahan');

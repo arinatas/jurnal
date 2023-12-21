@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-9 text-center">
                         <h2>YAYASAN PRIMAKARA</h2>
-                        <h1 style="margin-bottom: 5px; margin-top: 5px;">JURNAL TRANSAKSI</h1>
+                        <h1 style="margin-bottom: 5px; margin-top: 5px;">LAPORAN BUKU BESAR</h1>
                         @php
                             $formattedMonth = strtoupper(date('F', strtotime($selectedYear . '-' . $selectedMonth . '-01')));
                         @endphp
