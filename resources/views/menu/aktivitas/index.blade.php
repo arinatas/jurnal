@@ -73,7 +73,7 @@
                                                                 <td>{{ $no }}</td>
                                                                 <td>{{ $item->no_akun }}</td>
                                                                 <td>{{ $item->nama_akun }}</td>
-                                                                <td>{{ $pendapatanAmounts[$item->no_akun] }}</td>
+                                                                <td class="text-left">@if($pendapatanAmounts[$item->no_akun] != 0) Rp. @currency($pendapatanAmounts[$item->no_akun]) @else - @endif</td>
                                                             </tr>
                                                             @php
                                                                 $no++;
@@ -82,10 +82,12 @@
                                                         @endforeach
                                                     </tbody>
                                                     <!-- Display total row after the loop -->
-                                                    <tfoot>
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Total Pendapatan</td>
-                                                            <td>{{ $totalPendapatan }}</td>
+                                                    <tfoot class="alert alert-primary">
+                                                        <tr class="fw-bold fs-4 text-gray-800">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px;">Total Pendapatan</span>
+                                                            </td>
+                                                            <td>Rp. @currency($totalPendapatan)</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
