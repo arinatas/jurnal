@@ -11,6 +11,7 @@ use App\Http\Controllers\UangFisikController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KasController;
 use App\Http\Controllers\CompareController;
+use App\Http\Controllers\NeracaController;
 use App\Http\Controllers\PecahanUangController;
 use App\Http\Controllers\CashFlowController;
 use App\Http\Controllers\JurnalAkunController;
@@ -35,8 +36,8 @@ Route::get('/', [LoginController::class, 'index'])->middleware('guest')->name('l
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::get('password', [ChangePasswordController::class, 'edit'])->name('password.edit')->middleware('auth');
-Route::patch('password', [ChangePasswordController::class, 'update'])->name('password.edit')->middleware('auth');
+// Route::get('password', [ChangePasswordController::class, 'edit'])->name('password.edit')->middleware('auth');
+// Route::patch('password', [ChangePasswordController::class, 'update'])->name('password.edit')->middleware('auth');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
@@ -56,6 +57,10 @@ Route::delete('/deleteUangFisik/{id}', [UangFisikController::class, 'destroy'])-
 // menu compare
 Route::get('/compare', [CompareController::class, 'index'])->middleware('auth')->name('compare');
 Route::get('/printCompare', [CompareController::class, 'printCompare'])->middleware('auth')->name('printCompare');
+
+// menu neraca
+Route::get('/neraca', [NeracaController::class, 'index'])->middleware('auth')->name('neraca');
+Route::get('/printNeraca', [NeracaController::class, 'printNeraca'])->middleware('auth')->name('printNeraca');
 
 
 // Menu Cash Flow
