@@ -98,9 +98,13 @@
                                                             <td colspan="3">Total Beban Sehubungan Program</td>
                                                             <td>{{ $totalBebanSehubunganProgram }}</td>
                                                         </tr>
+                                                        <!-- Calculate and store Laba Kotor in a variable -->
+                                                        @php
+                                                            $labaKotor = $totalPendapatan - $totalBebanSehubunganProgram;
+                                                        @endphp
                                                         <tr class="fw-bold fs-6 text-gray-800">
                                                             <td colspan="3">Laba Kotor</td>
-                                                            <td>{{ $totalPendapatan - $totalBebanSehubunganProgram }}</td>
+                                                            <td>{{ $labaKotor }}</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -453,6 +457,19 @@
                                                             <td colspan="3">Total Beban Yayasan</td>
                                                             <td>{{ $totalBebanYayasan }}</td>
                                                         </tr>
+                                                        <!-- Calculate and store TOTAL SEMUA BEBAN in a variable -->
+                                                        @php
+                                                            $allBeban = $totalBebanMarketing + $totalBebanKegiatan + $totalBebanGaji + $totalBebanOperasionalKantor + $totalBebanRumahTanggaKantor + $totalBebanSewa + $totalBebanPerawatan + $totalBebanYayasan;
+                                                            $labaRugiSebelumBunga = $labaKotor + $totalPendapatanLainlain - $allBeban;
+                                                        @endphp
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">TOTAL SEMUA BEBAN</td>
+                                                            <td>{{ $allBeban }}</td>
+                                                        </tr>
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Laba (Rugi) Sebelum Bunga Pinjaman, Pajak, dan Depresiasi</td>
+                                                            <td>{{ $labaRugiSebelumBunga }}</td>
+                                                        </tr>
                                                     </tfoot>
                                                 </table>
                                             </div>
@@ -491,6 +508,14 @@
                                                         <tr class="fw-bold fs-6 text-gray-800">
                                                             <td colspan="3">Total Beban Lain Lain</td>
                                                             <td>{{ $totalBebanLainlain }}</td>
+                                                        </tr>
+                                                        <!-- Calculate and store Laba Rugi Sebelum pajak dan depresiasi in a variable -->
+                                                        @php
+                                                            $labaRugiSebelumPajak = $labaRugiSebelumBunga - $totalBebanLainlain;
+                                                        @endphp
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Laba (Rugi) Sebelum Pajak dan Depresiasi</td>
+                                                            <td>{{ $labaRugiSebelumPajak }}</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -531,6 +556,15 @@
                                                             <td colspan="3">Total Pajak</td>
                                                             <td>{{ $totalPajak }}</td>
                                                         </tr>
+                                                        <!-- Calculate and store Laba rugi sebelum depresiasi in a variable -->
+                                                        @php
+                                                            $labaRugiSebelumDepresiasi = $labaRugiSebelumPajak - $totalPajak;
+                                                        @endphp
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Laba (Rugi) Sebelum Depresiasi</td>
+                                                            <td>{{ $labaRugiSebelumDepresiasi }}</td>
+                                                        </tr>
+                                                    </tfoot>
                                                     </tfoot>
                                                 </table>
                                             </div>
@@ -569,6 +603,18 @@
                                                         <tr class="fw-bold fs-6 text-gray-800">
                                                             <td colspan="3">Total Depresiasi</td>
                                                             <td>{{ $totalDepresiasi }}</td>
+                                                        </tr>
+                                                        <!-- Calculate and store Kenaikan (Penurunan) Aset Netto in a variable -->
+                                                        @php
+                                                            $kenaikanPenurunanAsetNettoTidakTerikat = $labaRugiSebelumDepresiasi - $totalDepresiasi;
+                                                        @endphp
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Kenaikan (Penurunan) Aset Netto Tidak Terikat</td>
+                                                            <td>{{ $kenaikanPenurunanAsetNettoTidakTerikat }}</td>
+                                                        </tr>
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Kenaikan (Penurunan) Aset Netto</td>
+                                                            <td>{{ $kenaikanPenurunanAsetNettoTidakTerikat }}</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
