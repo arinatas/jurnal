@@ -54,8 +54,53 @@
                                                     <!-- Display total row after the loop -->
                                                     <tfoot>
                                                         <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Total</td>
+                                                            <td colspan="3">Total Pendapatan</td>
                                                             <td>{{ $totalPendapatan }}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        @endif
+
+                                        <!-- Table for Beban Sehubungan Program -->
+                                        @if ($bebanSehubunganProgram->count() > 0)
+                                            <div class="table-responsive my-10 mx-8">
+                                                <h6 class="fs-2x fw-bolder mb-4">Beban Sehubungan Program</h6>
+                                                <table class="table table-striped gy-7 gs-7">
+                                                    <thead>
+                                                        <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                            <th class="min-w-50px">No</th>
+                                                            <th class="min-w-50px">No Akun</th>
+                                                            <th class="min-w-100px">Nama Akun</th>
+                                                            <th class="min-w-100px">Jumlah</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php $no = 1; $totalBebanSehubunganProgram = 0; @endphp
+                                                        @foreach ($bebanSehubunganProgram as $item)
+                                                            <tr>
+                                                                <td>{{ $no }}</td>
+                                                                <td>{{ $item->no_akun }}</td>
+                                                                <td>{{ $item->nama_akun }}</td>
+                                                                <!-- Add the corresponding total amount -->
+                                                                <td>{{ $bebanSehubunganProgramAmounts[$item->no_akun] }}</td>
+                                                            </tr>
+                                                            @php
+                                                                $no++;
+                                                                // Accumulate the total for Beban Sehubungan Program
+                                                                $totalBebanSehubunganProgram += $bebanSehubunganProgramAmounts[$item->no_akun];
+                                                            @endphp
+                                                        @endforeach
+                                                    </tbody>
+                                                    <!-- Display total row after the loop -->
+                                                    <tfoot>
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Total Beban Sehubungan Program</td>
+                                                            <td>{{ $totalBebanSehubunganProgram }}</td>
+                                                        </tr>
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Laba Kotor</td>
+                                                            <td>{{ $totalPendapatan - $totalBebanSehubunganProgram }}</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
