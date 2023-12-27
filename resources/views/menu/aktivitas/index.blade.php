@@ -22,7 +22,37 @@
                                             <!--end::Title-->
                                         </div>
                                         <!--end::Heading-->
+                                        <!-- Form Filter -->
+                                        <div class="card-px mt-10">                                            
+                                            <form action="{{ route('aktivitas') }}" method="GET">
+                                                <div class="row mb-3">
+                                                    <div class="col-md-3">
+                                                        <label for="bulan" class="form-label">Bulan :</label>
+                                                        <select class="form-control" id="bulan" name="bulan" data-control="select2" data-hide-search="false">
+                                                            <option value="">Pilih Bulan</option>
+                                                            @for ($i = 1; $i <= 12; $i++)
+                                                                <option value="{{ $i }}" {{ request('bulan') == $i ? 'selected' : '' }}>{{ date('F', mktime(0, 0, 0, $i, 1)) }}</option>
+                                                            @endfor
+                                                        </select>
+                                                    </div>
+                                                   <div class="col-md-3">
+                                                        <label for="tahun" class="form-label">Tahun :</label>
+                                                        <select class="form-control" id="tahun" name="tahun" data-control="select2" data-hide-search="false">
+                                                            <option value="">Pilih Tahun</option>
+                                                            @foreach($years as $year)
+                                                                <option value="{{ $year }}" {{ request('tahun') == $year ? 'selected' : '' }}>{{ $year }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                   <div class="col-md-3 mt-4">
+                                                        <button type="submit" class="btn btn-primary mt-4">Filter</button>
+                                                     </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <!-- End Form Filter -->
                                         <!--begin::Table-->
+                                        @if ($selectedMonth || $selectedYear)
                                         <!-- Table for Pendapatan -->
                                         @if ($pendapatan->count() > 0)
                                             <div class="table-responsive my-10 mx-8">
@@ -621,7 +651,7 @@
                                             </div>
                                         @endif
 
-                                        @if (!$pendapatan)
+                                        @else (!$selectedMonth || !$selectedYear)
                                         <div class="my-10 mx-15">
                                             <!--begin::Notice-->
                                             <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6">
@@ -640,7 +670,7 @@
                                                     <!--begin::Content-->
                                                     <div class="mb-3 mb-md-0 fw-bold">
                                                         <h4 class="text-gray-900 fw-bolder">Belum ada data</h4>
-                                                        <div class="fs-6 text-gray-700 pe-7">Belum ada data yang diinputkan</div>
+                                                        <div class="fs-6 text-gray-700 pe-7">Silahkan filter berdasarkan bulan & tahun terlebih dahulu</div>
                                                     </div>
                                                     <!--end::Content-->
                                                 </div>
