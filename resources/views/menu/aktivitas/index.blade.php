@@ -107,6 +107,474 @@
                                             </div>
                                         @endif
 
+                                        <!-- Table for Pendapatan Lain Lain-->
+                                        @if ($pendapatanLainlain->count() > 0)
+                                            <div class="table-responsive my-10 mx-8">
+                                                <h6 class="fs-2x fw-bolder mb-4">Pendapatan Lain Lain</h6>
+                                                <table class="table table-striped gy-7 gs-7">
+                                                    <thead>
+                                                        <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                            <th class="min-w-50px">No</th>
+                                                            <th class="min-w-50px">No Akun</th>
+                                                            <th class="min-w-100px">Nama Akun</th>
+                                                            <th class="min-w-100px">Jumlah</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php $no = 1; $totalPendapatanLainlain = 0; @endphp
+                                                        @foreach ($pendapatanLainlain as $item)
+                                                            <tr>
+                                                                <td>{{ $no }}</td>
+                                                                <td>{{ $item->no_akun }}</td>
+                                                                <td>{{ $item->nama_akun }}</td>
+                                                                <td>{{ $pendapatanLainlainAmounts[$item->no_akun] }}</td>
+                                                            </tr>
+                                                            @php
+                                                                $no++;
+                                                                $totalPendapatanLainlain += $pendapatanLainlainAmounts[$item->no_akun];
+                                                            @endphp
+                                                        @endforeach
+                                                    </tbody>
+                                                    <!-- Display total row after the loop -->
+                                                    <tfoot>
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Total Pendapatan Lain Lain</td>
+                                                            <td>{{ $totalPendapatanLainlain }}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        @endif
+
+                                        <!-- Table for Beban Marketing -->
+                                        @if ($bebanMarketing->count() > 0)
+                                            <div class="table-responsive my-10 mx-8">
+                                                <h6 class="fs-2x fw-bolder mb-4">Beban Marketing</h6>
+                                                <table class="table table-striped gy-7 gs-7">
+                                                    <thead>
+                                                        <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                            <th class="min-w-50px">No</th>
+                                                            <th class="min-w-50px">No Akun</th>
+                                                            <th class="min-w-100px">Nama Akun</th>
+                                                            <th class="min-w-100px">Jumlah</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php $no = 1; $totalBebanMarketing = 0; @endphp
+                                                        @foreach ($bebanMarketing as $item)
+                                                            <tr>
+                                                                <td>{{ $no }}</td>
+                                                                <td>{{ $item->no_akun }}</td>
+                                                                <td>{{ $item->nama_akun }}</td>
+                                                                <td>{{ $bebanMarketingAmounts[$item->no_akun] }}</td>
+                                                            </tr>
+                                                            @php
+                                                                $no++;
+                                                                $totalBebanMarketing += $bebanMarketingAmounts[$item->no_akun];
+                                                            @endphp
+                                                        @endforeach
+                                                    </tbody>
+                                                    <!-- Display total row after the loop -->
+                                                    <tfoot>
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Total Beban Marketing</td>
+                                                            <td>{{ $totalBebanMarketing }}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        @endif
+
+                                        <!-- Table for Beban Kegiatan -->
+                                        @if ($bebanKegiatan->count() > 0)
+                                            <div class="table-responsive my-10 mx-8">
+                                                <h6 class="fs-2x fw-bolder mb-4">Beban Kegiatan</h6>
+                                                <table class="table table-striped gy-7 gs-7">
+                                                    <thead>
+                                                        <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                            <th class="min-w-50px">No</th>
+                                                            <th class="min-w-50px">No Akun</th>
+                                                            <th class="min-w-100px">Nama Akun</th>
+                                                            <th class="min-w-100px">Jumlah</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php $no = 1; $totalBebanKegiatan = 0; @endphp
+                                                        @foreach ($bebanKegiatan as $item)
+                                                            <tr>
+                                                                <td>{{ $no }}</td>
+                                                                <td>{{ $item->no_akun }}</td>
+                                                                <td>{{ $item->nama_akun }}</td>
+                                                                <td>{{ $bebanKegiatanAmounts[$item->no_akun] }}</td>
+                                                            </tr>
+                                                            @php
+                                                                $no++;
+                                                                $totalBebanKegiatan += $bebanKegiatanAmounts[$item->no_akun];
+                                                            @endphp
+                                                        @endforeach
+                                                    </tbody>
+                                                    <!-- Display total row after the loop -->
+                                                    <tfoot>
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Total Beban Kegiatan</td>
+                                                            <td>{{ $totalBebanKegiatan }}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        @endif
+
+                                        <!-- Table for Beban Gaji -->
+                                        @if ($bebanGaji->count() > 0)
+                                            <div class="table-responsive my-10 mx-8">
+                                                <h6 class="fs-2x fw-bolder mb-4">Beban Gaji</h6>
+                                                <table class="table table-striped gy-7 gs-7">
+                                                    <thead>
+                                                        <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                            <th class="min-w-50px">No</th>
+                                                            <th class="min-w-50px">No Akun</th>
+                                                            <th class="min-w-100px">Nama Akun</th>
+                                                            <th class="min-w-100px">Jumlah</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php $no = 1; $totalBebanGaji = 0; @endphp
+                                                        @foreach ($bebanGaji as $item)
+                                                            <tr>
+                                                                <td>{{ $no }}</td>
+                                                                <td>{{ $item->no_akun }}</td>
+                                                                <td>{{ $item->nama_akun }}</td>
+                                                                <td>{{ $bebanGajiAmounts[$item->no_akun] }}</td>
+                                                            </tr>
+                                                            @php
+                                                                $no++;
+                                                                $totalBebanGaji += $bebanGajiAmounts[$item->no_akun];
+                                                            @endphp
+                                                        @endforeach
+                                                    </tbody>
+                                                    <!-- Display total row after the loop -->
+                                                    <tfoot>
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Total Beban Gaji</td>
+                                                            <td>{{ $totalBebanGaji }}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        @endif
+
+                                        <!-- Table for Beban Operasional Kantor -->
+                                        @if ($bebanOperasionalKantor->count() > 0)
+                                            <div class="table-responsive my-10 mx-8">
+                                                <h6 class="fs-2x fw-bolder mb-4">Beban Operasional Kantor</h6>
+                                                <table class="table table-striped gy-7 gs-7">
+                                                    <thead>
+                                                        <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                            <th class="min-w-50px">No</th>
+                                                            <th class="min-w-50px">No Akun</th>
+                                                            <th class="min-w-100px">Nama Akun</th>
+                                                            <th class="min-w-100px">Jumlah</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php $no = 1; $totalBebanOperasionalKantor = 0; @endphp
+                                                        @foreach ($bebanOperasionalKantor as $item)
+                                                            <tr>
+                                                                <td>{{ $no }}</td>
+                                                                <td>{{ $item->no_akun }}</td>
+                                                                <td>{{ $item->nama_akun }}</td>
+                                                                <td>{{ $bebanOperasionalKantorAmounts[$item->no_akun] }}</td>
+                                                            </tr>
+                                                            @php
+                                                                $no++;
+                                                                $totalBebanOperasionalKantor += $bebanOperasionalKantorAmounts[$item->no_akun];
+                                                            @endphp
+                                                        @endforeach
+                                                    </tbody>
+                                                    <!-- Display total row after the loop -->
+                                                    <tfoot>
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Total Beban Operasional Kantor</td>
+                                                            <td>{{ $totalBebanOperasionalKantor }}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        @endif
+
+                                        <!-- Table for Beban Rumah Tangga Kantor -->
+                                        @if ($bebanRumahTanggaKantor->count() > 0)
+                                            <div class="table-responsive my-10 mx-8">
+                                                <h6 class="fs-2x fw-bolder mb-4">Beban Rumah Tangga Kantor</h6>
+                                                <table class="table table-striped gy-7 gs-7">
+                                                    <thead>
+                                                        <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                            <th class="min-w-50px">No</th>
+                                                            <th class="min-w-50px">No Akun</th>
+                                                            <th class="min-w-100px">Nama Akun</th>
+                                                            <th class="min-w-100px">Jumlah</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php $no = 1; $totalBebanRumahTanggaKantor = 0; @endphp
+                                                        @foreach ($bebanRumahTanggaKantor as $item)
+                                                            <tr>
+                                                                <td>{{ $no }}</td>
+                                                                <td>{{ $item->no_akun }}</td>
+                                                                <td>{{ $item->nama_akun }}</td>
+                                                                <td>{{ $bebanRumahTanggaKantorAmounts[$item->no_akun] }}</td>
+                                                            </tr>
+                                                            @php
+                                                                $no++;
+                                                                $totalBebanRumahTanggaKantor += $bebanRumahTanggaKantorAmounts[$item->no_akun];
+                                                            @endphp
+                                                        @endforeach
+                                                    </tbody>
+                                                    <!-- Display total row after the loop -->
+                                                    <tfoot>
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Total Beban Rumah Tangga Kantor</td>
+                                                            <td>{{ $totalBebanRumahTanggaKantor }}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        @endif
+
+                                        <!-- Table for Beban Sewa -->
+                                        @if ($bebanSewa->count() > 0)
+                                            <div class="table-responsive my-10 mx-8">
+                                                <h6 class="fs-2x fw-bolder mb-4">Beban Sewa</h6>
+                                                <table class="table table-striped gy-7 gs-7">
+                                                    <thead>
+                                                        <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                            <th class="min-w-50px">No</th>
+                                                            <th class="min-w-50px">No Akun</th>
+                                                            <th class="min-w-100px">Nama Akun</th>
+                                                            <th class="min-w-100px">Jumlah</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php $no = 1; $totalBebanSewa = 0; @endphp
+                                                        @foreach ($bebanSewa as $item)
+                                                            <tr>
+                                                                <td>{{ $no }}</td>
+                                                                <td>{{ $item->no_akun }}</td>
+                                                                <td>{{ $item->nama_akun }}</td>
+                                                                <td>{{ $bebanSewaAmounts[$item->no_akun] }}</td>
+                                                            </tr>
+                                                            @php
+                                                                $no++;
+                                                                $totalBebanSewa += $bebanSewaAmounts[$item->no_akun];
+                                                            @endphp
+                                                        @endforeach
+                                                    </tbody>
+                                                    <!-- Display total row after the loop -->
+                                                    <tfoot>
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Total Beban Sewa</td>
+                                                            <td>{{ $totalBebanSewa }}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        @endif
+
+                                        <!-- Table for Beban Perawatan -->
+                                        @if ($bebanPerawatan->count() > 0)
+                                            <div class="table-responsive my-10 mx-8">
+                                                <h6 class="fs-2x fw-bolder mb-4">Beban Perawatan</h6>
+                                                <table class="table table-striped gy-7 gs-7">
+                                                    <thead>
+                                                        <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                            <th class="min-w-50px">No</th>
+                                                            <th class="min-w-50px">No Akun</th>
+                                                            <th class="min-w-100px">Nama Akun</th>
+                                                            <th class="min-w-100px">Jumlah</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php $no = 1; $totalBebanPerawatan = 0; @endphp
+                                                        @foreach ($bebanPerawatan as $item)
+                                                            <tr>
+                                                                <td>{{ $no }}</td>
+                                                                <td>{{ $item->no_akun }}</td>
+                                                                <td>{{ $item->nama_akun }}</td>
+                                                                <td>{{ $bebanPerawatanAmounts[$item->no_akun] }}</td>
+                                                            </tr>
+                                                            @php
+                                                                $no++;
+                                                                $totalBebanPerawatan += $bebanPerawatanAmounts[$item->no_akun];
+                                                            @endphp
+                                                        @endforeach
+                                                    </tbody>
+                                                    <!-- Display total row after the loop -->
+                                                    <tfoot>
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Total Beban Perawatan</td>
+                                                            <td>{{ $totalBebanPerawatan }}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        @endif
+
+                                        <!-- Table for Beban Yayasan -->
+                                        @if ($bebanYayasan->count() > 0)
+                                            <div class="table-responsive my-10 mx-8">
+                                                <h6 class="fs-2x fw-bolder mb-4">Beban Yayasan</h6>
+                                                <table class="table table-striped gy-7 gs-7">
+                                                    <thead>
+                                                        <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                            <th class="min-w-50px">No</th>
+                                                            <th class="min-w-50px">No Akun</th>
+                                                            <th class="min-w-100px">Nama Akun</th>
+                                                            <th class="min-w-100px">Jumlah</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php $no = 1; $totalBebanYayasan = 0; @endphp
+                                                        @foreach ($bebanYayasan as $item)
+                                                            <tr>
+                                                                <td>{{ $no }}</td>
+                                                                <td>{{ $item->no_akun }}</td>
+                                                                <td>{{ $item->nama_akun }}</td>
+                                                                <td>{{ $bebanYayasanAmounts[$item->no_akun] }}</td>
+                                                            </tr>
+                                                            @php
+                                                                $no++;
+                                                                $totalBebanYayasan += $bebanYayasanAmounts[$item->no_akun];
+                                                            @endphp
+                                                        @endforeach
+                                                    </tbody>
+                                                    <!-- Display total row after the loop -->
+                                                    <tfoot>
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Total Beban Yayasan</td>
+                                                            <td>{{ $totalBebanYayasan }}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        @endif
+
+                                        <!-- Table for Beban Lain lain -->
+                                        @if ($bebanLainlain->count() > 0)
+                                            <div class="table-responsive my-10 mx-8">
+                                                <h6 class="fs-2x fw-bolder mb-4">Beban Lain Lain</h6>
+                                                <table class="table table-striped gy-7 gs-7">
+                                                    <thead>
+                                                        <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                            <th class="min-w-50px">No</th>
+                                                            <th class="min-w-50px">No Akun</th>
+                                                            <th class="min-w-100px">Nama Akun</th>
+                                                            <th class="min-w-100px">Jumlah</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php $no = 1; $totalBebanLainlain = 0; @endphp
+                                                        @foreach ($bebanLainlain as $item)
+                                                            <tr>
+                                                                <td>{{ $no }}</td>
+                                                                <td>{{ $item->no_akun }}</td>
+                                                                <td>{{ $item->nama_akun }}</td>
+                                                                <td>{{ $bebanLainlainAmounts[$item->no_akun] }}</td>
+                                                            </tr>
+                                                            @php
+                                                                $no++;
+                                                                $totalBebanLainlain += $bebanLainlainAmounts[$item->no_akun];
+                                                            @endphp
+                                                        @endforeach
+                                                    </tbody>
+                                                    <!-- Display total row after the loop -->
+                                                    <tfoot>
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Total Beban Lain Lain</td>
+                                                            <td>{{ $totalBebanLainlain }}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        @endif
+
+                                        <!-- Table for Pajak -->
+                                        @if ($pajak->count() > 0)
+                                            <div class="table-responsive my-10 mx-8">
+                                                <h6 class="fs-2x fw-bolder mb-4">Pajak</h6>
+                                                <table class="table table-striped gy-7 gs-7">
+                                                    <thead>
+                                                        <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                            <th class="min-w-50px">No</th>
+                                                            <th class="min-w-50px">No Akun</th>
+                                                            <th class="min-w-100px">Nama Akun</th>
+                                                            <th class="min-w-100px">Jumlah</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php $no = 1; $totalPajak = 0; @endphp
+                                                        @foreach ($pajak as $item)
+                                                            <tr>
+                                                                <td>{{ $no }}</td>
+                                                                <td>{{ $item->no_akun }}</td>
+                                                                <td>{{ $item->nama_akun }}</td>
+                                                                <td>{{ $pajakAmounts[$item->no_akun] }}</td>
+                                                            </tr>
+                                                            @php
+                                                                $no++;
+                                                                $totalPajak += $pajakAmounts[$item->no_akun];
+                                                            @endphp
+                                                        @endforeach
+                                                    </tbody>
+                                                    <!-- Display total row after the loop -->
+                                                    <tfoot>
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Total Pajak</td>
+                                                            <td>{{ $totalPajak }}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        @endif
+
+                                        <!-- Table for Depresiasi -->
+                                        @if ($depresiasi->count() > 0)
+                                            <div class="table-responsive my-10 mx-8">
+                                                <h6 class="fs-2x fw-bolder mb-4">Depresiasi</h6>
+                                                <table class="table table-striped gy-7 gs-7">
+                                                    <thead>
+                                                        <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                            <th class="min-w-50px">No</th>
+                                                            <th class="min-w-50px">No Akun</th>
+                                                            <th class="min-w-100px">Nama Akun</th>
+                                                            <th class="min-w-100px">Jumlah</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php $no = 1; $totalDepresiasi = 0; @endphp
+                                                        @foreach ($depresiasi as $item)
+                                                            <tr>
+                                                                <td>{{ $no }}</td>
+                                                                <td>{{ $item->no_akun }}</td>
+                                                                <td>{{ $item->nama_akun }}</td>
+                                                                <td>{{ $depresiasiAmounts[$item->no_akun] }}</td>
+                                                            </tr>
+                                                            @php
+                                                                $no++;
+                                                                $totalDepresiasi += $depresiasiAmounts[$item->no_akun];
+                                                            @endphp
+                                                        @endforeach
+                                                    </tbody>
+                                                    <!-- Display total row after the loop -->
+                                                    <tfoot>
+                                                        <tr class="fw-bold fs-6 text-gray-800">
+                                                            <td colspan="3">Total Depresiasi</td>
+                                                            <td>{{ $totalDepresiasi }}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        @endif
+
                                         @if (!$pendapatan)
                                         <div class="my-10 mx-15">
                                             <!--begin::Notice-->
