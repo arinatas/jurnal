@@ -16,6 +16,7 @@ use App\Http\Controllers\CashFlowController;
 use App\Http\Controllers\JurnalAkunController;
 use App\Http\Controllers\RkatController;
 use App\Http\Controllers\JurnalController;
+use App\Http\Controllers\AktivitasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +75,9 @@ Route::get('download-example-excel-jurnal', [JurnalController::class, 'downloadE
 Route::get('/laporanBukuBesar', [JurnalController::class, 'laporanBukuBesar'])->middleware('auth')->name('laporanBukuBesar');
 Route::get('/printjurnal/{selectedYear}/{selectedMonth}', [JurnalController::class, 'printJurnal'])->middleware('auth')->name('printjurnal');
 Route::get('/printbukubesar/{selectedYear}/{selectedMonth}/{selectedJurnalAccount}', [JurnalController::class, 'printBukuBesar'])->middleware('auth')->name('printbukubesar');
+
+// Menu Aktivitas
+Route::get('/aktivitas', [AktivitasController::class, 'index'])->middleware('auth')->name('aktivitas');
 
 // Master User
 Route::get('/user', [UserController::class, 'index'])->middleware('auth')->name('user');
