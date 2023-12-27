@@ -144,6 +144,11 @@
 													<!--end::Wrapper-->
 												</div>
 											</div>
+											<div class="col-xl-12">
+												<div class="d-grid gap-2 col-6 mx-auto mb-15">
+													<a href="{{ route('printNeraca') }}" target="blank" class="btn btn-lg btn-success fs-6">Cetak</a>
+												</div>
+											</div>
 										</div>
 										<!--end::Row-->
 									</div>
