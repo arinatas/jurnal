@@ -83,6 +83,7 @@ Route::get('/printbukubesar/{selectedYear}/{selectedMonth}/{selectedJurnalAccoun
 
 // Menu Aktivitas
 Route::get('/aktivitas', [AktivitasController::class, 'index'])->middleware('auth')->name('aktivitas');
+Route::get('/printAktivitas/{selectedYear}/{selectedMonth}', [AktivitasController::class, 'printAktivitas'])->middleware('auth')->name('printAktivitas');
 
 // Master User
 Route::get('/user', [UserController::class, 'index'])->middleware('auth')->name('user');

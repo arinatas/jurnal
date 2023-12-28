@@ -20,6 +20,13 @@
                                                     <h2 class="fs-2x fw-bolder mb-0">{{ $title }}</h2>
                                                 </div>
                                             <!--end::Title-->
+                                            <!--begin::Button Print-->
+                                            @if (request('bulan') && request('tahun'))
+                                            <div class="d-inline">
+                                                <a href="{{ route('printAktivitas', ['selectedYear' => request('tahun'), 'selectedMonth' => request('bulan')]) }}" class="btn btn-sm btn-success" title="Unduh Laporan">Print Laporan</a> 
+                                            </div>
+                                            @endif
+                                            <!--begin::Button Print-->
                                         </div>
                                         <!--end::Heading-->
                                         <!-- Form Filter -->
