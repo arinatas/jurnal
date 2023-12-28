@@ -82,12 +82,12 @@
                                                         @endforeach
                                                     </tbody>
                                                     <!-- Display total row after the loop -->
-                                                    <tfoot class="alert alert-primary">
-                                                        <tr class="fw-bold fs-4 text-gray-800">
+                                                    <tfoot>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-primary">
                                                             <td colspan="3">
-                                                                <span style="margin-left: 80px;">Total Pendapatan</span>
+                                                                <span style="margin-left: 80px; font-weight: bold;">Total Pendapatan</span>
                                                             </td>
-                                                            <td>Rp. @currency($totalPendapatan)</td>
+                                                            <td style="font-weight: bold;">Rp. @currency($totalPendapatan)</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -114,8 +114,7 @@
                                                                 <td>{{ $no }}</td>
                                                                 <td>{{ $item->no_akun }}</td>
                                                                 <td>{{ $item->nama_akun }}</td>
-                                                                <!-- Add the corresponding total amount -->
-                                                                <td>{{ $bebanSehubunganProgramAmounts[$item->no_akun] }}</td>
+                                                                <td class="text-left">@if($bebanSehubunganProgramAmounts[$item->no_akun] != 0) Rp. @currency($bebanSehubunganProgramAmounts[$item->no_akun]) @else - @endif</td>
                                                             </tr>
                                                             @php
                                                                 $no++;
@@ -126,17 +125,21 @@
                                                     </tbody>
                                                     <!-- Display total row after the loop -->
                                                     <tfoot>
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Total Beban Sehubungan Program</td>
-                                                            <td>{{ $totalBebanSehubunganProgram }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-primary">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Total Beban Sehubungan Program</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency($totalBebanSehubunganProgram)</td>
                                                         </tr>
                                                         <!-- Calculate and store Laba Kotor in a variable -->
                                                         @php
                                                             $labaKotor = $totalPendapatan - $totalBebanSehubunganProgram;
                                                         @endphp
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Laba Kotor</td>
-                                                            <td>{{ $labaKotor }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-success">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Laba Kotor</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency($labaKotor)</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -163,7 +166,7 @@
                                                                 <td>{{ $no }}</td>
                                                                 <td>{{ $item->no_akun }}</td>
                                                                 <td>{{ $item->nama_akun }}</td>
-                                                                <td>{{ $pendapatanLainlainAmounts[$item->no_akun] }}</td>
+                                                                <td class="text-left">@if($pendapatanLainlainAmounts[$item->no_akun] != 0) Rp. @currency($pendapatanLainlainAmounts[$item->no_akun]) @else - @endif</td>
                                                             </tr>
                                                             @php
                                                                 $no++;
@@ -173,9 +176,11 @@
                                                     </tbody>
                                                     <!-- Display total row after the loop -->
                                                     <tfoot>
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Total Pendapatan Lain Lain</td>
-                                                            <td>{{ $totalPendapatanLainlain }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-primary">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Total Pendapatan Lain Lain</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency($totalPendapatanLainlain)</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -202,7 +207,7 @@
                                                                 <td>{{ $no }}</td>
                                                                 <td>{{ $item->no_akun }}</td>
                                                                 <td>{{ $item->nama_akun }}</td>
-                                                                <td>{{ $bebanMarketingAmounts[$item->no_akun] }}</td>
+                                                                <td class="text-left">@if($bebanMarketingAmounts[$item->no_akun] != 0) Rp. @currency($bebanMarketingAmounts[$item->no_akun]) @else - @endif</td>
                                                             </tr>
                                                             @php
                                                                 $no++;
@@ -212,9 +217,11 @@
                                                     </tbody>
                                                     <!-- Display total row after the loop -->
                                                     <tfoot>
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Total Beban Marketing</td>
-                                                            <td>{{ $totalBebanMarketing }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-primary">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Total Beban Marketing</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency($totalBebanMarketing)</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -241,7 +248,7 @@
                                                                 <td>{{ $no }}</td>
                                                                 <td>{{ $item->no_akun }}</td>
                                                                 <td>{{ $item->nama_akun }}</td>
-                                                                <td>{{ $bebanKegiatanAmounts[$item->no_akun] }}</td>
+                                                                <td class="text-left">@if($bebanKegiatanAmounts[$item->no_akun] != 0) Rp. @currency($bebanKegiatanAmounts[$item->no_akun]) @else - @endif</td>
                                                             </tr>
                                                             @php
                                                                 $no++;
@@ -251,9 +258,11 @@
                                                     </tbody>
                                                     <!-- Display total row after the loop -->
                                                     <tfoot>
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Total Beban Kegiatan</td>
-                                                            <td>{{ $totalBebanKegiatan }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-primary">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Total Beban Kegiatan</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency($totalBebanKegiatan)</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -280,7 +289,7 @@
                                                                 <td>{{ $no }}</td>
                                                                 <td>{{ $item->no_akun }}</td>
                                                                 <td>{{ $item->nama_akun }}</td>
-                                                                <td>{{ $bebanGajiAmounts[$item->no_akun] }}</td>
+                                                                <td class="text-left">@if($bebanGajiAmounts[$item->no_akun] != 0) Rp. @currency($bebanGajiAmounts[$item->no_akun]) @else - @endif</td>
                                                             </tr>
                                                             @php
                                                                 $no++;
@@ -290,9 +299,11 @@
                                                     </tbody>
                                                     <!-- Display total row after the loop -->
                                                     <tfoot>
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Total Beban Gaji</td>
-                                                            <td>{{ $totalBebanGaji }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-primary">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Total Beban Gaji</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency($totalBebanGaji)</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -319,7 +330,7 @@
                                                                 <td>{{ $no }}</td>
                                                                 <td>{{ $item->no_akun }}</td>
                                                                 <td>{{ $item->nama_akun }}</td>
-                                                                <td>{{ $bebanOperasionalKantorAmounts[$item->no_akun] }}</td>
+                                                                <td class="text-left">@if($bebanOperasionalKantorAmounts[$item->no_akun] != 0) Rp. @currency($bebanOperasionalKantorAmounts[$item->no_akun]) @else - @endif</td>
                                                             </tr>
                                                             @php
                                                                 $no++;
@@ -329,9 +340,11 @@
                                                     </tbody>
                                                     <!-- Display total row after the loop -->
                                                     <tfoot>
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Total Beban Operasional Kantor</td>
-                                                            <td>{{ $totalBebanOperasionalKantor }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-primary">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Total Beban Operasional Kantor</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency($totalBebanOperasionalKantor)</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -358,7 +371,7 @@
                                                                 <td>{{ $no }}</td>
                                                                 <td>{{ $item->no_akun }}</td>
                                                                 <td>{{ $item->nama_akun }}</td>
-                                                                <td>{{ $bebanRumahTanggaKantorAmounts[$item->no_akun] }}</td>
+                                                                <td class="text-left">@if($bebanRumahTanggaKantorAmounts[$item->no_akun] != 0) Rp. @currency($bebanRumahTanggaKantorAmounts[$item->no_akun]) @else - @endif</td>
                                                             </tr>
                                                             @php
                                                                 $no++;
@@ -368,9 +381,11 @@
                                                     </tbody>
                                                     <!-- Display total row after the loop -->
                                                     <tfoot>
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Total Beban Rumah Tangga Kantor</td>
-                                                            <td>{{ $totalBebanRumahTanggaKantor }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-primary">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Total Beban Rumah Tangga Kantor</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency($totalBebanRumahTanggaKantor)</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -397,7 +412,7 @@
                                                                 <td>{{ $no }}</td>
                                                                 <td>{{ $item->no_akun }}</td>
                                                                 <td>{{ $item->nama_akun }}</td>
-                                                                <td>{{ $bebanSewaAmounts[$item->no_akun] }}</td>
+                                                                <td class="text-left">@if($bebanSewaAmounts[$item->no_akun] != 0) Rp. @currency($bebanSewaAmounts[$item->no_akun]) @else - @endif</td>
                                                             </tr>
                                                             @php
                                                                 $no++;
@@ -407,9 +422,11 @@
                                                     </tbody>
                                                     <!-- Display total row after the loop -->
                                                     <tfoot>
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Total Beban Sewa</td>
-                                                            <td>{{ $totalBebanSewa }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-primary">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Total Beban Sewa</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency($totalBebanSewa)</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -436,7 +453,7 @@
                                                                 <td>{{ $no }}</td>
                                                                 <td>{{ $item->no_akun }}</td>
                                                                 <td>{{ $item->nama_akun }}</td>
-                                                                <td>{{ $bebanPerawatanAmounts[$item->no_akun] }}</td>
+                                                                <td class="text-left">@if($bebanPerawatanAmounts[$item->no_akun] != 0) Rp. @currency($bebanPerawatanAmounts[$item->no_akun]) @else - @endif</td>
                                                             </tr>
                                                             @php
                                                                 $no++;
@@ -446,9 +463,11 @@
                                                     </tbody>
                                                     <!-- Display total row after the loop -->
                                                     <tfoot>
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Total Beban Perawatan</td>
-                                                            <td>{{ $totalBebanPerawatan }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-primary">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Total Beban Perawatan</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency($totalBebanPerawatan)</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -475,7 +494,7 @@
                                                                 <td>{{ $no }}</td>
                                                                 <td>{{ $item->no_akun }}</td>
                                                                 <td>{{ $item->nama_akun }}</td>
-                                                                <td>{{ $bebanYayasanAmounts[$item->no_akun] }}</td>
+                                                                <td class="text-left">@if($bebanYayasanAmounts[$item->no_akun] != 0) Rp. @currency($bebanYayasanAmounts[$item->no_akun]) @else - @endif</td>
                                                             </tr>
                                                             @php
                                                                 $no++;
@@ -485,22 +504,28 @@
                                                     </tbody>
                                                     <!-- Display total row after the loop -->
                                                     <tfoot>
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Total Beban Yayasan</td>
-                                                            <td>{{ $totalBebanYayasan }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-primary">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Total Beban Yayasan</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency($totalBebanYayasan)</td>
                                                         </tr>
                                                         <!-- Calculate and store TOTAL SEMUA BEBAN in a variable -->
                                                         @php
                                                             $allBeban = $totalBebanMarketing + $totalBebanKegiatan + $totalBebanGaji + $totalBebanOperasionalKantor + $totalBebanRumahTanggaKantor + $totalBebanSewa + $totalBebanPerawatan + $totalBebanYayasan;
                                                             $labaRugiSebelumBunga = $labaKotor + $totalPendapatanLainlain - $allBeban;
                                                         @endphp
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">TOTAL SEMUA BEBAN</td>
-                                                            <td>{{ $allBeban }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-danger">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Total Semua Beban</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency( $allBeban )</td>
                                                         </tr>
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Laba (Rugi) Sebelum Bunga Pinjaman, Pajak, dan Depresiasi</td>
-                                                            <td>{{ $labaRugiSebelumBunga }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-success">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Laba (Rugi) Sebelum Bunga Pinjaman, Pajak, dan Depresiasi</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency( $labaRugiSebelumBunga )</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -527,7 +552,7 @@
                                                                 <td>{{ $no }}</td>
                                                                 <td>{{ $item->no_akun }}</td>
                                                                 <td>{{ $item->nama_akun }}</td>
-                                                                <td>{{ $bebanLainlainAmounts[$item->no_akun] }}</td>
+                                                                <td class="text-left">@if($bebanLainlainAmounts[$item->no_akun] != 0) Rp. @currency($bebanLainlainAmounts[$item->no_akun]) @else - @endif</td>
                                                             </tr>
                                                             @php
                                                                 $no++;
@@ -537,17 +562,21 @@
                                                     </tbody>
                                                     <!-- Display total row after the loop -->
                                                     <tfoot>
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Total Beban Lain Lain</td>
-                                                            <td>{{ $totalBebanLainlain }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-primary">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Total Beban Lain Lain</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency( $totalBebanLainlain )</td>
                                                         </tr>
                                                         <!-- Calculate and store Laba Rugi Sebelum pajak dan depresiasi in a variable -->
                                                         @php
                                                             $labaRugiSebelumPajak = $labaRugiSebelumBunga - $totalBebanLainlain;
                                                         @endphp
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Laba (Rugi) Sebelum Pajak dan Depresiasi</td>
-                                                            <td>{{ $labaRugiSebelumPajak }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-success">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Laba (Rugi) Sebelum Pajak dan Depresiasi</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency( $labaRugiSebelumPajak )</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -574,7 +603,7 @@
                                                                 <td>{{ $no }}</td>
                                                                 <td>{{ $item->no_akun }}</td>
                                                                 <td>{{ $item->nama_akun }}</td>
-                                                                <td>{{ $pajakAmounts[$item->no_akun] }}</td>
+                                                                <td class="text-left">@if($pajakAmounts[$item->no_akun] != 0) Rp. @currency($pajakAmounts[$item->no_akun]) @else - @endif</td>
                                                             </tr>
                                                             @php
                                                                 $no++;
@@ -584,17 +613,21 @@
                                                     </tbody>
                                                     <!-- Display total row after the loop -->
                                                     <tfoot>
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Total Pajak</td>
-                                                            <td>{{ $totalPajak }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-primary">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Total Pajak</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency( $totalPajak )</td>
                                                         </tr>
                                                         <!-- Calculate and store Laba rugi sebelum depresiasi in a variable -->
                                                         @php
                                                             $labaRugiSebelumDepresiasi = $labaRugiSebelumPajak - $totalPajak;
                                                         @endphp
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Laba (Rugi) Sebelum Depresiasi</td>
-                                                            <td>{{ $labaRugiSebelumDepresiasi }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-success">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Laba (Rugi) Sebelum Depresiasi</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency($labaRugiSebelumDepresiasi)</td>
                                                         </tr>
                                                     </tfoot>
                                                     </tfoot>
@@ -622,7 +655,7 @@
                                                                 <td>{{ $no }}</td>
                                                                 <td>{{ $item->no_akun }}</td>
                                                                 <td>{{ $item->nama_akun }}</td>
-                                                                <td>{{ $depresiasiAmounts[$item->no_akun] }}</td>
+                                                                <td class="text-left">@if($depresiasiAmounts[$item->no_akun] != 0) Rp. @currency($depresiasiAmounts[$item->no_akun]) @else - @endif</td>
                                                             </tr>
                                                             @php
                                                                 $no++;
@@ -632,21 +665,27 @@
                                                     </tbody>
                                                     <!-- Display total row after the loop -->
                                                     <tfoot>
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Total Depresiasi</td>
-                                                            <td>{{ $totalDepresiasi }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-primary">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Total Depresiasi</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency( $totalDepresiasi )</td>
                                                         </tr>
                                                         <!-- Calculate and store Kenaikan (Penurunan) Aset Netto in a variable -->
                                                         @php
                                                             $kenaikanPenurunanAsetNettoTidakTerikat = $labaRugiSebelumDepresiasi - $totalDepresiasi;
                                                         @endphp
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Kenaikan (Penurunan) Aset Netto Tidak Terikat</td>
-                                                            <td>{{ $kenaikanPenurunanAsetNettoTidakTerikat }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-success">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Kenaikan (Penurunan) Aset Netto Tidak Terikat</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency( $kenaikanPenurunanAsetNettoTidakTerikat )</td>
                                                         </tr>
-                                                        <tr class="fw-bold fs-6 text-gray-800">
-                                                            <td colspan="3">Kenaikan (Penurunan) Aset Netto</td>
-                                                            <td>{{ $kenaikanPenurunanAsetNettoTidakTerikat }}</td>
+                                                        <tr class="fw-bold fs-4 text-gray-800 alert alert-success">
+                                                            <td colspan="3">
+                                                                <span style="margin-left: 80px; font-weight: bold;">Kenaikan (Penurunan) Aset Netto</span>
+                                                            </td>
+                                                            <td style="font-weight: bold;">Rp. @currency( $kenaikanPenurunanAsetNettoTidakTerikat )</td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
