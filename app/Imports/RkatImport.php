@@ -27,9 +27,9 @@ class RkatImport implements ToModel, WithHeadingRow, WithValidation // Gunakan W
     {
         return [
             // Sesuaikan aturan validasi dengan kunci (header) yang Anda tetapkan
-            'kode_rkat' => 'required|string|max:100',
+            'kode_rkat' => 'required',
             'no_akun' => 'required|max:100',
-            'keterangan' => 'required|string|max:255',
+            'keterangan' => 'required|string',
             'periode' => 'required|string|max:100',
         ];
     }
