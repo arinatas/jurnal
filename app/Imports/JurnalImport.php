@@ -49,7 +49,7 @@ class JurnalImport implements ToModel, WithHeadingRow, WithValidation
             'periode_jurnal' => 'required|date_format:Y-m-d',
             'type_jurnal' => 'required|string|max:100',
             'id_rkat' => 'required|integer',
-            'uraian' => 'required|string|max:255',
+            'uraian' => 'required|string',
             'no_bukti' => 'required|string|max:100',
             'debit' => 'required|integer',
             'kredit' => 'required|integer',
