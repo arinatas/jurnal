@@ -16,6 +16,7 @@ use App\Http\Controllers\CashFlowController;
 use App\Http\Controllers\JurnalAkunController;
 use App\Http\Controllers\RkatController;
 use App\Http\Controllers\JurnalController;
+use App\Http\Controllers\DivisiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,4 +110,10 @@ Route::get('/editPecahan/{id}', [PecahanUangController::class, 'edit'])->middlew
 Route::post('/updatePecahan/{id}', [PecahanUangController::class, 'update'])->middleware('auth')->name('update.pecahan');
 Route::delete('/deletePecahan/{id}', [PecahanUangController::class, 'destroy'])->middleware('auth')->name('destroy.pecahan');
 
+// Master Divisi
+Route::get('/divisi', [DivisiController::class, 'index'])->middleware('auth')->name('divisi');
+Route::post('/divisi', [DivisiController::class, 'store'])->middleware('auth')->name('insert.divisi');
+Route::get('/editDivisi/{id}', [DivisiController::class, 'edit'])->middleware('auth')->name('edit.divisi');
+Route::post('/updateDivisi/{id}', [DivisiController::class, 'update'])->middleware('auth')->name('update.divisi');
+Route::delete('/deleteDivisi/{id}', [DivisiController::class, 'destroy'])->middleware('auth')->name('destroy.divisi');
 
