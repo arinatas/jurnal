@@ -21,7 +21,12 @@
                                                 </div>
                                                 <div class="d-inline">
                                                     <a href="#" class="btn btn-sm btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#kt_modal_rkat">Tambah</a>
-                                                    <a href="{{ route('download.example.excel.jurnal') }}" class="btn btn-sm btn-secondary">Download Contoh Excel</a>
+                                                    <a href="{{ route('download.example.excel') }}" class="btn btn-sm btn-secondary">Download Contoh Excel</a>
+                                                    <!-- Begin export -->
+                                                    @if (request('periode'))
+                                                        <a href="{{ route('exportrkat', ['periode' => request('periode')]) }}" class="btn btn-sm btn-info" title="Export Excel">Export RKAT</a>
+                                                    @endif
+                                                    <!-- End export -->
                                                 </div>
                                             <!--end::Title-->
                                         </div>
@@ -102,13 +107,14 @@
                                             <table class="table table-striped gy-7 gs-7">
                                                 <thead>
                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
-                                                        <th class="min-w-50px">No</th>
-                                                        <th class="min-w-100px">Kode RKAT</th>
-                                                        <th class="min-w-100px">Keterangan</th>
-                                                        <th class="min-w-100px">No Akun</th>
-                                                        <th class="min-w-100px">Nama Akun</th>
-                                                        <th class="min-w-100px">Periode</th>
-                                                        <th class="min-w-100px">Action</th>
+                                                        <th class="min-w-50px text-center">No</th>
+                                                        <th class="min-w-100px text-center">ID RKAT</th>
+                                                        <th class="min-w-100px text-center">Kode RKAT</th>
+                                                        <th class="min-w-100px text-center">Keterangan</th>
+                                                        <th class="min-w-100px text-center">No Akun</th>
+                                                        <th class="min-w-100px text-center">Nama Akun</th>
+                                                        <th class="min-w-100px text-center">Periode</th>
+                                                        <th class="min-w-100px text-center">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -117,12 +123,13 @@
                                                     @endphp
                                                     @foreach ($rkats as $item)
                                                     <tr>
-                                                        <td>{{ $no }}</td>
-                                                        <td>{{ $item->kode_rkat }}</td>
-                                                        <td>{{ $item->keterangan }}</td>
-                                                        <td>{{ $item->no_akun }}</td>
-                                                        <td>{{ $item->jurnalAkun->nama_akun }}</td>
-                                                        <td>{{ $item->periode }}</td>
+                                                        <td class="text-center">{{ $no }}</td>
+                                                        <td class="text-center">{{ $item->id }}</td>
+                                                        <td class="text-center">{{ $item->kode_rkat }}</td>
+                                                        <td class="text-left">{{ $item->keterangan }}</td>
+                                                        <td class="text-center">{{ $item->no_akun }}</td>
+                                                        <td class="text-center">{{ $item->jurnalAkun->nama_akun }}</td>
+                                                        <td class="text-center">{{ $item->periode }}</td>
                                                         <td>
                                                             <a href="{{ route('edit.rkat', $item->id ) }}" class="btn btn-sm btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                                             <form id="form-delete" action="{{ route('destroy.rkat', $item->id ) }}" method="POST"

@@ -9,8 +9,10 @@ use Illuminate\Http\Request;
 use App\Models\JurnalAkun;
 use App\Models\Rkat;
 use Illuminate\Support\Facades\Hash;
-use App\Imports\RkatImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\RkatImport;
+use App\Exports\RkatExport;
+use Carbon\Carbon;
 
 class RkatController extends Controller
 {
@@ -192,29 +194,28 @@ class RkatController extends Controller
         }
     
         $file = $request->file('excel_file');
-
+    
         // Validasi Data duplikat atau dengan email & bulan & tahun yang sama sebelum di impor
         $import = new RkatImport;
         $rows = Excel::toCollection($import, $file)->first();
-
+    
         $duplicateEntries = [];
-
+    
         foreach ($rows as $row) {
             $kode_rkat = $row['kode_rkat'];
             $periode = $row['periode'];
-
+    
             // Periksa apakah kombinasi email, bulan, dan tahun sudah ada di database
             if (Rkat::where('kode_rkat', $kode_rkat)->where('periode', $periode)->exists()) {
                 $duplicateEntries[] = "Kode RKAT: $kode_rkat, Periode: $periode";
             }
         }
-
+    
         if (!empty($duplicateEntries)) {
             $errorMessage = 'Data Kode RKAT dengan Periode yang sama sudah ada:';
             foreach ($duplicateEntries as $entry) {
-                $errorMessage .= "$entry";
+                $errorMessage .= "<br>$entry";
             }
-
             return redirect()->back()->with('importError', $errorMessage);
         }
         // END Validasi Data duplikat atau dengan email & bulan & tahun yang sama sebelum di impor
@@ -242,9 +243,10 @@ class RkatController extends Controller
                 ->withInput();
         } catch (\Exception $e) {
             DB::rollBack(); // Rollback jika terjadi kesalahan umum selama impor
-            return redirect()->back()->with('importError', 'Terjadi kesalahan selama impor. Silakan coba lagi.');
+            $errorMessage = 'Terjadi kesalahan selama impor. ';
+            $errorMessage .= 'Detail Kesalahan: ' . $e->getMessage(); // Tambahkan detail kesalahan umum
+            return redirect()->back()->with('importError', $errorMessage);
         }
-    
         return redirect()->back()->with('importSuccess', 'Data berhasil diimpor.');
     }
 
@@ -261,6 +263,18 @@ class RkatController extends Controller
         } else {
             return redirect()->back()->with('downloadFail', 'File contoh tidak ditemukan.');
         }
-    } 
+    }
+
+    // Metode untuk Export ke Excel
+    public function exportRkat(Request $request, $periode)
+    {
+        $export = new RkatExport($periode);
+
+        $currentDate = Carbon::now()->format('d-m-y'); // Format the current date as desired
+
+        $fileName = 'data_rkat_' . $currentDate . '.xlsx';
+
+        return Excel::download($export, $fileName);
+    }
     
 }

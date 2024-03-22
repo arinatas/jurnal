@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Piutang;
 use App\Models\TotalPiutang;
-use App\Models\Kas;
+// use App\Models\Kas;
 use Illuminate\Support\Facades\Hash;
 
 class PiutangController extends Controller
@@ -96,10 +96,10 @@ class PiutangController extends Controller
             $totalPiutang->total_piutang = $totalPiutang->total_piutang + $jumlah_piutang;
             $totalPiutang->save();
             
-            // mengurangi jumlah kas se jumlah piutang
-            $totalKas = Kas::findOrFail("1");
-            $totalKas->kas = $totalKas->kas - $jumlah_piutang;
-            $totalKas->save();
+            // // mengurangi jumlah kas se jumlah piutang
+            // $totalKas = Kas::findOrFail("1");
+            // $totalKas->kas = $totalKas->kas - $jumlah_piutang;
+            // $totalKas->save();
 
             DB::commit();
 
@@ -165,10 +165,10 @@ class PiutangController extends Controller
             $totalPiutang->total_piutang = $totalPiutang->total_piutang - $jumlah_piutang;
             $totalPiutang->save();
             
-            // menambahkan ke kas sejumlah piutang (dan nanti untuk pengurangannya bakal di catat di cashflow)
-            $totalKas = Kas::findOrFail("1");
-            $totalKas->kas = $totalKas->kas + $jumlah_piutang;
-            $totalKas->save();
+            // // menambahkan ke kas sejumlah piutang (dan nanti untuk pengurangannya bakal di catat di cashflow)
+            // $totalKas = Kas::findOrFail("1");
+            // $totalKas->kas = $totalKas->kas + $jumlah_piutang;
+            // $totalKas->save();
 
             DB::commit();
 

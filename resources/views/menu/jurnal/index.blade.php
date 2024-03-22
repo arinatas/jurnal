@@ -176,7 +176,7 @@
                                                     <!--begin::Content-->
                                                     <div class="mb-3 mb-md-0 fw-bold">
                                                         <h4 class="text-gray-900 fw-bolder">Belum ada data</h4>
-                                                        <div class="fs-6 text-gray-700 pe-7">Belum ada data yang diinputkan</div>
+                                                        <div class="fs-6 text-gray-700 pe-7">Belum ada data yang diinputkan hari ini</div>
                                                     </div>
                                                     <!--end::Content-->
                                                 </div>

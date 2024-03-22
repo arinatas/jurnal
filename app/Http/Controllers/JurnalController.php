@@ -337,8 +337,95 @@ class JurnalController extends Controller
             'totalKredit' => $totalKredit,
             'years' => $years,
             'selectedYear' => $selectedYear, 
-            'selectedMonth' => $selectedMonth, 
+            'selectedMonth' => $selectedMonth,
+            'selectedJurnalAccount' => $selectedJurnalAccount,
         ]);
     }   
+
+    // Metode untuk Print Buku Besar
+    public function printBukuBesar($selectedYear, $selectedMonth, $selectedJurnalAccount)
+    {
+        // Query for CashFlows with optional date filter
+        $jurnalsQuery = Jurnal::with('rkat:id,kode_rkat')
+            ->with('jurnalAkun');
+    
+            if ($selectedYear) {
+                $jurnalsQuery->whereYear('periode_jurnal', $selectedYear);
+            }
+        
+            if ($selectedMonth) {
+                $jurnalsQuery->whereMonth('periode_jurnal', $selectedMonth);
+            }
+
+            if ($selectedJurnalAccount) {
+                $jurnalsQuery->whereHas('rkat.jurnalAkun', function ($query) use ($selectedJurnalAccount) {
+                    $query->where('no_akun', $selectedJurnalAccount);
+                });
+            }
+
+        // Execute the query
+        $jurnals = $jurnalsQuery->get();
+    
+        // Calculate total debit and total kredit
+        $totalDebit = $jurnals->sum('debit');
+        $totalKredit = $jurnals->sum('kredit');
+    
+        // Get the list of kode_rkat options
+        $rkatOptions = Rkat::pluck('kode_rkat', 'id');
+        $rkatDescriptions = Rkat::pluck('keterangan', 'id');
+    
+        return view('menu.jurnal.printbukubesar', [
+            'title' => 'Laporan Jurnal',
+            'section' => 'Laporan',
+            'active' => 'Laporan Jurnal',
+            'jurnals' => $jurnals,
+            'rkatOptions' => $rkatOptions,
+            'rkatDescriptions' => $rkatDescriptions,
+            'totalDebit' => $totalDebit,
+            'totalKredit' => $totalKredit,
+            'selectedYear' => $selectedYear, 
+            'selectedMonth' => $selectedMonth, 
+        ]);
+    }
+
+    // Metode untuk Print Jurnal
+    public function printJurnal($selectedYear, $selectedMonth)
+    {
+        // Query for CashFlows with optional date filter
+        $jurnalsQuery = Jurnal::with('rkat:id,kode_rkat')
+            ->with('jurnalAkun');
+    
+            if ($selectedYear) {
+                $jurnalsQuery->whereYear('periode_jurnal', $selectedYear);
+            }
+        
+            if ($selectedMonth) {
+                $jurnalsQuery->whereMonth('periode_jurnal', $selectedMonth);
+            }
+
+        // Execute the query
+        $jurnals = $jurnalsQuery->get();
+    
+        // Calculate total debit and total kredit
+        $totalDebit = $jurnals->sum('debit');
+        $totalKredit = $jurnals->sum('kredit');
+    
+        // Get the list of kode_rkat options
+        $rkatOptions = Rkat::pluck('kode_rkat', 'id');
+        $rkatDescriptions = Rkat::pluck('keterangan', 'id');
+    
+        return view('menu.jurnal.printlaporan', [
+            'title' => 'Laporan Jurnal',
+            'section' => 'Laporan',
+            'active' => 'Laporan Jurnal',
+            'jurnals' => $jurnals,
+            'rkatOptions' => $rkatOptions,
+            'rkatDescriptions' => $rkatDescriptions,
+            'totalDebit' => $totalDebit,
+            'totalKredit' => $totalKredit,
+            'selectedYear' => $selectedYear, 
+            'selectedMonth' => $selectedMonth, 
+        ]);
+    }
 }
 

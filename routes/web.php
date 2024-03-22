@@ -11,12 +11,17 @@ use App\Http\Controllers\UangFisikController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KasController;
 use App\Http\Controllers\CompareController;
+use App\Http\Controllers\NeracaController;
 use App\Http\Controllers\PecahanUangController;
 use App\Http\Controllers\CashFlowController;
 use App\Http\Controllers\JurnalAkunController;
 use App\Http\Controllers\RkatController;
 use App\Http\Controllers\JurnalController;
+<<<<<<< HEAD
 use App\Http\Controllers\DivisiController;
+=======
+use App\Http\Controllers\AktivitasController;
+>>>>>>> cf83e6e25156bf1603d8e359060a408452bcb66c
 
 /*
 |--------------------------------------------------------------------------
@@ -35,8 +40,8 @@ Route::get('/', [LoginController::class, 'index'])->middleware('guest')->name('l
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::get('password', [ChangePasswordController::class, 'edit'])->name('password.edit')->middleware('auth');
-Route::patch('password', [ChangePasswordController::class, 'update'])->name('password.edit')->middleware('auth');
+// Route::get('password', [ChangePasswordController::class, 'edit'])->name('password.edit')->middleware('auth');
+// Route::patch('password', [ChangePasswordController::class, 'update'])->name('password.edit')->middleware('auth');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
@@ -57,6 +62,10 @@ Route::delete('/deleteUangFisik/{id}', [UangFisikController::class, 'destroy'])-
 Route::get('/compare', [CompareController::class, 'index'])->middleware('auth')->name('compare');
 Route::get('/printCompare', [CompareController::class, 'printCompare'])->middleware('auth')->name('printCompare');
 
+// menu neraca
+Route::get('/neraca', [NeracaController::class, 'index'])->middleware('auth')->name('neraca');
+Route::get('/printNeraca', [NeracaController::class, 'printNeraca'])->middleware('auth')->name('printNeraca');
+
 
 // Menu Cash Flow
 Route::get('/cashflow', [CashFlowController::class, 'index'])->middleware('auth')->name('cashflow');
@@ -73,6 +82,12 @@ Route::get('/import-jurnal', [JurnalController::class, 'showImportForm'])->name(
 Route::post('/import-jurnal', [JurnalController::class, 'importExcel'])->name('import.jurnal');
 Route::get('download-example-excel-jurnal', [JurnalController::class, 'downloadExampleExcel'])->name('download.example.excel.jurnal');
 Route::get('/laporanBukuBesar', [JurnalController::class, 'laporanBukuBesar'])->middleware('auth')->name('laporanBukuBesar');
+Route::get('/printjurnal/{selectedYear}/{selectedMonth}', [JurnalController::class, 'printJurnal'])->middleware('auth')->name('printjurnal');
+Route::get('/printbukubesar/{selectedYear}/{selectedMonth}/{selectedJurnalAccount}', [JurnalController::class, 'printBukuBesar'])->middleware('auth')->name('printbukubesar');
+
+// Menu Aktivitas
+Route::get('/aktivitas', [AktivitasController::class, 'index'])->middleware('auth')->name('aktivitas');
+Route::get('/printAktivitas/{selectedYear}/{selectedMonth}', [AktivitasController::class, 'printAktivitas'])->middleware('auth')->name('printAktivitas');
 
 // Master User
 Route::get('/user', [UserController::class, 'index'])->middleware('auth')->name('user');
@@ -102,6 +117,7 @@ Route::delete('/deleteRkat/{id}', [RkatController::class, 'destroy'])->middlewar
 Route::get('/import-rkat', [RkatController::class, 'showImportForm'])->name('import.rkat.view');
 Route::post('/import-rkat', [RkatController::class, 'importExcel'])->name('import.rkat');
 Route::get('download-example-excel', [RkatController::class, 'downloadExampleExcel'])->name('download.example.excel');
+Route::get('/exportrkat/{periode}', [RkatController::class, 'exportRkat'])->middleware('auth')->name('exportrkat');
 
 // Master Pecahan Uang
 Route::get('/pecahan', [PecahanUangController::class, 'index'])->middleware('auth')->name('pecahan');

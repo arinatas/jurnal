@@ -175,6 +175,7 @@
                                                             <option value="PASIVA">PASIVA</option>
                                                             <option value="LIABILITAS">LIABILITAS</option>
                                                             <option value="EKUITAS">EKUITAS</option>
+                                                            <option value="LABA-RUGI">LABA-RUGI</option>
                                                         </select>
                                                     </div>
                                                     <div class="d-flex flex-column mb-7 fv-row">
@@ -183,12 +184,24 @@
                                                             <span class="">Sub Type</span>
                                                         </label>
                                                         <!--end::Label-->
-                                                        <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Pilih Sub Type" name="sub_type">
+                                                        <select class="form-select form-select-solid" data-control="select2" data-hide-search="false" data-placeholder="Pilih Sub Type" name="sub_type">
                                                             <option value="">Pilih Sub Type</option>
                                                             <option value="Kas & Bank">Kas & Bank</option>
                                                             <option value="Piutang">Piutang</option>
                                                             <option value="Liabilitas Jangka Pendek">Liabilitas Jangka Pendek</option>
                                                             <option value="Liabilitas Jangka Panjang">Liabilitas Jangka Panjang</option>
+                                                            <option value="Pendapatan">Pendapatan</option>
+                                                            <option value="Beban Sehubungan Program">Beban Sehubungan Program</option>
+                                                            <option value="Pendapatan Lain-Lain">Pendapatan Lain-Lain</option>
+                                                            <option value="Beban Marketing">Beban Marketing</option>
+                                                            <option value="Beban Kegiatan">Beban Kegiatan</option>
+                                                            <option value="Beban Gaji">Beban Gaji</option>
+                                                            <option value="Beban Operasional Kantor">Beban Operasional Kantor</option>
+                                                            <option value="Beban Rumah Tangga Kantor">Beban Rumah Tangga Kantor</option>
+                                                            <option value="Beban Sewa">Beban Sewa</option>
+                                                            <option value="Beban Perawatan">Beban Perawatan</option>
+                                                            <option value="Beban Yayasan">Beban Yayasan</option>
+                                                            <option value="Beban Lain-Lain">Beban Lain-Lain</option>
                                                         </select>
                                                     </div>
                                                     <div class="d-flex flex-column mb-7 fv-row">

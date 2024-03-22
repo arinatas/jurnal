@@ -97,12 +97,15 @@ class CashFlowController extends Controller
                 'id_accounting' => $user->id
             ]);
     
-            // Check if debit or kredit is greater than 0 and update uang_kas accordingly
+            // Update uang_kas accordingly
+            $totalKas = Kas::findOrFail("1");
             if ($cashFlow->debit > 0) {
-                Kas::increment('kas', $cashFlow->debit);
+                $totalKas->kas = $totalKas->kas + $cashFlow->debit;
             } elseif ($cashFlow->kredit > 0) {
-                Kas::decrement('kas', $cashFlow->kredit);
+                $totalKas->kas = $totalKas->kas - $cashFlow->kredit;
             }
+
+            $totalKas->save();
     
             DB::commit();
     
