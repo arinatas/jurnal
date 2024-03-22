@@ -17,11 +17,8 @@ use App\Http\Controllers\CashFlowController;
 use App\Http\Controllers\JurnalAkunController;
 use App\Http\Controllers\RkatController;
 use App\Http\Controllers\JurnalController;
-<<<<<<< HEAD
 use App\Http\Controllers\DivisiController;
-=======
 use App\Http\Controllers\AktivitasController;
->>>>>>> cf83e6e25156bf1603d8e359060a408452bcb66c
 
 /*
 |--------------------------------------------------------------------------
