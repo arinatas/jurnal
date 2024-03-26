@@ -54,11 +54,6 @@ class Jurnal extends Model
         return $this->belongsTo(Rkat::class, 'id_rkat', 'id');
     }
 
-    // Define the relationship with the Rkat model
-    public function divisi()
-    {
-        return $this->belongsTo(Divisi::class, 'devisi', 'id');
-    }
     public function jurnalAkun()
     {
         return $this->hasManyThrough(
@@ -69,6 +64,16 @@ class Jurnal extends Model
             'id_rkat',        // Local key on the jurnal table
             'no_akun'    // Local key on the rkat table
         );
+    }
+
+    public function akun()
+    {
+        return $this->belongsTo(JurnalAkun::class, 'kode_akun', 'no_akun');
+    }
+
+    public function dataDivisi()
+    {
+        return $this->belongsTo(Divisi::class, 'divisi', 'id');
     }
 
 }

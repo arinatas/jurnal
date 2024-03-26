@@ -20,17 +20,16 @@ class KasMasukController extends Controller
     {
         // Get the current date
         $today = Carbon::now()->format('Y-m-d');
-    
+
         // Fetch Jurnal entries created today
-        $jurnals = Jurnal::with('divisi')
-            ->with('jurnalAkun')
+        $jurnals = Jurnal::with('akun')
+            ->with('dataDivisi')
             ->whereDate('created_at', $today)
-            ->paginate(10); // Menambahkan pagination untuk 50 data perhalaman
+            ->paginate(10);
 
         // Calculate total debit and total kredit
-        // Fetch Jurnal entries created today without pagination
-        $jurnalsAll = Jurnal::with('divisi')
-            ->with('jurnalAkun')
+        $jurnalsAll = Jurnal::with('akun')
+            ->with('dataDivisi')
             ->whereDate('created_at', $today)
             ->get();
 

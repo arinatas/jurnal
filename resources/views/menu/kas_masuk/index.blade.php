@@ -83,9 +83,9 @@
                                                         <th class="min-w-100px text-center">Periode</th>
                                                         <th class="min-w-50px text-center">Tipe Jurnal</th>
                                                         <th class="min-w-100px text-center">Uraian</th>
-                                                        <th class="min-w-100px text-center">RKAT</th>
-                                                        <th class="min-w-100px text-center">Kode Rekening</th>
-                                                        <th class="min-w-100px text-center">Nama Rekening</th>
+                                                        <th class="min-w-100px text-center">Divisi</th>
+                                                        <th class="min-w-100px text-center">Kode Akun</th>
+                                                        <th class="min-w-100px text-center">Nama Akun</th>
                                                         <th class="min-w-100px text-center">No Bukti</th>
                                                         <th class="min-w-150px text-center">Debit</th>
                                                         <th class="min-w-150px text-center">Kredit</th>
@@ -106,10 +106,10 @@
                                                         @endif
                                                         </td>
                                                         <td>{{ $item->uraian }}</td>
-                                                        @foreach ($item->jurnalAkun as $jurnalAkun)
-                                                            <td class="text-center">{{ $jurnalAkun->no_akun }}</td>
-                                                            <td>{{ $jurnalAkun->nama_akun }}</td>
-                                                        @endforeach
+                                                        <td class="text-center">{{ $item->dataDivisi->nama_divisi }}</td>
+                                                        <td class="text-center">{{ $item->akun->no_akun }}</td>
+                                                        <td>{{ $item->akun->nama_akun }}</td>
+
                                                         <td class="text-center">{{ $item->no_bukti }}</td>
                                                         <td class="text-center">@if($item->debit != 0) Rp. @currency($item->debit) @else - @endif</td>
                                                         <td class="text-center">@if($item->kredit != 0) Rp. @currency($item->kredit) @else - @endif</td>

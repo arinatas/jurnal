@@ -122,7 +122,7 @@
 												<td>
 													<div class="input-group">
 														<span class="input-group-text">Rp</span>
-														<input class="form-control form-control-solid" type="text" name="kredit1" required oninput="formatNumber(this);" onblur="removeFormat(this)" onfocus="removeLeadingZeros(this)" value="{{ old('kredit1', '0') }}"/>
+														<input class="form-control form-control-solid" type="text" name="kredit1" required onchange="updateHiddenValues()" value="{{ old('kredit1') }}"/>
 													</div>
 												</td>
 												<!-- Input tipe hidden untuk setiap nilai -->
@@ -130,7 +130,7 @@
 												<input type="hidden" name="no_bukti2" id="hidden_no_bukti" />
 												<input type="hidden" name="divisi2" id="hidden_divisi" />
 												<input type="hidden" name="debit1" value="0" />
-												<input type="hidden" name="debit2" value="250000" />
+												<input type="hidden" name="debit2" id="hidden_kredit" />
 												<input type="hidden" name="kredit2" value="0"/>
 											</tr>
 											</tbody>
@@ -142,34 +142,6 @@
 							</div>
 							<!--end::Row-->
 							<!--end::Plans-->
-							<div class="row">
-								<div class="col-lg-6">
-									<!--begin::Alert-->
-									<div class="alert alert-primary mt-3">
-										<!--begin::Wrapper-->
-										<div class="d-flex flex-column">
-											<!--begin::Title-->
-											<h3 class="my-1 text-dark text-center" id="debitTotal">Total Debit : </h3>
-											<!--end::Title-->
-										</div>
-										<!--end::Wrapper-->
-									</div>
-									<!--end::Alert-->
-								</div>
-								<div class="col-lg-6">
-									<!--begin::Alert-->
-									<div class="alert alert-primary mt-3">
-										<!--begin::Wrapper-->
-										<div class="d-flex flex-column">
-											<!--begin::Title-->
-											<h3 class="my-1 text-dark text-center" id="creditTotal">Total Kredit : </h3>
-											<!--end::Title-->
-										</div>
-										<!--end::Wrapper-->
-									</div>
-									<!--end::Alert-->
-								</div>
-							</div>
 							<!--begin::Actions-->
 							<div class="d-flex flex-center flex-row-fluid pt-12">
 								<a href="{{url('kasMasuk')}}" class="btn btn-warning me-3">Kembali</a>
@@ -197,11 +169,13 @@
 			var keterangan_rkat_value = document.getElementById('keterangan_rkat1').value;
 			var no_bukti_value = document.getElementById('no_bukti1').value;
 			var divisi_value = document.getElementsByName('divisi1')[0].value;
+			var kredit_value = document.getElementsByName('kredit1')[0].value;
 
 			// Set nilai input tipe hidden dengan nilai yang sesuai
 			document.getElementById('hidden_keterangan_rkat').value = keterangan_rkat_value;
 			document.getElementById('hidden_no_bukti').value = no_bukti_value;
 			document.getElementById('hidden_divisi').value = divisi_value;
+			document.getElementById('hidden_kredit').value = kredit_value;
 		}
 	</script>
 
@@ -220,62 +194,6 @@
                 // Mencegah pengiriman berulang
                 button.form.submit();
                 }
-    	// Fungsi untuk menambahkan pemisah 3 digit pada input
-        function formatNumber(input) {
-        	// Menghapus karakter selain angka
-            let value = input.value.replace(/\D/g, '');
-
-            // Menambahkan pemisah 3 digit
-            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-            // Memasukkan nilai yang telah diformat kembali ke input
-                input.value = value;
-            }
-
-        // Fungsi untuk mengembalikan nilai tanpa pemisah saat disubmit
-        function removeFormat(input) {
-            input.value = input.value.replace(/\D/g, '');
-        }
-        // Fungsi untuk menghapus angka nol di depan saat input difokuskan
-        function removeLeadingZeros(input) {
-            let value = input.value;
-            // Menghapus angka nol di depan
-            value = value.replace(/^0+/, '');
-            // Memasukkan nilai yang telah diformat kembali ke input
-            input.value = value;
-        }
-
-		// Fungsi untuk menghitung dan memperbarui total debit dan kredit
-		function hitungTotal() {
-			let totalDebit = 0;
-			let totalKredit = 0;
-
-			// Iterasi melalui baris pada tabel
-			document.querySelectorAll('#input-table tbody tr').forEach((baris) => {
-				// Dapatkan nilai debit dan kredit dari baris saat ini
-				const nilaiDebit = parseFloat(baris.querySelector('[name^="debit"]').value.replace(/,/g, '') || 0);
-				const nilaiKredit = parseFloat(baris.querySelector('[name^="kredit"]').value.replace(/,/g, '') || 0);
-
-				// Perbarui nilai total
-				totalDebit += nilaiDebit;
-				totalKredit += nilaiKredit;
-			});
-
-			// Tampilkan nilai total
-			document.getElementById('debitTotal').innerText = 'Total Debit:  ' + formatCurrency(totalDebit);
-			document.getElementById('creditTotal').innerText = 'Total Kredit:  ' + formatCurrency(totalKredit);
-		}
-
-		// Fungsi untuk memformat mata uang dengan tanda koma
-		function formatCurrency(nilai) {
-			return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(nilai);
-		}
-
-		// Menyisipkan fungsi hitungTotal ke peristiwa yang relevan (mis., perubahan input)
-		document.addEventListener('input', hitungTotal);
-
-		// Panggil hitungTotal secara awal untuk menampilkan total pada saat halaman dimuat
-		hitungTotal();
     </script>
 
 	
