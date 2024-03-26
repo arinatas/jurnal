@@ -53,7 +53,7 @@ class KasMasukController extends Controller
     public function input()
     {
         // Fetch Jurnal yang diinput 
-        $jurnals = Jurnal::with('divisi')
+        $jurnals = Jurnal::with('dataDivisi')
             ->with('jurnalAkun')
             ->get();
         
