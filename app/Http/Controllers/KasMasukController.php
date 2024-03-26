@@ -166,5 +166,25 @@ class KasMasukController extends Controller
             return redirect()->back()->with('insertFail', $e->getMessage());
         }
     }
+
+    public function showImportForm()
+    {
+        return view('import'); // Menampilkan tampilan untuk mengunggah file Excel
+    }
+    
+    public function downloadExampleExcel()
+    {
+        $filePath = public_path('contoh-excel/jurnal.xlsx'); // Sesuaikan dengan path file Excel contoh Anda
+    
+        if (file_exists($filePath)) {
+            $headers = [
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            ];
+    
+            return response()->download($filePath, 'jurnal.xlsx', $headers);
+        } else {
+            return redirect()->back()->with('downloadFail', 'File contoh tidak ditemukan.');
+        }
+    } 
 }
 

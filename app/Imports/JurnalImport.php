@@ -33,7 +33,9 @@ class JurnalImport implements ToModel, WithHeadingRow, WithValidation
         return new Jurnal([
             'periode_jurnal' => $row['periode_jurnal'],
             'type_jurnal' => $row['type_jurnal'],
-            'id_rkat' => $row['id_rkat'],
+            'keterangan_rkat' => $row['keterangan_rkat'],
+            'divisi' => $row['divisi'],
+            'kode_akun' => $row['kode_akun'],
             'uraian' => $row['uraian'],
             'no_bukti' => $row['no_bukti'],
             'debit' => $debit,
@@ -48,7 +50,9 @@ class JurnalImport implements ToModel, WithHeadingRow, WithValidation
             // Validation rules
             'periode_jurnal' => 'required|date_format:Y-m-d',
             'type_jurnal' => 'required|string|max:100',
-            'id_rkat' => 'required|integer',
+            'keterangan_rkat' => 'nullable|string|max:100',
+            'divisi' => 'required|integer',
+            'kode_akun' => 'required|string',
             'uraian' => 'required|string',
             'no_bukti' => 'required|string|max:100',
             'debit' => 'required|integer',

@@ -21,6 +21,7 @@
                                                 </div>
                                                 <div class="d-inline">
                                                     <a href="{{ route('input.kasMasuk') }}" class="btn btn-sm btn-primary fs-6">Input Kas Masuk</a>
+                                                    <a href="{{ route('download.example.excel.jurnal') }}" class="btn btn-sm btn-secondary">Download Contoh Excel</a>
                                                 </div>
                                             <!--end::Title-->
                                         </div>
@@ -89,6 +90,7 @@
                                                         <th class="min-w-100px text-center">No Bukti</th>
                                                         <th class="min-w-150px text-center">Debit</th>
                                                         <th class="min-w-150px text-center">Kredit</th>
+                                                        <th class="min-w-100px text-center">Ket. RKAT</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -113,6 +115,8 @@
                                                         <td class="text-center">{{ $item->no_bukti }}</td>
                                                         <td class="text-center">@if($item->debit != 0) Rp. @currency($item->debit) @else - @endif</td>
                                                         <td class="text-center">@if($item->kredit != 0) Rp. @currency($item->kredit) @else - @endif</td>
+                                                        <td>{{ $item->keterangan_rkat ?? '-' }}</td>
+
                                                         <!-- <td>
                                                             @foreach ($item->jurnalAkun as $jurnalAkun)
                                                                 {{ $jurnalAkun->no_akun }} - {{ $jurnalAkun->nama_akun }}<br>
