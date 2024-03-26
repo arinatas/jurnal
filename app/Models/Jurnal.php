@@ -12,14 +12,31 @@ class Jurnal extends Model
     protected $table = 'jurnal';
     protected $primaryKey = 'id';
 
+    // protected $fillable = [
+    //     'periode_jurnal',
+    //     'type_jurnal',
+    //     'id_rkat',
+    //     'uraian',
+    //     'no_bukti',
+    //     'debit',
+    //     'kredit',
+    //     'korek',
+    //     'ku',
+    //     'unit_usaha',
+    //     'created_by',
+    // ];
+
     protected $fillable = [
         'periode_jurnal',
         'type_jurnal',
-        'id_rkat',
+        'keterangan_rkat',
+        'divisi',
+        'kode_akun',
         'uraian',
         'no_bukti',
         'debit',
         'kredit',
+        'tt',
         'korek',
         'ku',
         'unit_usaha',
@@ -35,6 +52,12 @@ class Jurnal extends Model
     public function rkat()
     {
         return $this->belongsTo(Rkat::class, 'id_rkat', 'id');
+    }
+
+    // Define the relationship with the Rkat model
+    public function divisi()
+    {
+        return $this->belongsTo(Divisi::class, 'devisi', 'id');
     }
     public function jurnalAkun()
     {

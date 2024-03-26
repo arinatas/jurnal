@@ -19,6 +19,7 @@ use App\Http\Controllers\RkatController;
 use App\Http\Controllers\JurnalController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\AktivitasController;
+use App\Http\Controllers\KasMasukController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +82,14 @@ Route::get('download-example-excel-jurnal', [JurnalController::class, 'downloadE
 Route::get('/laporanBukuBesar', [JurnalController::class, 'laporanBukuBesar'])->middleware('auth')->name('laporanBukuBesar');
 Route::get('/printjurnal/{selectedYear}/{selectedMonth}', [JurnalController::class, 'printJurnal'])->middleware('auth')->name('printjurnal');
 Route::get('/printbukubesar/{selectedYear}/{selectedMonth}/{selectedJurnalAccount}', [JurnalController::class, 'printBukuBesar'])->middleware('auth')->name('printbukubesar');
+
+// Menu Kas Masuk
+Route::get('/kasMasuk', [KasMasukController::class, 'index'])->middleware('auth')->name('kasMasuk');
+Route::get('/inputKasMasuk', [KasMasukController::class, 'input'])->middleware('auth')->name('input.kasMasuk');
+Route::post('/kasMasukStore', [KasMasukController::class, 'storeKasMasuk'])->middleware('auth')->name('store.kasMasuk');
+Route::get('/import-kasMasuk', [KasMasukController::class, 'showImportForm'])->name('import.kasMasuk.view');
+Route::post('/import-kasMasuk', [KasMasukController::class, 'importExcel'])->name('import.kasMasuk');
+Route::get('download-example-excel-kasMasuk', [KasMasukController::class, 'downloadExampleExcel'])->name('download.example.excel.kasMasuk');
 
 // Menu Aktivitas
 Route::get('/aktivitas', [AktivitasController::class, 'index'])->middleware('auth')->name('aktivitas');
