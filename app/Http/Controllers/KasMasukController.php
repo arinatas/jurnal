@@ -36,7 +36,7 @@ class KasMasukController extends Controller
         $totalDebit = $jurnalsAll->sum('debit');
         $totalKredit = $jurnalsAll->sum('kredit');
     
-        // Get the list of kode_rkat options
+        // Get the list of kode_akun options
         $jurnalAkunOptions = JurnalAkun::pluck('nama_akun', 'no_akun');
     
         return view('menu.kas_masuk.index', [
@@ -54,7 +54,7 @@ class KasMasukController extends Controller
     {
         // Fetch Jurnal yang diinput 
         $jurnals = Jurnal::with('dataDivisi')
-            ->with('jurnalAkun')
+            ->with('akun')
             ->get();
         
         // Mengambil data kode akun dan nama akun untuk option form

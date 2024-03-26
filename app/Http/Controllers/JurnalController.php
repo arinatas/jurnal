@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Jurnal;
 use App\Models\JurnalAkun;
 use App\Models\Rkat;
+use App\Models\Divisi;
 use Illuminate\Support\Facades\Auth;
 use App\Imports\JurnalImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -22,32 +23,30 @@ class JurnalController extends Controller
         $today = Carbon::now()->format('Y-m-d');
     
         // Fetch Jurnal entries created today
-        $jurnals = Jurnal::with('rkat:id,kode_rkat')
-            ->with('jurnalAkun')
+        $jurnals = Jurnal::with('dataDivisi')
+            ->with('akun')
             ->whereDate('created_at', $today)
             ->paginate(10); // Menambahkan pagination untuk 50 data perhalaman
     
         // Calculate total debit and total kredit
         // Fetch Jurnal entries created today without pagination
-        $jurnalsAll = Jurnal::with('rkat:id,kode_rkat')
-        ->with('jurnalAkun')
+        $jurnalsAll = Jurnal::with('dataDivisi')
+        ->with('akun')
         ->whereDate('created_at', $today)
         ->get();
 
         $totalDebit = $jurnalsAll->sum('debit');
         $totalKredit = $jurnalsAll->sum('kredit');
     
-        // Get the list of kode_rkat options
-        $rkatOptions = Rkat::pluck('kode_rkat', 'id');
-        $rkatDescriptions = Rkat::pluck('keterangan', 'id');
+        // Get the list of kode_akun options
+        $jurnalAkunOptions = JurnalAkun::pluck('nama_akun', 'no_akun');
     
         return view('menu.jurnal.index', [
             'title' => 'Jurnal',
             'section' => 'Menu',
             'active' => 'Jurnal',
             'jurnals' => $jurnals,
-            'rkatOptions' => $rkatOptions,
-            'rkatDescriptions' => $rkatDescriptions,
+            'jurnalAkunOptions' => $jurnalAkunOptions,
             'totalDebit' => $totalDebit,
             'totalKredit' => $totalKredit,
         ]);
@@ -186,23 +185,25 @@ class JurnalController extends Controller
     public function input()
     {
         // Fetch Jurnal entries created today
-        $jurnals = Jurnal::with('rkat:id,kode_rkat')
-            ->with('jurnalAkun')
+        $jurnals = Jurnal::with('dataDivisi')
+            ->with('akun')
             ->get();
         
-        // Get the latest periode from the rkat table
-        $latestPeriode = Rkat::max('periode');
-        // Get the list of kode_rkat options for the latest periode
-        $rkatOptions = Rkat::where('periode', $latestPeriode)->pluck('kode_rkat', 'id');
-        $rkatDescriptions = Rkat::where('periode', $latestPeriode)->pluck('keterangan', 'id');
+        // Mengambil data kode akun dan nama akun untuk option form
+        $jurnalAkunOptions = JurnalAkun::pluck('no_akun', 'no_akun');
+        $jurnalAkunDesc = JurnalAkun::pluck('nama_akun', 'no_akun');
+
+        // Mengambil data divisi untuk option form
+        $dataDivisi = Divisi::pluck('nama_divisi', 'id');
 
         return view('menu.jurnal.inputJurnal', [
             'title' => 'Input Jurnal',
             'section' => 'Menu',
             'active' => 'Jurnal',
             'jurnals' => $jurnals,
-            'rkatOptions' => $rkatOptions,
-            'rkatDescriptions' => $rkatDescriptions,
+            'jurnalAkunOptions' => $jurnalAkunOptions,
+            'jurnalAkunDesc' => $jurnalAkunDesc,
+            'dataDivisi' => $dataDivisi,
         ]);
     }
 
@@ -211,9 +212,13 @@ class JurnalController extends Controller
         $validator = Validator::make($request->all(), [
             'periode_jurnal' => 'required|date',
             'type_jurnal' => 'required|string|max:100',
-            'id_rkat1' => 'required|integer',
-            'id_rkat2' => 'required|integer',
+            'kode_akun1' => 'required|string|max:100',
+            'kode_akun2' => 'required|string|max:100',
+            'divisi1' => 'required|integer',
+            'divisi2' => 'required|integer',
             'uraian' => 'required|string|max:255',
+            'keterangan_rkat1' => 'nullable|string|max:100',
+            'keterangan_rkat2' => 'nullable|string|max:100',
             'no_bukti1' => 'required|string|max:100',
             'debit1' => 'required|integer',
             'kredit1' => 'required|integer',
@@ -247,11 +252,13 @@ class JurnalController extends Controller
             Jurnal::create([
                 'periode_jurnal' => $request->periode_jurnal,
                 'type_jurnal' => $request->type_jurnal,
-                'id_rkat' => $request->id_rkat1,
+                'kode_akun' => $request->kode_akun1,
+                'divisi' => $request->divisi1,
                 'uraian' => $request->uraian,
+                'keterangan_rkat' => $request->keterangan_rkat1,
                 'no_bukti' => $request->no_bukti1,
-                'debit' => $request->debit1,
-                'kredit' => $request->kredit1,
+                'debit' => $request->debit1, 
+                'kredit' => $request->kredit1, 
                 'tt' => $request->tt,
                 'korek' => $request->korek,
                 'ku' => $request->ku,
@@ -263,11 +270,13 @@ class JurnalController extends Controller
             Jurnal::create([
                 'periode_jurnal' => $request->periode_jurnal,
                 'type_jurnal' => $request->type_jurnal,
-                'id_rkat' => $request->id_rkat2,
+                'kode_akun' => $request->kode_akun2,
+                'divisi' => $request->divisi2,
                 'uraian' => $request->uraian,
+                'keterangan_rkat' => $request->keterangan_rkat2,
                 'no_bukti' => $request->no_bukti2,
-                'debit' => $request->debit2, // Use the appropriate field name for the second row
-                'kredit' => $request->kredit2, // Use the appropriate field name for the second row
+                'debit' => $request->debit2, 
+                'kredit' => $request->kredit2,
                 'tt' => $request->tt,
                 'korek' => $request->korek,
                 'ku' => $request->ku,

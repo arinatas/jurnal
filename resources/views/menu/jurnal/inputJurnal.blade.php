@@ -76,7 +76,9 @@
 										<table id="input-table" class="table table-row-bordered gy-5">
 											<thead>
 												<tr class="fw-semibold fs-6 text-muted">
-													<th class="text-dark required fs-6 fw-bold mb-2">Kode/Nama Akun RKAT</th>
+												<th class="text-dark required fs-6 fw-bold mb-2">Jurnal Akun</th>
+													<th class="text-dark required fs-6 fw-bold mb-2">Divisi</th>
+													<th class="text-dark fs-6 fw-bold mb-2">Ket. RKAT</th>
 													<th class="text-dark required fs-6 fw-bold mb-2">No Bukti</th>
 													<th class="text-dark required fs-6 fw-bold mb-2">Debit (Db)</th>
 													<th class="text-dark required fs-6 fw-bold mb-2">Kredit (Cr)</th>
@@ -86,12 +88,23 @@
 											<!-- Set Data Pertama -->
 											<tr id="row-1">
 												<td>
-													<select name="id_rkat1" required class="form-select form-select-solid" data-control="select2" data-hide-search="false" data-placeholder="Pilih Kode/Nama Akun RKAT">
-														<option value="">Pilih Kode/Nama Akun</option>
-														@foreach($rkatOptions as $id => $kode_rkat)
-															<option value="{{ $id }}" {{ old('id_rkat1') == $id ? 'selected' : '' }}>{{ $kode_rkat }} - {{ $rkatDescriptions[$id] }}</option>
+													<select name="kode_akun1" required class="form-select form-select-solid" data-control="select2" data-hide-search="false" data-placeholder="Pilih Akun">
+														<option value="">Pilih Akun</option>
+														@foreach($jurnalAkunOptions as $id => $no_akun)
+															<option value="{{ $id }}" {{ old('kode_akun1') == $id ? 'selected' : '' }}>{{ $no_akun }}-{{$jurnalAkunDesc[$id]}}</option>
 														@endforeach
 													</select>
+												</td>
+												<td>
+													<select name="divisi1" required class="form-select form-select-solid" data-control="select2" data-hide-search="false" data-placeholder="Pilih Divisi" onchange="updateHiddenValues()">
+														<option value="">Pilih Divisi</option>
+														@foreach($dataDivisi as $id => $nama_divisi)
+															<option value="{{ $id }}" {{ old('divisi1') == $id ? 'selected' : '' }}>{{ $nama_divisi }}</option>
+														@endforeach
+													</select>
+												</td>
+												<td>
+													<input type="text" class="form-control form-control-solid" placeholder="Ket. RKAT" name="keterangan_rkat1" id="keterangan_rkat1" value="{{ old('keterangan_rkat1') }}" onchange="updateHiddenValues()" />
 												</td>
 												<td>
 													<input type="text" class="form-control form-control-solid" placeholder="No Bukti" name="no_bukti1" value="{{ old('no_bukti1') }}" />
@@ -113,12 +126,23 @@
 											<!-- Set Data Kedua -->
 											<tr id="row-2">
 												<td>
-													<select name="id_rkat2" required class="form-select form-select-solid" data-control="select2" data-hide-search="false" data-placeholder="Pilih Kode/Nama Akun RKAT">
-														<option value="">Pilih Kode/Nama Akun</option>
-														@foreach($rkatOptions as $id => $kode_rkat)
-															<option value="{{ $id }}" {{ old('id_rkat2') == $id ? 'selected' : '' }}>{{ $kode_rkat }} - {{ $rkatDescriptions[$id] }}</option>
+													<select name="kode_akun2" required class="form-select form-select-solid" data-control="select2" data-hide-search="false" data-placeholder="Pilih Akun">
+														<option value="">Pilih Akun</option>
+														@foreach($jurnalAkunOptions as $id => $no_akun)
+															<option value="{{ $id }}" {{ old('kode_akun2') == $id ? 'selected' : '' }}>{{ $no_akun }}-{{$jurnalAkunDesc[$id]}}</option>
 														@endforeach
 													</select>
+												</td>
+												<td>
+													<select name="divisi2" required class="form-select form-select-solid" data-control="select2" data-hide-search="false" data-placeholder="Pilih Divisi" onchange="updateHiddenValues()">
+														<option value="">Pilih Divisi</option>
+														@foreach($dataDivisi as $id => $nama_divisi)
+															<option value="{{ $id }}" {{ old('divisi2') == $id ? 'selected' : '' }}>{{ $nama_divisi }}</option>
+														@endforeach
+													</select>
+												</td>
+												<td>
+													<input type="text" class="form-control form-control-solid" placeholder="Ket. RKAT" name="keterangan_rkat1" id="keterangan_rkat1" value="{{ old('keterangan_rkat1') }}" onchange="updateHiddenValues()" />
 												</td>
 												<td>
 													<input type="text" class="form-control form-control-solid" placeholder="No Bukti" name="no_bukti2" value="{{ old('no_bukti2') }}" />
