@@ -435,5 +435,44 @@ class JurnalController extends Controller
             'selectedMonth' => $selectedMonth, 
         ]);
     }
+
+    // Metode untuk Print Jurnal Divisi
+    public function printJurnalDivisi($selectedYear, $selectedMonth, $selectedDivisi)
+    {
+        // Query for CashFlows with optional date filter
+        $jurnalsQuery = Jurnal::with('dataDivisi')
+            ->with('akun');
+    
+            if ($selectedYear) {
+                $jurnalsQuery->whereYear('periode_jurnal', $selectedYear);
+            }
+        
+            if ($selectedMonth) {
+                $jurnalsQuery->whereMonth('periode_jurnal', $selectedMonth);
+            }
+
+            if ($selectedDivisi) {
+                $jurnalsQuery->where('divisi', $selectedDivisi);
+            }
+
+        // Execute the query
+        $jurnals = $jurnalsQuery->get();
+    
+        // Calculate total debit and total kredit
+        $totalDebit = $jurnals->sum('debit');
+        $totalKredit = $jurnals->sum('kredit');
+    
+        return view('menu.jurnal.printlaporan', [
+            'title' => 'Laporan Jurnal',
+            'section' => 'Laporan',
+            'active' => 'Laporan Jurnal',
+            'jurnals' => $jurnals,
+            'totalDebit' => $totalDebit,
+            'totalKredit' => $totalKredit,
+            'selectedYear' => $selectedYear, 
+            'selectedMonth' => $selectedMonth,
+            'selectedDivisi' => $selectedDivisi, 
+        ]);
+    }
 }
 
