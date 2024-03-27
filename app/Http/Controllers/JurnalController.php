@@ -312,7 +312,7 @@ class JurnalController extends Controller
     
         // Fetch Jurnal entries based on selected month and year
         $jurnalsQuery = Jurnal::with('dataDivisi')
-            ->with('jurnalAkun');
+            ->with('akun');
     
         if ($selectedYear) {
             $jurnalsQuery->whereYear('periode_jurnal', $selectedYear);
@@ -323,7 +323,7 @@ class JurnalController extends Controller
         }
 
         if ($selectedJurnalAccount) {
-            $jurnalsQuery->whereHas('rkat.jurnalAkun', function ($query) use ($selectedJurnalAccount) {
+            $jurnalsQuery->whereHas('akun', function ($query) use ($selectedJurnalAccount) {
                 $query->where('no_akun', $selectedJurnalAccount);
             });
         }
@@ -356,6 +356,7 @@ class JurnalController extends Controller
             'selectedYear' => $selectedYear, 
             'selectedMonth' => $selectedMonth,
             'selectedJurnalAccount' => $selectedJurnalAccount,
+            'selectedDivisi' => $selectedDivisi, 
             'divisis' => $divisis,
         ]);
     }   
@@ -364,8 +365,8 @@ class JurnalController extends Controller
     public function printBukuBesar($selectedYear, $selectedMonth, $selectedJurnalAccount)
     {
         // Query for CashFlows with optional date filter
-        $jurnalsQuery = Jurnal::with('rkat:id,kode_rkat')
-            ->with('jurnalAkun');
+        $jurnalsQuery = Jurnal::with('dataDivisi')
+            ->with('akun');
     
             if ($selectedYear) {
                 $jurnalsQuery->whereYear('periode_jurnal', $selectedYear);
@@ -376,7 +377,7 @@ class JurnalController extends Controller
             }
 
             if ($selectedJurnalAccount) {
-                $jurnalsQuery->whereHas('rkat.jurnalAkun', function ($query) use ($selectedJurnalAccount) {
+                $jurnalsQuery->whereHas('akun', function ($query) use ($selectedJurnalAccount) {
                     $query->where('no_akun', $selectedJurnalAccount);
                 });
             }
@@ -387,18 +388,13 @@ class JurnalController extends Controller
         // Calculate total debit and total kredit
         $totalDebit = $jurnals->sum('debit');
         $totalKredit = $jurnals->sum('kredit');
-    
-        // Get the list of kode_rkat options
-        $rkatOptions = Rkat::pluck('kode_rkat', 'id');
-        $rkatDescriptions = Rkat::pluck('keterangan', 'id');
+
     
         return view('menu.jurnal.printbukubesar', [
             'title' => 'Laporan Jurnal',
             'section' => 'Laporan',
             'active' => 'Laporan Jurnal',
             'jurnals' => $jurnals,
-            'rkatOptions' => $rkatOptions,
-            'rkatDescriptions' => $rkatDescriptions,
             'totalDebit' => $totalDebit,
             'totalKredit' => $totalKredit,
             'selectedYear' => $selectedYear, 
@@ -410,8 +406,8 @@ class JurnalController extends Controller
     public function printJurnal($selectedYear, $selectedMonth)
     {
         // Query for CashFlows with optional date filter
-        $jurnalsQuery = Jurnal::with('rkat:id,kode_rkat')
-            ->with('jurnalAkun');
+        $jurnalsQuery = Jurnal::with('dataDivisi')
+            ->with('akun');
     
             if ($selectedYear) {
                 $jurnalsQuery->whereYear('periode_jurnal', $selectedYear);
@@ -428,17 +424,11 @@ class JurnalController extends Controller
         $totalDebit = $jurnals->sum('debit');
         $totalKredit = $jurnals->sum('kredit');
     
-        // Get the list of kode_rkat options
-        $rkatOptions = Rkat::pluck('kode_rkat', 'id');
-        $rkatDescriptions = Rkat::pluck('keterangan', 'id');
-    
         return view('menu.jurnal.printlaporan', [
             'title' => 'Laporan Jurnal',
             'section' => 'Laporan',
             'active' => 'Laporan Jurnal',
             'jurnals' => $jurnals,
-            'rkatOptions' => $rkatOptions,
-            'rkatDescriptions' => $rkatDescriptions,
             'totalDebit' => $totalDebit,
             'totalKredit' => $totalKredit,
             'selectedYear' => $selectedYear, 
