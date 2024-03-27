@@ -46,7 +46,7 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <label for="bulan" class="form-label">Bulan :</label>
                                                         <select class="form-control" id="bulan" name="bulan" data-control="select2" data-hide-search="false">
                                                             <option value="">Pilih Bulan</option>
@@ -55,7 +55,7 @@
                                                             @endfor
                                                         </select>
                                                     </div>
-                                                   <div class="col-md-3">
+                                                   <div class="col-md-2">
                                                         <label for="tahun" class="form-label">Tahun :</label>
                                                         <select class="form-control" id="tahun" name="tahun" data-control="select2" data-hide-search="false">
                                                             <option value="">Pilih Tahun</option>
@@ -64,9 +64,20 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                   <div class="col-md-3 mt-4">
+                                                    <div class="col-md-3">
+                                                        <label for="divisi" class="form-label">Divisi :</label>
+                                                        <select class="form-control" id="divisi" name="divisi" data-control="select2" data-hide-search="false">
+                                                            <option value="">Pilih Divisi</option>
+                                                            @foreach ($divisis as $item)
+                                                                <option value="{{ $item->id }}" {{ request('divisi') == $item->id ? 'selected' : '' }}>
+                                                                    {{ $item->nama_divisi }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2 mt-4">
                                                         <button type="submit" class="btn btn-primary mt-4">Filter</button>
-                                                     </div>
+                                                    </div>
                                                 </div>
                                             </form>
                                         </div>
@@ -81,12 +92,13 @@
                                                         <th class="min-w-100px text-center">Periode</th>
                                                         <th class="min-w-50px text-center">Tipe Jurnal</th>
                                                         <th class="min-w-100px text-center">Uraian</th>
-                                                        <th class="min-w-100px text-center">RKAT</th>
-                                                        <th class="min-w-100px text-center">Kode Rekening</th>
-                                                        <th class="min-w-100px text-center">Nama Rekening</th>
+                                                        <th class="min-w-100px text-center">Divisi</th>
+                                                        <th class="min-w-100px text-center">Kode Akun</th>
+                                                        <th class="min-w-100px text-center">Nama Akun</th>
                                                         <th class="min-w-100px text-center">No Bukti</th>
                                                         <th class="min-w-150px text-center">Debit</th>
                                                         <th class="min-w-150px text-center">Kredit</th>
+                                                        <th class="min-w-100px text-center">Ket. RKAT</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -107,14 +119,13 @@
                                                         @endif
                                                         </td>
                                                         <td>{{ $item->uraian }}</td>
-                                                        
-                                                        @foreach ($item->jurnalAkun as $jurnalAkun)
-                                                            <td class="text-center">{{ $jurnalAkun->no_akun }}</td>
-                                                            <td>{{ $jurnalAkun->nama_akun }}</td>
-                                                        @endforeach
+                                                        <td class="text-center">{{ $item->dataDivisi->nama_divisi }}</td>
+                                                        <td class="text-center">{{ $item->akun->no_akun }}</td>
+                                                        <td>{{ $item->akun->nama_akun }}</td>
                                                         <td class="text-center">{{ $item->no_bukti }}</td>
                                                         <td class="text-center">@if($item->debit != 0) Rp. @currency($item->debit) @else - @endif</td>
                                                         <td class="text-center">@if($item->kredit != 0) Rp. @currency($item->kredit) @else - @endif</td>
+                                                        <td>{{ $item->keterangan_rkat ?? '-' }}</td>
                                                         <!-- <td>
                                                             @foreach ($item->jurnalAkun as $jurnalAkun)
                                                                 {{ $jurnalAkun->no_akun }} - {{ $jurnalAkun->nama_akun }}<br>

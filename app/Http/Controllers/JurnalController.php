@@ -298,6 +298,9 @@ class JurnalController extends Controller
         // get all jurnal account
         $jurnalakuns = JurnalAkun::all();
 
+        // get all jurnal account
+        $divisis = Divisi::all();
+
         // Get the unique years from the "periode_jurnal" field
         $years = Jurnal::distinct()->select(DB::raw('YEAR(periode_jurnal) as year'))->pluck('year');
     
@@ -305,6 +308,7 @@ class JurnalController extends Controller
         $selectedYear = $request->input('tahun');
         $selectedMonth = $request->input('bulan');
         $selectedJurnalAccount = $request->input('jurnal_akun');
+        $selectedDivisi = $request->input('divisi');
     
         // Fetch Jurnal entries based on selected month and year
         $jurnalsQuery = Jurnal::with('dataDivisi')
@@ -322,6 +326,10 @@ class JurnalController extends Controller
             $jurnalsQuery->whereHas('rkat.jurnalAkun', function ($query) use ($selectedJurnalAccount) {
                 $query->where('no_akun', $selectedJurnalAccount);
             });
+        }
+
+        if ($selectedDivisi) {
+            $jurnalsQuery->where('divisi', $selectedDivisi);
         }
     
         $jurnals = $jurnalsQuery->get();
@@ -348,6 +356,7 @@ class JurnalController extends Controller
             'selectedYear' => $selectedYear, 
             'selectedMonth' => $selectedMonth,
             'selectedJurnalAccount' => $selectedJurnalAccount,
+            'divisis' => $divisis,
         ]);
     }   
 
