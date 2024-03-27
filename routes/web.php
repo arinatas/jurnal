@@ -20,6 +20,7 @@ use App\Http\Controllers\JurnalController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\AktivitasController;
 use App\Http\Controllers\KasMasukController;
+use App\Http\Controllers\KasKeluarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +91,14 @@ Route::post('/kasMasukStore', [KasMasukController::class, 'storeKasMasuk'])->mid
 Route::get('/import-kasMasuk', [KasMasukController::class, 'showImportForm'])->name('import.kasMasuk.view');
 Route::post('/import-kasMasuk', [KasMasukController::class, 'importExcel'])->name('import.kasMasuk');
 Route::get('download-example-excel-kasMasuk', [KasMasukController::class, 'downloadExampleExcel'])->name('download.example.excel.kasMasuk');
+
+// Menu Kas Keluar
+Route::get('/kasKeluar', [KasKeluarController::class, 'index'])->middleware('auth')->name('kasKeluar');
+Route::get('/inputKasKeluar', [KasKeluarController::class, 'input'])->middleware('auth')->name('input.kasKeluar');
+Route::post('/kasKeluarStore', [KasKeluarController::class, 'storeKasKeluar'])->middleware('auth')->name('store.kasKeluar');
+Route::get('/import-kasKeluar', [KasKeluarController::class, 'showImportForm'])->name('import.kasKeluar.view');
+Route::post('/import-kasKeluar', [KasKeluarController::class, 'importExcel'])->name('import.kasKeluar');
+Route::get('download-example-excel-kasKeluar', [KasKeluarController::class, 'downloadExampleExcel'])->name('download.example.excel.kasKeluar');
 
 // Menu Aktivitas
 Route::get('/aktivitas', [AktivitasController::class, 'index'])->middleware('auth')->name('aktivitas');

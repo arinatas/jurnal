@@ -23,7 +23,7 @@
 					</div>
 					<div class="card-body pb-10">
 						<!--Begin::Table-->
-						<form id="my-form" action="{{ route('store.kasMasuk') }}" enctype="multipart/form-data" method="POST">
+						<form id="my-form" action="{{ route('store.kasKeluar') }}" enctype="multipart/form-data" method="POST">
 							@csrf
 							<!--begin::Row-->
 							<div class="row">
@@ -91,7 +91,7 @@
 													<th class="text-dark required fs-6 fw-bold mb-2">Divisi</th>
 													<th class="text-dark fs-6 fw-bold mb-2">Ket. RKAT</th>
 													<th class="text-dark required fs-6 fw-bold mb-2">No Bukti</th>
-													<th class="text-dark required fs-6 fw-bold mb-2">Kredit (Cr)</th>
+													<th class="text-dark required fs-6 fw-bold mb-2">Debit (Db)</th>
 												</tr>
 											</thead>
 											<tbody id="input-fields">
@@ -122,16 +122,16 @@
 												<td>
 													<div class="input-group">
 														<span class="input-group-text">Rp</span>
-														<input class="form-control form-control-solid" type="text" name="debit1" required onchange="updateHiddenValues()" value="{{ old('debit1') }}"/>
+														<input class="form-control form-control-solid" type="text" name="debit2" required onchange="updateHiddenValues()" value="{{ old('debit2') }}"/>
 													</div>
 												</td>
 												<!-- Input tipe hidden untuk setiap nilai -->
 												<input type="hidden" name="keterangan_rkat2" id="hidden_keterangan_rkat" />
 												<input type="hidden" name="no_bukti2" id="hidden_no_bukti" />
 												<input type="hidden" name="divisi2" id="hidden_divisi" />
-												<input type="hidden" name="kredit1" value="0" />
-												<input type="hidden" name="debit2"  value="0"/>
-												<input type="hidden" name="kredit2" id="hidden_kredit" />
+												<input type="hidden" name="debit1" value="0" />
+												<input type="hidden" name="kredit1" id="hidden_kredit" />
+												<input type="hidden" name="kredit2" value="0" />
 											</tr>
 											</tbody>
 										</table>
@@ -144,7 +144,7 @@
 							<!--end::Plans-->
 							<!--begin::Actions-->
 							<div class="d-flex flex-center flex-row-fluid pt-12">
-								<a href="{{url('kasMasuk')}}" class="btn btn-warning me-3">Kembali</a>
+								<a href="{{url('kasKeluar')}}" class="btn btn-warning me-3">Kembali</a>
 								<button type="submit" onclick="submitForm(this)" class="btn btn-primary">
                                     <span class="indicator-label">Submit</span>
                                 </button>
@@ -169,7 +169,7 @@
 			var keterangan_rkat_value = document.getElementById('keterangan_rkat1').value;
 			var no_bukti_value = document.getElementById('no_bukti1').value;
 			var divisi_value = document.getElementsByName('divisi1')[0].value;
-			var kredit_value = document.getElementsByName('debit1')[0].value;
+			var kredit_value = document.getElementsByName('debit2')[0].value;
 
 			// Set nilai input tipe hidden dengan nilai yang sesuai
 			document.getElementById('hidden_keterangan_rkat').value = keterangan_rkat_value;

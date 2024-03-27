@@ -307,7 +307,7 @@ class JurnalController extends Controller
         $selectedJurnalAccount = $request->input('jurnal_akun');
     
         // Fetch Jurnal entries based on selected month and year
-        $jurnalsQuery = Jurnal::with('rkat:id,kode_rkat')
+        $jurnalsQuery = Jurnal::with('dataDivisi')
             ->with('jurnalAkun');
     
         if ($selectedYear) {
