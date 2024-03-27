@@ -20,7 +20,11 @@
                                                     <h2 class="fs-2x fw-bolder mb-0">{{ $title }}</h2>
                                                 </div>
                                             <!--end::Title-->
-                                            @if (request('bulan') && request('tahun') && request('jurnal_akun') && $jurnals && count($jurnals) > 0)
+                                            @if (request('bulan') && request('tahun') && request('jurnal_akun') && request('divisi') && $jurnals && count($jurnals) > 0)
+                                            <div class="d-inline">
+                                                <a href="{{ route('printbukubesardivisi', ['selectedYear' => request('tahun'), 'selectedMonth' => request('bulan'),  'selectedDivisi' => request('divisi'), 'selectedJurnalAccount' => request('jurnal_akun')]) }}" class="btn btn-sm btn-primary" title="Unduh Laporan">Print Laporan</a> 
+                                            </div>
+                                            @elseif (request('bulan') && request('tahun') && request('jurnal_akun') && $jurnals && count($jurnals) > 0)
                                             <div class="d-inline">
                                                 <a href="{{ route('printbukubesar', ['selectedYear' => request('tahun'), 'selectedMonth' => request('bulan'), 'selectedJurnalAccount' => request('jurnal_akun')]) }}" class="btn btn-sm btn-success" title="Unduh Laporan">Print Laporan</a> 
                                             </div>

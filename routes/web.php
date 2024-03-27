@@ -84,6 +84,7 @@ Route::get('/laporanBukuBesar', [JurnalController::class, 'laporanBukuBesar'])->
 Route::get('/printjurnal/{selectedYear}/{selectedMonth}', [JurnalController::class, 'printJurnal'])->middleware('auth')->name('printjurnal');
 Route::get('/printbukubesar/{selectedYear}/{selectedMonth}/{selectedJurnalAccount}', [JurnalController::class, 'printBukuBesar'])->middleware('auth')->name('printbukubesar');
 Route::get('/printjurnaldivisi/{selectedYear}/{selectedMonth}/{selectedDivisi}', [JurnalController::class, 'printJurnalDivisi'])->middleware('auth')->name('printjurnaldivisi');
+Route::get('/printbukubesardivisi/{selectedYear}/{selectedMonth}/{selectedJurnalAccount}/{selectedDivisi}', [JurnalController::class, 'printBukuBesarDivisi'])->middleware('auth')->name('printbukubesardivisi');
 
 // Menu Kas Masuk
 Route::get('/kasMasuk', [KasMasukController::class, 'index'])->middleware('auth')->name('kasMasuk');
