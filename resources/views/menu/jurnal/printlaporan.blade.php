@@ -115,8 +115,8 @@
                         <address style="float: inline-end;" class="mr-5">
                             Mengetahui,<br>
                             Warek II Bidang Keuangan & Sumber Daya</p>
-                            <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" />
-                            <br>
+                            <!-- <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" /> -->
+                            <br><br><br>
                             <strong><u>I Made Sudama, S.E., M.M. </u></strong><br>
                             <strong>NIK. 2013091005</strong><br>
                         </address>
@@ -127,8 +127,8 @@
                         <address style="float: inline-end;" class="mr-5">
                             Diperiksa Oleh,<br>
                             Direktorat Keuangan</p>
-                            <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" />
-                            <br>
+                            <!-- <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" /> -->
+                            <br><br><br>
                             <strong><u>I Gusti Ayu Agung Dina Purnama Sari, S.Tr. Akt</u></strong><br>
                             <strong>NIK. 2017070364</strong><br>
                         </address>
@@ -140,10 +140,10 @@
                             <p>Denpasar, {{ date('d F Y') }}<br>
                             Dibuat Oleh,<br>
                             Accounting</p>
-                            <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" />
-                            <br>
-                            <strong><u>Ida Ayu Shanti Dharmasari, S.E., Ak.</u></strong><br>
-                            <strong>NIK. 2021112212</strong><br>
+                            <!-- <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" /> -->
+                            <br><br><br>
+                            <strong><u>Anak Agung Kompiang Ari Purnamayani, S.Ak</u></strong><br>
+                            <strong>NIK. 2024022208</strong><br>
                         </address>
                     </div>
                     <!-- /.col -->

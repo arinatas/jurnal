@@ -169,43 +169,43 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
-                <!-- info row -->
-                <div class="row" style="margin-top: 50px">
-                    <div class="col-lg-4 invoice-col mt-5">
-                        <address style="float: inline-end;" class="mr-5">
-                            <p>Denpasar, {{ \Carbon\Carbon::parse(date("Y-m-d h:i:sa"))->format('j F Y'); }}</strong><br>
-                            <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" />
-                            <br>
-                            <strong><u>I Made Artana, S.Kom.,M.M.</u></strong><br>
-                            <strong>Rektor Primakara University</strong><br>
-                        </address>
-                    </div>
-                    <div class="col-lg-4 invoice-col mt-5">
-                        <address style="float: inline-end;" class="mr-5">
-                            <p>Denpasar, {{ \Carbon\Carbon::parse(date("Y-m-d h:i:sa"))->format('j F Y'); }}</strong><br>
-                            <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" />
-                            <br>
-                            <strong><u>I Made Artana, S.Kom.,M.M.</u></strong><br>
-                            <strong>Rektor Primakara University</strong><br>
-                        </address>
-                    </div>
-                    <div class="col-lg-4 invoice-col mt-5">
-                        <address style="float: inline-end;" class="mr-5">
-                            <p>Denpasar, {{ \Carbon\Carbon::parse(date("Y-m-d h:i:sa"))->format('j F Y'); }}</strong><br>
-                            <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" />
-                            <br>
-                            <strong><u>I Made Artana, S.Kom.,M.M.</u></strong><br>
-                            <strong>Rektor Primakara University</strong><br>
-                        </address>
-                    </div>
-                </div>
                 <!-- /.row -->
+                    <div class="row" style="margin-top: 50px">
+                        <div class="col-sm-4 invoice-col mt-4">
+                            <address style="float: inline-end;" class="mr-5">
+                                Disetujui,<br></p>
+                                <!-- <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" /> -->
+                                <br><br><br>
+                                <strong><u>Juniwati, S.Kom. </u></strong><br>
+                                <strong>Ketua Yayasan</strong><br>
+                            </address>
+                        </div>
+                        <!-- /.col -->
 
+                        <div class="col-sm-4 invoice-col mt-4">
+                            <address style="float: inline-end;" class="mr-5">
+                                Diketahui,<br></p>
+                                <!-- <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" /> -->
+                                <br><br><br>
+                                <strong><u>I Made Artana, S.Kom., M.M.</u></strong><br>
+                                <strong>Rektor Primakara University</strong><br>
+                            </address>
+                        </div>
+                        <!-- /.col -->
 
+                        <div class="col-sm-4 invoice-col mt-4">
+                            <address style="float: inline-end;" class="mr-5">
+                                <p>Denpasar, {{ date('d F Y') }}<br></p>
+                                <!-- <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" /> -->
+                                <br><br><br>
+                                <strong><u>I Made Sudama, S.E., M.M.</u></strong><br>
+                                <strong>WAREK II Bidang Sumber Daya</strong><br>
+                            </address>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                <!-- /.row -->
             </section>
-
-
         </div>
         <!-- ./wrapper -->
 

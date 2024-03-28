@@ -694,8 +694,8 @@
                             <div class="col-sm-4 invoice-col mt-4">
                                 <address style="float: inline-end;" class="mr-5">
                                     Disetujui,<br></p>
-                                    <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" />
-                                    <br>
+                                    <!-- <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" /> -->
+                                    <br><br><br>
                                     <strong><u>Juniwati, S.Kom. </u></strong><br>
                                     <strong>Ketua Yayasan</strong><br>
                                 </address>
@@ -705,8 +705,8 @@
                             <div class="col-sm-4 invoice-col mt-4">
                                 <address style="float: inline-end;" class="mr-5">
                                     Diketahui,<br></p>
-                                    <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" />
-                                    <br>
+                                    <!-- <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" /> -->
+                                    <br><br><br>
                                     <strong><u>I Made Artana, S.Kom., M.M.</u></strong><br>
                                     <strong>Rektor Primakara University</strong><br>
                                 </address>
@@ -716,8 +716,8 @@
                             <div class="col-sm-4 invoice-col mt-4">
                                 <address style="float: inline-end;" class="mr-5">
                                     <p>Denpasar, {{ date('d F Y') }}<br></p>
-                                    <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" />
-                                    <br>
+                                    <!-- <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" /> -->
+                                    <br><br><br>
                                     <strong><u>I Made Sudama, S.E., M.M.</u></strong><br>
                                     <strong>WAREK II Bidang Sumber Daya</strong><br>
                                 </address>

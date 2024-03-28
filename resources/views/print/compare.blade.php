@@ -83,15 +83,41 @@
                 </div>
                 <!-- /.row -->
 
-                <!-- info row -->
+                <!-- /.row -->
                 <div class="row">
-                    <div class="col-sm-12 invoice-col mt-5">
+                    <div class="col-sm-4 invoice-col mt-5">
                         <address style="float: inline-end;" class="mr-5">
-                            <p>Denpasar, {{ \Carbon\Carbon::parse(date("Y-m-d h:i:sa"))->format('j F Y'); }}</strong><br>
-                            <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" />
-                            <br>
-                            <strong><u>I Made Artana, S.Kom.,M.M.</u></strong><br>
-                            <strong>Rektor Primakara University</strong><br>
+                            Mengetahui,<br>
+                            Warek II Bidang Keuangan & Sumber Daya</p>
+                            <!-- <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" /> -->
+                            <br><br><br>
+                            <strong><u>I Made Sudama, S.E., M.M. </u></strong><br>
+                            <strong>NIK. 2013091005</strong><br>
+                        </address>
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-sm-4 invoice-col mt-5">
+                        <address style="float: inline-end;" class="mr-5">
+                            Diperiksa Oleh,<br>
+                            Direktorat Keuangan</p>
+                            <!-- <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" /> -->
+                            <br><br><br>
+                            <strong><u>I Gusti Ayu Agung Dina Purnama Sari, S.Tr. Akt</u></strong><br>
+                            <strong>NIK. 2017070364</strong><br>
+                        </address>
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-sm-4 invoice-col mt-4">
+                        <address style="float: inline-end;" class="mr-5">
+                        <p>Denpasar, {{ date('d F Y', strtotime($item->created_at)) }}<br>
+                            Dibuat Oleh,<br>
+                            Accounting</p>
+                            <!-- <img alt="Logo" class="" src="/assets/media/logos/ttd.png" width="160px" /> -->
+                            <br><br><br>
+                            <strong><u>Anak Agung Kompiang Ari Purnamayani, S.Ak</u></strong><br>
+                            <strong>NIK. 2024022208</strong><br>
                         </address>
                     </div>
                     <!-- /.col -->
