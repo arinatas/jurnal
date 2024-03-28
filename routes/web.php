@@ -72,6 +72,9 @@ Route::post('/cashflow', [CashFlowController::class, 'store'])->middleware('auth
 Route::get('/lapcashflow', [CashFlowController::class, 'laporan'])->middleware('auth')->name('lapcashflow'); // Laporan Cash Flow
 Route::get('/printcashflow/{start_date}/{end_date}', [CashFlowController::class, 'printCashFlow'])->middleware('auth')->name('printcashflow'); // Print Laporan Cash Flow
 Route::get('/exportcashflow/{start_date}/{end_date}', [CashFlowController::class, 'exportCashFlow'])->middleware('auth')->name('exportcashflow'); // Export Excel Cash Flow
+Route::get('/import-cashflow', [CashFlowController::class, 'showImportForm'])->name('import.cashflow.view');
+Route::post('/import-cashflow', [CashFlowController::class, 'importExcel'])->name('import.cashflow');
+Route::get('download-example-excel-cashflow', [CashFlowController::class, 'downloadExampleExcel'])->name('download.example.excel.cashflow');
 
 // Menu Jurnal
 Route::get('/jurnal', [JurnalController::class, 'index'])->middleware('auth')->name('jurnal');

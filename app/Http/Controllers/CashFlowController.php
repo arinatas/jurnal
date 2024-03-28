@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use App\Models\CashFlow;
-use App\Models\Kas;
-use App\Models\User;
-use App\Models\Rkat;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use App\Exports\CashFlowExport;
-use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
+use App\Models\Kas;
+use App\Models\Rkat;
+use App\Models\User;
+use App\Models\CashFlow;
+use Illuminate\Http\Request;
+use App\Exports\CashFlowExport;
+use App\Imports\CashFlowImport;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
 
 class CashFlowController extends Controller
 {
@@ -216,4 +217,69 @@ class CashFlowController extends Controller
         return Excel::download($export, $fileName);
     }
     
+    public function showImportForm()
+    {
+        return view('import'); // Menampilkan tampilan untuk mengunggah file Excel
+    }
+    
+    public function downloadExampleExcel()
+    {
+        $filePath = public_path('contoh-excel/cashflow.xlsx');
+    
+        if (file_exists($filePath)) {
+            $headers = [
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            ];
+    
+            return response()->download($filePath, 'cashflow.xlsx', $headers);
+        } else {
+            return redirect()->back()->with('downloadFail', 'File contoh tidak ditemukan.');
+        }
+    } 
+
+    public function importExcel(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'excel_file' => 'required|mimes:xls,xlsx',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $import = new CashFlowImport(auth()->user());
+
+            // Import data Excel
+            Excel::import($import, $request->file('excel_file'));
+
+            DB::commit();
+
+            return redirect()->back()->with('importSuccess', 'Data berhasil diimpor.');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            DB::rollBack();
+            $failures = $e->failures();
+            $errorMessages = [];
+
+            foreach ($failures as $failure) {
+                $rowNumber = $failure->row();
+                $column = $failure->attribute();
+                $errorMessages[] = "Baris $rowNumber, Kolom $column: " . implode(', ', $failure->errors());
+            }
+
+            return redirect()->back()
+                ->with('importValidationFailures', $failures)
+                ->with('importErrors', $errorMessages)
+                ->withInput();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $errorMessage = $e->getMessage();
+
+            \Log::error($errorMessage);
+
+            return redirect()->back()->with('importError', $errorMessage);
+        }
+    }
 }
