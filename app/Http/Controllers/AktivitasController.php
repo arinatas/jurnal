@@ -74,7 +74,7 @@ class AktivitasController extends Controller
         $creditAmounts = [];
     
         foreach ($jurnalAkuns as $item) {
-            $creditAmount = Jurnal::whereHas('rkat', function ($query) use ($item) {
+            $creditAmount = Jurnal::whereHas('akun', function ($query) use ($item) {
                 $query->where('no_akun', $item->no_akun);
             })
             ->whereYear('periode_jurnal', $selectedYear)
