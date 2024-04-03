@@ -16,23 +16,29 @@ use Carbon\Carbon;
 
 class KasMasukController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Get the current date
-        // $today = Carbon::now()->format('Y-m-d');
-
+        // Get the start and end dates from the request, if available
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+    
         // Fetch Jurnal entries created today
-        $jurnals = Jurnal::with('akun')
+        $jurnalsQuery = Jurnal::with('akun')
             ->with('dataDivisi')
-            ->where('asal_input', 1)
-            ->paginate(10);
-
+            ->where('asal_input', 1);
+    
         // Calculate total debit and total kredit
-        $jurnalsAll = Jurnal::with('akun')
-            ->with('dataDivisi')
-            ->where('asal_input', 1)
-            ->get();
-
+        $jurnalsAllQuery = clone $jurnalsQuery;
+    
+        // Add date filter if start and end dates are provided
+        if ($startDate && $endDate) {
+            $jurnalsQuery->whereBetween('periode_jurnal', [$startDate, $endDate]);
+            $jurnalsAllQuery->whereBetween('periode_jurnal', [$startDate, $endDate]);
+        }
+    
+        $jurnals = $jurnalsQuery->paginate(10);
+        $jurnalsAll = $jurnalsAllQuery->get();
+    
         $totalDebit = $jurnalsAll->sum('debit');
         $totalKredit = $jurnalsAll->sum('kredit');
     
@@ -47,8 +53,10 @@ class KasMasukController extends Controller
             'jurnalAkunOptions' => $jurnalAkunOptions,
             'totalDebit' => $totalDebit,
             'totalKredit' => $totalKredit,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
         ]);
-    }    
+    }      
 
     public function input()
     {
