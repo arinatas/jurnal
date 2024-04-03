@@ -57,10 +57,7 @@
                                                         <th class="min-w-100px">Tanggal</th>
                                                         <th class="min-w-100px">No Bukti</th>
                                                         <th class="min-w-100px">PIC</th>
-                                                        <th class="min-w-100px">Nama</th>
-                                                        <th class="min-w-100px">Kode Anggaran</th>
                                                         <th class="min-w-100px">Transaksi</th>
-                                                        <th class="min-w-100px">Ref</th>
                                                         <th class="min-w-100px">Accounting</th>
                                                         <th class="min-w-150px">Debit</th>
                                                         <th class="min-w-150px">Kredit</th>
@@ -76,10 +73,7 @@
                                                         <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('j F Y'); }}</td>
                                                         <td>{{ $item->no_bukti }}</td>
                                                         <td>{{ $item->pic }}</td>
-                                                        <td>{{ $item->nama }}</td>
-                                                        <td>{{ $item->rkat->kode_rkat }}</td>
                                                         <td>{{ $item->transaksi }}</td>
-                                                        <td>{{ $item->ref }}</td>
                                                         <td>{{ $item->user->nama }}</td>
                                                         <td>Rp. @currency($item->debit )</td>
                                                         <td>Rp. @currency($item->kredit )</td>
@@ -95,17 +89,11 @@
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
                                                         <td><strong>Total</strong></td>
                                                         <td><strong>Rp. @currency($totalDebit)</strong></td>
                                                         <td><strong>Rp. @currency($totalKredit)</strong></td>
                                                     </tr>
                                                     <tr class="fw-bold fs-6 text-gray-800">
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
