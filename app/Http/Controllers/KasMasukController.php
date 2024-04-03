@@ -19,7 +19,7 @@ class KasMasukController extends Controller
     public function index()
     {
         // Get the current date
-        $today = Carbon::now()->format('Y-m-d');
+        // $today = Carbon::now()->format('Y-m-d');
 
         // Fetch Jurnal entries created today
         $jurnals = Jurnal::with('akun')
@@ -30,7 +30,7 @@ class KasMasukController extends Controller
         // Calculate total debit and total kredit
         $jurnalsAll = Jurnal::with('akun')
             ->with('dataDivisi')
-            ->whereDate('created_at', $today)
+            ->where('asal_input', 1)
             ->get();
 
         $totalDebit = $jurnalsAll->sum('debit');

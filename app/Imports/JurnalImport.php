@@ -41,6 +41,7 @@ class JurnalImport implements ToModel, WithHeadingRow, WithValidation
             'debit' => $debit,
             'kredit' => $kredit,
             'created_by' => $this->user->id,
+            'asal_input' => 0,
         ]);
     }
 

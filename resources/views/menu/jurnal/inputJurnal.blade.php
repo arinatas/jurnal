@@ -142,7 +142,7 @@
 													</select>
 												</td>
 												<td>
-													<input type="text" class="form-control form-control-solid" placeholder="Ket. RKAT" name="keterangan_rkat1" id="keterangan_rkat1" value="{{ old('keterangan_rkat1') }}" onchange="updateHiddenValues()" />
+													<input type="text" class="form-control form-control-solid" placeholder="Ket. RKAT" name="keterangan_rkat2" id="keterangan_rkat2" value="{{ old('keterangan_rkat2') }}" onchange="updateHiddenValues()" />
 												</td>
 												<td>
 													<input type="text" class="form-control form-control-solid" placeholder="No Bukti" name="no_bukti2" value="{{ old('no_bukti2') }}" />

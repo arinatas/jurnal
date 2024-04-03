@@ -20,19 +20,21 @@ class JurnalController extends Controller
     public function index()
     {
         // Get the current date
-        $today = Carbon::now()->format('Y-m-d');
+        // $today = Carbon::now()->format('Y-m-d');
     
         // Fetch Jurnal entries created today
         $jurnals = Jurnal::with('dataDivisi')
             ->with('akun')
-            ->whereDate('created_at', $today)
+            ->where('asal_input', 0)
+            // ->whereDate('created_at', $today)
             ->paginate(10); // Menambahkan pagination untuk 50 data perhalaman
     
         // Calculate total debit and total kredit
         // Fetch Jurnal entries created today without pagination
         $jurnalsAll = Jurnal::with('dataDivisi')
         ->with('akun')
-        ->whereDate('created_at', $today)
+        ->where('asal_input', 0)
+        // ->whereDate('created_at', $today)
         ->get();
 
         $totalDebit = $jurnalsAll->sum('debit');
@@ -52,59 +54,59 @@ class JurnalController extends Controller
         ]);
     }    
 
-    public function store(Request $request)
-    {
-        // validasi input yang didapatkan dari request
-        $validator = Validator::make($request->all(), [
-            'periode_jurnal' => 'required|date',
-            'type_jurnal' => 'required|string|max:100',
-            'id_rkat' => 'required|integer',
-            'uraian' => 'required|string|max:255',
-            'no_bukti' => 'required|string|max:100',
-            'debit' => 'required|integer',
-            'kredit' => 'required|integer',
-            'tt' => 'nullable|string|max:100',
-            'korek' => 'nullable|string|max:255',
-            'ku' => 'nullable|string|max:100',
-            'unit_usaha' => 'nullable|string|max:100',
-        ]);
+    // public function store(Request $request)
+    // {
+    //     // validasi input yang didapatkan dari request
+    //     $validator = Validator::make($request->all(), [
+    //         'periode_jurnal' => 'required|date',
+    //         'type_jurnal' => 'required|string|max:100',
+    //         'id_rkat' => 'required|integer',
+    //         'uraian' => 'required|string|max:255',
+    //         'no_bukti' => 'required|string|max:100',
+    //         'debit' => 'required|integer',
+    //         'kredit' => 'required|integer',
+    //         'tt' => 'nullable|string|max:100',
+    //         'korek' => 'nullable|string|max:255',
+    //         'ku' => 'nullable|string|max:100',
+    //         'unit_usaha' => 'nullable|string|max:100',
+    //     ]);
     
-        // kalau ada error kembalikan error
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
+    //     // kalau ada error kembalikan error
+    //     if ($validator->fails()) {
+    //         return redirect()->back()->withErrors($validator)->withInput();
+    //     }
     
-        // simpan data ke database
-        try {
-            DB::beginTransaction();
+    //     // simpan data ke database
+    //     try {
+    //         DB::beginTransaction();
 
-            // Get the currently authenticated user
-            $user = Auth::user();
+    //         // Get the currently authenticated user
+    //         $user = Auth::user();
     
-            // insert ke tabel positions
-            Jurnal::create([
-                'periode_jurnal' => $request->periode_jurnal,
-                'type_jurnal' => $request->type_jurnal,
-                'id_rkat' => $request->id_rkat,
-                'uraian' => $request->uraian,
-                'no_bukti' => $request->no_bukti,
-                'debit' => $request->debit,
-                'kredit' => $request->kredit,
-                'tt' => $request->tt,
-                'korek' => $request->korek,
-                'ku' => $request->ku,
-                'unit_usaha' => $request->unit_usaha,
-                'created_by' => $user->id
-            ]);
+    //         // insert ke tabel positions
+    //         Jurnal::create([
+    //             'periode_jurnal' => $request->periode_jurnal,
+    //             'type_jurnal' => $request->type_jurnal,
+    //             'id_rkat' => $request->id_rkat,
+    //             'uraian' => $request->uraian,
+    //             'no_bukti' => $request->no_bukti,
+    //             'debit' => $request->debit,
+    //             'kredit' => $request->kredit,
+    //             'tt' => $request->tt,
+    //             'korek' => $request->korek,
+    //             'ku' => $request->ku,
+    //             'unit_usaha' => $request->unit_usaha,
+    //             'created_by' => $user->id
+    //         ]);
     
-            DB::commit();
+    //         DB::commit();
     
-            return redirect()->back()->with('insertSuccess', 'Data berhasil di Inputkan');
-        } catch (Exception $e) {
-            DB::rollBack();
-            return redirect()->back()->with('insertFail', $e->getMessage());
-        }
-    }
+    //         return redirect()->back()->with('insertSuccess', 'Data berhasil di Inputkan');
+    //     } catch (Exception $e) {
+    //         DB::rollBack();
+    //         return redirect()->back()->with('insertFail', $e->getMessage());
+    //     }
+    // }
 
     public function showImportForm()
     {
@@ -263,7 +265,8 @@ class JurnalController extends Controller
                 'korek' => $request->korek,
                 'ku' => $request->ku,
                 'unit_usaha' => $request->unit_usaha,
-                'created_by' => $user->id
+                'created_by' => $user->id,
+                'asal_input' => 0,
             ]);
 
             // Insert the second row into the jurnal table
@@ -281,7 +284,8 @@ class JurnalController extends Controller
                 'korek' => $request->korek,
                 'ku' => $request->ku,
                 'unit_usaha' => $request->unit_usaha,
-                'created_by' => $user->id
+                'created_by' => $user->id,
+                'asal_input' => 0,
             ]);
 
             DB::commit();
