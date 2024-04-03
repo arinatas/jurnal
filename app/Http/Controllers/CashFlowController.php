@@ -63,10 +63,10 @@ class CashFlowController extends Controller
             'tanggal' => 'required|date',
             'no_bukti' => 'required|string|max:100',
             'pic' => 'required|string|max:255',
-            'nama' => 'required|string|max:255',
-            'kode_anggaran' => 'required|integer',
+            'nama' => 'nullable|string|max:255',
+            'kode_anggaran' => 'nullable|integer',
             'transaksi' => 'required|string|max:255',
-            'ref' => 'required|string|max:100',
+            'ref' => 'nullable|string|max:100',
             'debit' => 'required|integer',
             'kredit' => 'required|integer',
         ]);

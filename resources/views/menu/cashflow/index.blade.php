@@ -84,10 +84,10 @@
                                                         <th class="min-w-100px">Tanggal</th>
                                                         <th class="min-w-100px">No Bukti</th>
                                                         <th class="min-w-100px">PIC</th>
-                                                        <th class="min-w-100px">Nama</th>
-                                                        <th class="min-w-100px">Kode Anggaran</th>
+                                                        <!-- <th class="min-w-100px">Nama</th>
+                                                        <th class="min-w-100px">Kode Anggaran</th> -->
                                                         <th class="min-w-100px">Transaksi</th>
-                                                        <th class="min-w-100px">Ref</th>
+                                                        <!-- <th class="min-w-100px">Ref</th> -->
                                                         <th class="min-w-100px">Accounting</th>
                                                         <th class="min-w-150px">Debit</th>
                                                         <th class="min-w-150px">Kredit</th>
@@ -103,10 +103,7 @@
                                                         <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('j F Y'); }}</td>
                                                         <td>{{ $item->no_bukti }}</td>
                                                         <td>{{ $item->pic }}</td>
-                                                        <td>{{ $item->nama }}</td>
-                                                        <td>{{ $item->rkat->kode_rkat }}</td>
                                                         <td>{{ $item->transaksi }}</td>
-                                                        <td>{{ $item->ref }}</td>
                                                         <td>{{ $item->user->nama }}</td>
                                                         <td>Rp. @currency($item->debit )</td>
                                                         <td>Rp. @currency($item->kredit )</td>
@@ -117,9 +114,6 @@
                                                     @endforeach
                                                     <!-- Total rows after the loop -->
                                                     <tr class="fw-bold fs-6 text-gray-800">
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
@@ -223,39 +217,10 @@
                                                     <div class="d-flex flex-column mb-7 fv-row">
                                                         <!--begin::Label-->
                                                         <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Nama</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="nama" required value=""/>
-                                                    </div>
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Kode Anggaran</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <select class="form-control form-control-solid" name="kode_anggaran" data-control="select2" data-dropdown-parent="#kt_modal_new_user" required>
-                                                            <option value="">Pilih Kode Anggaran</option>
-                                                            @foreach($rkatOptions as $id => $kode_rkat)
-                                                                <option value="{{ $id }}">{{ $kode_rkat }} - {{ $rkatDescriptions[$id] }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
                                                             <span class="required">Transaksi</span>
                                                         </label>
                                                         <!--end::Label-->
                                                         <input class="form-control form-control-solid" type="text" name="transaksi" required value=""/>
-                                                    </div>
-                                                    <div class="d-flex flex-column mb-7 fv-row">
-                                                        <!--begin::Label-->
-                                                        <label class="d-flex align-items-center fs-6 fw-bold form-label mb-2">
-                                                            <span class="required">Ref</span>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                        <input class="form-control form-control-solid" type="text" name="ref" required value=""/>
                                                     </div>
                                                     <div class="d-flex flex-column mb-7 fv-row">
                                                         <!--begin::Label-->
