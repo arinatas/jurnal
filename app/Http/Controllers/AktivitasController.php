@@ -79,7 +79,7 @@ class AktivitasController extends Controller
             })
             ->whereYear('periode_jurnal', $selectedYear)
             ->whereMonth('periode_jurnal', $selectedMonth)
-            ->sum('kredit');    
+            ->sum('debit');    
     
             $creditAmounts[$item->no_akun] = $creditAmount;
         }
