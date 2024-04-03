@@ -255,6 +255,12 @@ class CashFlowController extends Controller
             // Import data Excel
             Excel::import($import, $request->file('excel_file'));
 
+            // Update uang_kas 
+            $totalKas = Kas::findOrFail("1");
+            $totalKas->kas += $import->getTotalDebit();
+            $totalKas->kas -= $import->getTotalKredit();
+            $totalKas->save();
+
             DB::commit();
 
             return redirect()->back()->with('importSuccess', 'Data berhasil diimpor.');
