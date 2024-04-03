@@ -10,7 +10,7 @@ use App\Models\Jurnal;
 use App\Models\JurnalAkun;
 use App\Models\Divisi;
 use Illuminate\Support\Facades\Auth;
-use App\Imports\JurnalImport;
+use App\Imports\KasMasukImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
 
@@ -24,7 +24,7 @@ class KasMasukController extends Controller
         // Fetch Jurnal entries created today
         $jurnals = Jurnal::with('akun')
             ->with('dataDivisi')
-            ->whereDate('created_at', $today)
+            ->where('asal_input', 1)
             ->paginate(10);
 
         // Calculate total debit and total kredit
@@ -137,6 +137,7 @@ class KasMasukController extends Controller
                 'korek' => $request->korek,
                 'ku' => $request->ku,
                 'unit_usaha' => $request->unit_usaha,
+                'asal_input' => 1,
                 'created_by' => $user->id
             ]);
 
@@ -155,6 +156,7 @@ class KasMasukController extends Controller
                 'korek' => $request->korek,
                 'ku' => $request->ku,
                 'unit_usaha' => $request->unit_usaha,
+                'asal_input' => 1,
                 'created_by' => $user->id
             ]);
 
@@ -186,5 +188,61 @@ class KasMasukController extends Controller
             return redirect()->back()->with('downloadFail', 'File contoh tidak ditemukan.');
         }
     } 
+
+    public function importExcel(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'excel_file' => 'required|mimes:xls,xlsx',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $import = new KasMasukImport(auth()->user());
+
+            // Import data Excel
+            Excel::import($import, $request->file('excel_file'));
+
+            // Get total debit and credit after import
+            $totalDebit = $import->getTotalDebit();
+            $totalKredit = $import->getTotalKredit();
+
+            // Check if totals are balanced
+            if ($totalDebit !== $totalKredit) {
+                DB::rollBack();
+                return redirect()->back()->with('importError', 'Data total debit dan kredit belum balance.');
+            }
+
+            DB::commit();
+
+            return redirect()->back()->with('importSuccess', 'Data berhasil diimpor.');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            DB::rollBack();
+            $failures = $e->failures();
+            $errorMessages = [];
+
+            foreach ($failures as $failure) {
+                $rowNumber = $failure->row();
+                $column = $failure->attribute();
+                $errorMessages[] = "Baris $rowNumber, Kolom $column: " . implode(', ', $failure->errors());
+            }
+
+            return redirect()->back()
+                ->with('importValidationFailures', $failures)
+                ->with('importErrors', $errorMessages)
+                ->withInput();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $errorMessage = $e->getMessage();
+
+            \Log::error($errorMessage);
+
+            return redirect()->back()->with('importError', $errorMessage);
+        }
+    }
 }
 

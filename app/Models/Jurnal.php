@@ -40,6 +40,7 @@ class Jurnal extends Model
         'korek',
         'ku',
         'unit_usaha',
+        'asal_input',
         'created_by',
     ];
 

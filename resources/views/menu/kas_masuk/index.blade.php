@@ -29,7 +29,7 @@
                                         <!--begin::Import Form-->
                                         <div class="card-px mt-10 mt-5">
                                             <h3 class="fs-4 fw-bolder mb-4">Import Data Excel</h3>
-                                            <form action="{{ route('import.jurnal') }}" method="POST" enctype="multipart/form-data">
+                                            <form action="{{ route('import.kasMasuk') }}" method="POST" enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="mb-3">
                                                     <label for="excel_file" class="form-label">Pilih File Excel:</label>
