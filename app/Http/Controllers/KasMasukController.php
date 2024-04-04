@@ -35,6 +35,9 @@ class KasMasukController extends Controller
             $jurnalsQuery->whereBetween('periode_jurnal', [$startDate, $endDate]);
             $jurnalsAllQuery->whereBetween('periode_jurnal', [$startDate, $endDate]);
         }
+
+        // Order by ID in descending order
+        $jurnalsQuery->orderBy('id', 'desc');
     
         $jurnals = $jurnalsQuery->paginate(10);
         $jurnalsAll = $jurnalsAllQuery->get();
@@ -250,6 +253,101 @@ class KasMasukController extends Controller
             \Log::error($errorMessage);
 
             return redirect()->back()->with('importError', $errorMessage);
+        }
+    }
+
+    public function edit($id)
+    {
+        $kasMasuk = Jurnal::find($id);
+        $divisions = Divisi::all();
+        $jurnalAkuns = JurnalAkun::all();
+
+        if (!$kasMasuk) {
+            return redirect()->back()->with('dataNotFound', 'Data tidak ditemukan');
+        }
+
+        return view('menu.kas_masuk.edit', [
+            'title' => 'Kas Masuk',
+            'secction' => 'Menu',
+            'active' => 'Kas Masuk',
+            'kasMasuk' => $kasMasuk,
+            'divisions' => $divisions, 
+            'jurnalAkuns' => $jurnalAkuns, 
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $kasMasuk = Jurnal::find($id);
+
+        if (!$kasMasuk) {
+            return redirect()->back()->with('dataNotFound', 'Data tidak ditemukan');
+        }
+
+        // validasi input yang didapatkan dari request
+        $validator = Validator::make($request->all(), [
+            'periode_jurnal' => 'required|date',
+            'type_jurnal' => 'required|string|max:100',
+            'kode_akun' => 'required|string|max:100',
+            'divisi' => 'required|integer',
+            'uraian' => 'required|string|max:255',
+            'keterangan_rkat' => 'nullable|string|max:100',
+            'no_bukti' => 'required|string|max:100',
+            'debit' => 'required|integer',
+            'kredit' => 'required|integer',
+            'tt' => 'nullable|string|max:100',
+            'korek' => 'nullable|string|max:255',
+            'ku' => 'nullable|string|max:100',
+            'unit_usaha' => 'nullable|string|max:100',
+        ]);
+
+        // kalau ada error kembalikan error
+        if ($validator->fails()) {
+            $validatorErrors = implode('<br>', $validator->errors()->all());
+            return redirect()->back()->with('validatorFail', $validatorErrors);
+        }
+
+        try {
+            DB::beginTransaction();
+    
+            $kasMasuk->periode_jurnal = $request->periode_jurnal;
+            $kasMasuk->type_jurnal = $request->type_jurnal;
+            $kasMasuk->kode_akun = $request->kode_akun;
+            $kasMasuk->divisi = $request->divisi;
+            $kasMasuk->uraian = $request->uraian;
+            $kasMasuk->no_bukti = $request->no_bukti;
+            $kasMasuk->debit = $request->debit;
+            $kasMasuk->kredit = $request->kredit;
+            $kasMasuk->tt = $request->tt;
+            $kasMasuk->korek = $request->korek;
+            $kasMasuk->ku = $request->ku;
+            $kasMasuk->unit_usaha = $request->unit_usaha;
+            $kasMasuk->keterangan_rkat = $request->keterangan_rkat;
+    
+            $kasMasuk->save();
+    
+            DB::commit();
+
+            return redirect('/kasMasuk')->with('updateSuccess', 'Data berhasil di Update');
+    
+        } catch(Exception $e) {
+            DB::rollBack();
+            // dd($e->getMessage());
+            return redirect()->back()->with('updateFail', 'Data gagal di Update');
+        }
+    }
+
+    public function destroy($id)
+    {
+        // Cari data pengguna berdasarkan ID
+        $kasMasuk = Jurnal::find($id);
+
+        try {
+            // Hapus data pengguna
+            $kasMasuk->delete();
+            return redirect()->back()->with('deleteSuccess', 'Data berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('deleteFail', $e->getMessage());
         }
     }
 }

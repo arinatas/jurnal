@@ -99,6 +99,7 @@
                                             <table class="table table-striped gy-7 gs-7">
                                                 <thead>
                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+                                                        <th class="min-w-100px text-center">Action</th>
                                                         <th class="min-w-50px text-center">No</th>
                                                         <th class="min-w-100px text-center">Periode</th>
                                                         <th class="min-w-50px text-center">Tipe Jurnal</th>
@@ -115,6 +116,17 @@
                                                 <tbody>
                                                     @foreach ($jurnals as $item)
                                                     <tr>
+                                                        <td>
+                                                            <a href="{{ route('edit.kasMasuk', $item->id ) }}" class="btn btn-sm btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                                            <form id="form-delete" action="{{ route('destroy.kasMasuk', $item->id ) }}" method="POST"
+                                                            class="d-inline-block">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button id="submit-btn" type="submit" data-toggle="tooltip" data-original-title="Hapus bagian"
+                                                                class="btn btn-sm btn-danger btn-action" onclick="confirmDelete(event)"
+                                                                ><i class="fas fa-trash"></i></i></button>
+                                                            </form>
+                                                        </td>
                                                         <td class="text-center">{{ $jurnals->firstItem() + $loop->index }}</td>
                                                         <td>{{ \Carbon\Carbon::parse($item->periode_jurnal)->format('j F Y'); }}</td>
                                                         <td class="text-center">

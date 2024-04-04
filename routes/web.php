@@ -95,6 +95,9 @@ Route::get('/inputKasMasuk', [KasMasukController::class, 'input'])->middleware('
 Route::post('/kasMasukStore', [KasMasukController::class, 'storeKasMasuk'])->middleware('auth')->name('store.kasMasuk');
 Route::get('/import-kasMasuk', [KasMasukController::class, 'showImportForm'])->name('import.kasMasuk.view');
 Route::post('/import-kasMasuk', [KasMasukController::class, 'importExcel'])->name('import.kasMasuk');
+Route::get('/editKasMasuk/{id}', [KasMasukController::class, 'edit'])->middleware('auth')->name('edit.kasMasuk');
+Route::post('/updateKasMasuk/{id}', [KasMasukController::class, 'update'])->middleware('auth')->name('update.kasMasuk');
+Route::delete('/deleteKasMasuk/{id}', [KasMasukController::class, 'destroy'])->middleware('auth')->name('destroy.kasMasuk');
 
 // Menu Kas Keluar
 Route::get('/kasKeluar', [KasKeluarController::class, 'index'])->middleware('auth')->name('kasKeluar');
