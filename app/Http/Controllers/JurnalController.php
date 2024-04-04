@@ -17,25 +17,46 @@ use Carbon\Carbon;
 
 class JurnalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // Get the current date
         // $today = Carbon::now()->format('Y-m-d');
     
+        // // Fetch Jurnal entries created today
+        // $jurnals = Jurnal::with('dataDivisi')
+        //     ->with('akun')
+        //     ->where('asal_input', 0)
+        //     // ->whereDate('created_at', $today)
+        //     ->paginate(10); // Menambahkan pagination untuk 50 data perhalaman
+    
+        // // Calculate total debit and total kredit
+        // // Fetch Jurnal entries created today without pagination
+        // $jurnalsAll = Jurnal::with('dataDivisi')
+        // ->with('akun')
+        // ->where('asal_input', 0)
+        // // ->whereDate('created_at', $today)
+        // ->get();
+
+        // Get the start and end dates from the request, if available
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
         // Fetch Jurnal entries created today
-        $jurnals = Jurnal::with('dataDivisi')
-            ->with('akun')
-            ->where('asal_input', 0)
-            // ->whereDate('created_at', $today)
-            ->paginate(10); // Menambahkan pagination untuk 50 data perhalaman
+        $jurnalsQuery = Jurnal::with('akun')
+            ->with('dataDivisi')
+            ->where('asal_input', 0);
     
         // Calculate total debit and total kredit
-        // Fetch Jurnal entries created today without pagination
-        $jurnalsAll = Jurnal::with('dataDivisi')
-        ->with('akun')
-        ->where('asal_input', 0)
-        // ->whereDate('created_at', $today)
-        ->get();
+        $jurnalsAllQuery = clone $jurnalsQuery;
+    
+        // Add date filter if start and end dates are provided
+        if ($startDate && $endDate) {
+            $jurnalsQuery->whereBetween('periode_jurnal', [$startDate, $endDate]);
+            $jurnalsAllQuery->whereBetween('periode_jurnal', [$startDate, $endDate]);
+        }
+    
+        $jurnals = $jurnalsQuery->paginate(10);
+        $jurnalsAll = $jurnalsAllQuery->get();
 
         $totalDebit = $jurnalsAll->sum('debit');
         $totalKredit = $jurnalsAll->sum('kredit');
@@ -51,6 +72,8 @@ class JurnalController extends Controller
             'jurnalAkunOptions' => $jurnalAkunOptions,
             'totalDebit' => $totalDebit,
             'totalKredit' => $totalKredit,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
         ]);
     }    
 
