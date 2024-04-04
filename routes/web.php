@@ -88,6 +88,9 @@ Route::get('/printjurnal/{selectedYear}/{selectedMonth}', [JurnalController::cla
 Route::get('/printbukubesar/{selectedYear}/{selectedMonth}/{selectedJurnalAccount}', [JurnalController::class, 'printBukuBesar'])->middleware('auth')->name('printbukubesar');
 Route::get('/printjurnaldivisi/{selectedYear}/{selectedMonth}/{selectedDivisi}', [JurnalController::class, 'printJurnalDivisi'])->middleware('auth')->name('printjurnaldivisi');
 Route::get('/printbukubesardivisi/{selectedYear}/{selectedMonth}/{selectedJurnalAccount}/{selectedDivisi}', [JurnalController::class, 'printBukuBesarDivisi'])->middleware('auth')->name('printbukubesardivisi');
+Route::get('/editJurnal/{id}', [JurnalController::class, 'edit'])->middleware('auth')->name('edit.jurnal');
+Route::post('/updateJurnal/{id}', [JurnalController::class, 'update'])->middleware('auth')->name('update.jurnal');
+Route::delete('/deleteJurnal/{id}', [JurnalController::class, 'destroy'])->middleware('auth')->name('destroy.jurnal');
 
 // Menu Kas Masuk
 Route::get('/kasMasuk', [KasMasukController::class, 'index'])->middleware('auth')->name('kasMasuk');
@@ -105,6 +108,9 @@ Route::get('/inputKasKeluar', [KasKeluarController::class, 'input'])->middleware
 Route::post('/kasKeluarStore', [KasKeluarController::class, 'storeKasKeluar'])->middleware('auth')->name('store.kasKeluar');
 Route::get('/import-kasKeluar', [KasKeluarController::class, 'showImportForm'])->name('import.kasKeluar.view');
 Route::post('/import-kasKeluar', [KasKeluarController::class, 'importExcel'])->name('import.kasKeluar');
+Route::get('/editKasKeluar/{id}', [KasKeluarController::class, 'edit'])->middleware('auth')->name('edit.kasKeluar');
+Route::post('/updateKasKeluar/{id}', [KasKeluarController::class, 'update'])->middleware('auth')->name('update.kasKeluar');
+Route::delete('/deleteKasKeluar/{id}', [KasKeluarController::class, 'destroy'])->middleware('auth')->name('destroy.kasKeluar');
 
 // Menu Aktivitas
 Route::get('/aktivitas', [AktivitasController::class, 'index'])->middleware('auth')->name('aktivitas');

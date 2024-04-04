@@ -54,6 +54,9 @@ class JurnalController extends Controller
             $jurnalsQuery->whereBetween('periode_jurnal', [$startDate, $endDate]);
             $jurnalsAllQuery->whereBetween('periode_jurnal', [$startDate, $endDate]);
         }
+
+        // Order by ID in descending order
+        $jurnalsQuery->orderBy('id', 'desc');
     
         $jurnals = $jurnalsQuery->paginate(10);
         $jurnalsAll = $jurnalsAllQuery->get();
@@ -546,6 +549,101 @@ class JurnalController extends Controller
             'selectedMonth' => $selectedMonth,
             'selectedDivisi' => $selectedDivisi,
         ]);
+    }
+
+    public function edit($id)
+    {
+        $jurnal = Jurnal::find($id);
+        $divisions = Divisi::all();
+        $jurnalAkuns = JurnalAkun::all();
+
+        if (!$jurnal) {
+            return redirect()->back()->with('dataNotFound', 'Data tidak ditemukan');
+        }
+
+        return view('menu.jurnal.edit', [
+            'title' => 'Jurnal',
+            'secction' => 'Menu',
+            'active' => 'Jurnal',
+            'jurnal' => $jurnal,
+            'divisions' => $divisions, 
+            'jurnalAkuns' => $jurnalAkuns, 
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $jurnal = Jurnal::find($id);
+
+        if (!$jurnal) {
+            return redirect()->back()->with('dataNotFound', 'Data tidak ditemukan');
+        }
+
+        // validasi input yang didapatkan dari request
+        $validator = Validator::make($request->all(), [
+            'periode_jurnal' => 'required|date',
+            'type_jurnal' => 'required|string|max:100',
+            'kode_akun' => 'required|string|max:100',
+            'divisi' => 'required|integer',
+            'uraian' => 'required|string|max:255',
+            'keterangan_rkat' => 'nullable|string|max:100',
+            'no_bukti' => 'required|string|max:100',
+            'debit' => 'required|integer',
+            'kredit' => 'required|integer',
+            'tt' => 'nullable|string|max:100',
+            'korek' => 'nullable|string|max:255',
+            'ku' => 'nullable|string|max:100',
+            'unit_usaha' => 'nullable|string|max:100',
+        ]);
+
+        // kalau ada error kembalikan error
+        if ($validator->fails()) {
+            $validatorErrors = implode('<br>', $validator->errors()->all());
+            return redirect()->back()->with('validatorFail', $validatorErrors);
+        }
+
+        try {
+            DB::beginTransaction();
+    
+            $jurnal->periode_jurnal = $request->periode_jurnal;
+            $jurnal->type_jurnal = $request->type_jurnal;
+            $jurnal->kode_akun = $request->kode_akun;
+            $jurnal->divisi = $request->divisi;
+            $jurnal->uraian = $request->uraian;
+            $jurnal->no_bukti = $request->no_bukti;
+            $jurnal->debit = $request->debit;
+            $jurnal->kredit = $request->kredit;
+            $jurnal->tt = $request->tt;
+            $jurnal->korek = $request->korek;
+            $jurnal->ku = $request->ku;
+            $jurnal->unit_usaha = $request->unit_usaha;
+            $jurnal->keterangan_rkat = $request->keterangan_rkat;
+    
+            $jurnal->save();
+    
+            DB::commit();
+
+            return redirect('/jurnal')->with('updateSuccess', 'Data berhasil di Update');
+    
+        } catch(Exception $e) {
+            DB::rollBack();
+            // dd($e->getMessage());
+            return redirect()->back()->with('updateFail', 'Data gagal di Update');
+        }
+    }
+
+    public function destroy($id)
+    {
+        // Cari data pengguna berdasarkan ID
+        $jurnal = Jurnal::find($id);
+
+        try {
+            // Hapus data pengguna
+            $jurnal->delete();
+            return redirect()->back()->with('deleteSuccess', 'Data berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('deleteFail', $e->getMessage());
+        }
     }
 }
 
