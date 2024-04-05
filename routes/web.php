@@ -63,6 +63,7 @@ Route::get('/printCompare', [CompareController::class, 'printCompare'])->middlew
 
 // menu neraca
 Route::get('/neraca', [NeracaController::class, 'index'])->middleware('auth')->name('neraca');
+Route::get('/printNeracaBlnThn/{selectedYear}/{selectedMonth}', [NeracaController::class, 'printNeracaBlnThn'])->middleware('auth')->name('printNeracaBlnThn');
 Route::get('/printNeraca', [NeracaController::class, 'printNeraca'])->middleware('auth')->name('printNeraca');
 
 
