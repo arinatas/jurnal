@@ -24,6 +24,7 @@
                                             @if (request('bulan') && request('tahun'))
                                             <div class="d-inline">
                                                 <a href="{{ route('printAktivitas', ['selectedYear' => request('tahun'), 'selectedMonth' => request('bulan')]) }}" class="btn btn-sm btn-success" title="Unduh Laporan">Print Laporan</a> 
+                                                <a href="{{ route('exportAktivitas', ['selectedYear' => request('tahun'), 'selectedMonth' => request('bulan')]) }}" class="btn btn-sm btn-info" title="Export Excel">Export Excel</a>
                                             </div>
                                             @endif
                                             <!--begin::Button Print-->

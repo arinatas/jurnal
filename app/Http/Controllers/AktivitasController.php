@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Models\Rkat;
 use App\Models\Jurnal;
 use App\Models\JurnalAkun;
-use App\Models\Rkat;
+use Illuminate\Http\Request;
+use App\Exports\AktivitasExport;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class AktivitasController extends Controller
 {
@@ -132,11 +133,38 @@ class AktivitasController extends Controller
         return view('menu.aktivitas.print_aktivitas', $data);
     }
 
+    // Metode untuk Export ke Excel
+    public function exportAktivitas(Request $request, $selectedYear, $selectedMonth)
+    {
+        // Definisi daftar section beserta parent id-nya
+        $sections = [
+            'pendapatan' => 4,
+            'bebanSehubunganProgram' => 5,
+            'pendapatanLainlain' => 7,
+            'bebanMarketing' => 601,
+            'bebanKegiatan' => 602,
+            'bebanGaji' => 603,
+            'bebanOperasionalKantor' => 604,
+            'bebanRumahTanggaKantor' => 605,
+            'bebanSewa' => 606,
+            'bebanPerawatan' => 607,
+            'bebanYayasan' => 608,
+            'bebanLainlain' => 609,
+            'pajak' => 610,
+            'depresiasi' => 611,
+        ];
+        $export = new AktivitasExport($sections, $selectedYear, $selectedMonth);
+
+        $currentDate = Carbon::now()->format('d-m-y'); // Format the current date as desired
+
+        $fileName = 'laporan_aktivitas_' . $currentDate . '.xlsx';
+
+        return Excel::download($export, $fileName);
+    }
 
 
 
-
-
+    
 
 
     // // Metode untuk Print Aktivitas

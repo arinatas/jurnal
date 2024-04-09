@@ -116,6 +116,7 @@ Route::delete('/deleteKasKeluar/{id}', [KasKeluarController::class, 'destroy'])-
 // Menu Aktivitas
 Route::get('/aktivitas', [AktivitasController::class, 'index'])->middleware('auth')->name('aktivitas');
 Route::get('/printAktivitas/{selectedYear}/{selectedMonth}', [AktivitasController::class, 'printAktivitas'])->middleware('auth')->name('printAktivitas');
+Route::get('/exportAktivitas/{selectedYear}/{selectedMonth}', [AktivitasController::class, 'exportAktivitas'])->middleware('auth')->name('exportAktivitas'); // Export Excel
 
 // Master User
 Route::get('/user', [UserController::class, 'index'])->middleware('auth')->name('user');
