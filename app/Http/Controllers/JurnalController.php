@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use App\Models\Jurnal;
-use App\Models\JurnalAkun;
+use Carbon\Carbon;
 use App\Models\Rkat;
 use App\Models\Divisi;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Jurnal;
+use App\Models\JurnalAkun;
+use Illuminate\Http\Request;
 use App\Imports\JurnalImport;
+use App\Exports\BukuBesarExport;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class JurnalController extends Controller
 {
@@ -644,6 +645,18 @@ class JurnalController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('deleteFail', $e->getMessage());
         }
+    }
+
+    // Metode untuk Export ke Excel
+    public function exportBukuBesar(Request $request, $selectedYear, $selectedMonth)
+    {
+        $export = new BukuBesarExport($selectedYear, $selectedMonth);
+
+        $currentDate = Carbon::now()->format('d-m-y'); // Format the current date as desired
+
+        $fileName = 'laporan_buku_besar_' . $currentDate . '.xlsx';
+
+        return Excel::download($export, $fileName);
     }
 }
 

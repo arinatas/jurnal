@@ -35,6 +35,7 @@
                                             @elseif (request('bulan') && request('tahun') && $jurnals && count($jurnals) > 0)
                                             <div class="d-inline">
                                                 <a href="{{ route('printjurnal', ['selectedYear' => request('tahun'), 'selectedMonth' => request('bulan')]) }}" class="btn btn-sm btn-danger" title="Unduh Laporan">Print Laporan</a> 
+                                                <a href="{{ route('exportBukuBesar', ['selectedYear' => request('tahun'), 'selectedMonth' => request('bulan')]) }}" class="btn btn-sm btn-info" title="Export Excel">Export Excel</a>
                                             </div>
                                             @endif
                                         </div>
