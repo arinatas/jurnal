@@ -53,7 +53,7 @@
                     <td style="text-align: center;">{{ $bukubesar->periode_jurnal }}</td>
                     <td style="text-align: center;">{{ $bukubesar->type_jurnal }}</td>
                     <td style="text-align: center;">{{ $bukubesar->uraian }}</td>
-                    <td style="text-align: left;">{{ $bukubesar->divisi }}</td>
+                    <td style="text-align: left;">{{ $bukubesar->dataDivisi->nama_divisi }}</td>
                     <td style="text-align: left;">{{ $bukubesar->kode_akun }}</td>
                     <td style="text-align: left;">{{ $bukubesar->akun->nama_akun }}</td>
                     <td style="text-align: center;">{{ $bukubesar->no_bukti }}</td>
