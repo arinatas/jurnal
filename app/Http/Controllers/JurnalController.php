@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\BukuBesarExportJurnal;
 use Illuminate\Support\Facades\Validator;
 
 class JurnalController extends Controller
@@ -652,7 +653,18 @@ class JurnalController extends Controller
     {
         $export = new BukuBesarExport($selectedYear, $selectedMonth, $selectedDivisi);
 
-        $currentDate = Carbon::now()->format('d-m-y'); // Format the current date as desired
+        $currentDate = Carbon::now()->format('d-m-y');
+
+        $fileName = 'laporan_buku_besar_' . $currentDate . '.xlsx';
+
+        return Excel::download($export, $fileName);
+    }
+
+    public function exportBukuBesarJurnal(Request $request, $selectedYear, $selectedMonth, $selectedJurnalAccount = null)
+    {
+        $export = new BukuBesarExportJurnal($selectedYear, $selectedMonth, $selectedJurnalAccount);
+
+        $currentDate = Carbon::now()->format('d-m-y');
 
         $fileName = 'laporan_buku_besar_' . $currentDate . '.xlsx';
 

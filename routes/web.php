@@ -93,6 +93,7 @@ Route::get('/editJurnal/{id}', [JurnalController::class, 'edit'])->middleware('a
 Route::post('/updateJurnal/{id}', [JurnalController::class, 'update'])->middleware('auth')->name('update.jurnal');
 Route::delete('/deleteJurnal/{id}', [JurnalController::class, 'destroy'])->middleware('auth')->name('destroy.jurnal');
 Route::get('/exportBukuBesar/{selectedYear}/{selectedMonth}/{selectedDivisi?}', [JurnalController::class, 'exportBukuBesar'])->middleware('auth')->name('exportBukuBesar');
+Route::get('/exportBukuBesarJurnal/{selectedYear}/{selectedMonth}/{selectedJurnalAccount}', [JurnalController::class, 'exportBukuBesarJurnal'])->middleware('auth')->name('exportBukuBesarJurnal');
 
 // Menu Kas Masuk
 Route::get('/kasMasuk', [KasMasukController::class, 'index'])->middleware('auth')->name('kasMasuk');
