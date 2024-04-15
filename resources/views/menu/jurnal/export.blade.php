@@ -55,7 +55,7 @@
                     <td style="text-align: center;">{{ $bukubesar->uraian }}</td>
                     <td style="text-align: left;">{{ $bukubesar->divisi }}</td>
                     <td style="text-align: left;">{{ $bukubesar->kode_akun }}</td>
-                    <td style="text-align: left;">{{ $bukubesar->nama_akun }}</td>
+                    <td style="text-align: left;">{{ $bukubesar->akun->nama_akun }}</td>
                     <td style="text-align: center;">{{ $bukubesar->no_bukti }}</td>
                     <td style="text-align: center;">{{ $bukubesar->debit }}</td>
                     <td style="text-align: center;">{{ $bukubesar->kredit }}</td>

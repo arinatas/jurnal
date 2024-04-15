@@ -30,7 +30,8 @@
                                             </div>
                                             @elseif (request('bulan') && request('tahun') && request('divisi') && $jurnals && count($jurnals) > 0)
                                             <div class="d-inline">
-                                                <a href="{{ route('printjurnaldivisi', ['selectedYear' => request('tahun'), 'selectedMonth' => request('bulan'), 'selectedDivisi' => request('divisi')]) }}" class="btn btn-sm btn-success" title="Unduh Laporan">Print Laporan</a> 
+                                                <a href="{{ route('printjurnaldivisi', ['selectedYear' => request('tahun'), 'selectedMonth' => request('bulan'), 'selectedDivisi' => request('divisi')]) }}" class="btn btn-sm btn-secondary" title="Unduh Laporan">Print Laporan</a> 
+                                                <a href="{{ route('exportBukuBesar', ['selectedYear' => request('tahun'), 'selectedMonth' => request('bulan'), 'selectedDivisi' => request('divisi')]) }}" class="btn btn-sm btn-info" title="Export Excel">Export Excel</a>
                                             </div>
                                             @elseif (request('bulan') && request('tahun') && $jurnals && count($jurnals) > 0)
                                             <div class="d-inline">

@@ -12,19 +12,27 @@ class BukuBesarExport implements FromView, WithHeadings, ShouldAutoSize
 {
     protected $selectedYear;
     protected $selectedMonth;
+    protected $selectedDivisi;
 
-    public function __construct($selectedYear, $selectedMonth)
+    public function __construct($selectedYear, $selectedMonth, $selectedDivisi)
     {
         $this->selectedYear = $selectedYear;
         $this->selectedMonth = $selectedMonth;
+        $this->selectedDivisi = $selectedDivisi;
     }
 
     public function view(): View
     {
-        $bukubesars = Jurnal::query()
+        $query = Jurnal::query()
             ->whereYear('periode_jurnal', $this->selectedYear)
-            ->whereMonth('periode_jurnal', $this->selectedMonth)
-            ->get();
+            ->whereMonth('periode_jurnal', $this->selectedMonth);
+
+        if ($this->selectedDivisi !== null) {
+            $query->where('divisi', $this->selectedDivisi);
+        }
+
+        $bukubesars = $query->get();
+
 
         return view('menu.jurnal.export', [
             'bukubesars' => $bukubesars,

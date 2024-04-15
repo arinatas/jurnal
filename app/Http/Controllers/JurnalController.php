@@ -648,9 +648,9 @@ class JurnalController extends Controller
     }
 
     // Metode untuk Export ke Excel
-    public function exportBukuBesar(Request $request, $selectedYear, $selectedMonth)
+    public function exportBukuBesar(Request $request, $selectedYear, $selectedMonth, $selectedDivisi = null)
     {
-        $export = new BukuBesarExport($selectedYear, $selectedMonth);
+        $export = new BukuBesarExport($selectedYear, $selectedMonth, $selectedDivisi);
 
         $currentDate = Carbon::now()->format('d-m-y'); // Format the current date as desired
 
