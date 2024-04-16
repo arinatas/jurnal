@@ -2,25 +2,26 @@
 
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\DashboardController;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
-
-use App\Http\Controllers\PiutangController;
-use App\Http\Controllers\UangFisikController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\KasController;
-use App\Http\Controllers\CompareController;
-use App\Http\Controllers\NeracaController;
-use App\Http\Controllers\PecahanUangController;
-use App\Http\Controllers\CashFlowController;
-use App\Http\Controllers\JurnalAkunController;
 use App\Http\Controllers\RkatController;
-use App\Http\Controllers\JurnalController;
+use App\Http\Controllers\UserController;
+
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DivisiController;
-use App\Http\Controllers\AktivitasController;
+use App\Http\Controllers\JurnalController;
+use App\Http\Controllers\NeracaController;
+use App\Http\Controllers\CompareController;
+use App\Http\Controllers\PiutangController;
+use App\Http\Controllers\CashFlowController;
 use App\Http\Controllers\KasMasukController;
+use App\Http\Controllers\AktivitasController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KasKeluarController;
+use App\Http\Controllers\UangFisikController;
+use App\Http\Controllers\JurnalAkunController;
+use App\Http\Controllers\LockJurnalController;
+use App\Http\Controllers\PecahanUangController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -166,4 +167,11 @@ Route::post('/divisi', [DivisiController::class, 'store'])->middleware('auth')->
 Route::get('/editDivisi/{id}', [DivisiController::class, 'edit'])->middleware('auth')->name('edit.divisi');
 Route::post('/updateDivisi/{id}', [DivisiController::class, 'update'])->middleware('auth')->name('update.divisi');
 Route::delete('/deleteDivisi/{id}', [DivisiController::class, 'destroy'])->middleware('auth')->name('destroy.divisi');
+
+// Menu Lock Jurnal
+Route::get('/lockJurnal', [LockJurnalController::class, 'index'])->middleware('auth')->name('lockJurnal');
+Route::post('/lockJurnal', [LockJurnalController::class, 'store'])->middleware('auth')->name('insert.lockJurnal');
+Route::get('/editLockJurnal/{id}', [LockJurnalController::class, 'edit'])->middleware('auth')->name('edit.lockJurnal');
+Route::post('/updateLockJurnal/{id}', [LockJurnalController::class, 'update'])->middleware('auth')->name('update.lockJurnal');
+Route::delete('/deleteLockJurnal/{id}', [LockJurnalController::class, 'destroy'])->middleware('auth')->name('destroy.lockJurnal');
 
