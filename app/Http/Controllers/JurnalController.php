@@ -7,6 +7,7 @@ use App\Models\Rkat;
 use App\Models\Divisi;
 use App\Models\Jurnal;
 use App\Models\JurnalAkun;
+use App\Models\LockJurnal;
 use Illuminate\Http\Request;
 use App\Imports\JurnalImport;
 use App\Exports\BukuBesarExport;
@@ -279,6 +280,16 @@ class JurnalController extends Controller
             if ($totalDebit != $totalKredit) {
                 return redirect()->back()->withInput()->with('error', 'Total Debit dan Kredit harus seimbang.');
             }
+
+            // Check apakah periode yang di input locked
+            $lockedPeriod = LockJurnal::where('bulan', date('m', strtotime($request->periode_jurnal)))
+                ->where('tahun', date('Y', strtotime($request->periode_jurnal)))
+                ->first();
+
+            if ($lockedPeriod && $lockedPeriod->status === 'Lock') {
+                return redirect()->back()->withInput()->with('error', 'Bulan dan tahun periode tersebut terkunci untuk input data.');
+            }
+            
             // Insert the first row into the jurnal table
             Jurnal::create([
                 'periode_jurnal' => $request->periode_jurnal,

@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Models\Divisi;
 use App\Models\Jurnal;
 use App\Models\JurnalAkun;
-use App\Models\Divisi;
-use Illuminate\Support\Facades\Auth;
+use App\Models\LockJurnal;
+use Illuminate\Http\Request;
 use App\Imports\KasKeluarImport;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class KasKeluarController extends Controller
 {
@@ -133,6 +134,16 @@ class KasKeluarController extends Controller
             if ($totalDebit != $totalKredit) {
                 return redirect()->back()->withInput()->with('error', 'Total Debit dan Kredit harus seimbang.');
             }
+
+            // Check apakah periode yang di input locked
+            $lockedPeriod = LockJurnal::where('bulan', date('m', strtotime($request->periode_jurnal)))
+                ->where('tahun', date('Y', strtotime($request->periode_jurnal)))
+                ->first();
+
+            if ($lockedPeriod && $lockedPeriod->status === 'Lock') {
+                return redirect()->back()->withInput()->with('error', 'Bulan dan tahun periode tersebut terkunci untuk input data.');
+            }
+            
             // Insert the first row into the jurnal table
             Jurnal::create([
                 'periode_jurnal' => $request->periode_jurnal,
