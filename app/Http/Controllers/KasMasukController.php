@@ -48,7 +48,12 @@ class KasMasukController extends Controller
     
         // Get the list of kode_akun options
         $jurnalAkunOptions = JurnalAkun::pluck('nama_akun', 'no_akun');
-    
+
+        // Fetch lock status for the corresponding month and year
+        $lockStatus = LockJurnal::where('bulan', date('m', strtotime($startDate)))
+            ->where('tahun', date('Y', strtotime($startDate)))
+            ->first();
+
         return view('menu.kas_masuk.index', [
             'title' => 'Kas Masuk',
             'section' => 'Menu',
@@ -59,6 +64,7 @@ class KasMasukController extends Controller
             'totalKredit' => $totalKredit,
             'start_date' => $startDate,
             'end_date' => $endDate,
+            'lockStatus' => $lockStatus,
         ]);
     }      
 
@@ -319,6 +325,15 @@ class KasMasukController extends Controller
 
         try {
             DB::beginTransaction();
+
+            // Check apakah periode yang di input locked
+            $lockedPeriod = LockJurnal::where('bulan', date('m', strtotime($request->periode_jurnal)))
+                ->where('tahun', date('Y', strtotime($request->periode_jurnal)))
+                ->first();
+
+            if ($lockedPeriod && $lockedPeriod->status === 'Lock') {
+                return redirect()->back()->withInput()->with('error', 'Bulan dan tahun periode tersebut terkunci untuk input data.');
+            }
     
             $kasMasuk->periode_jurnal = $request->periode_jurnal;
             $kasMasuk->type_jurnal = $request->type_jurnal;
