@@ -16,6 +16,15 @@
                                                 <div class="d-inline mt-2">
                                                     <h2 class="fs-2x fw-bolder mb-0">{{ $title }}</h2>
                                                 </div>
+												@if (request('bulan') && request('tahun'))
+													<div class="d-inline">
+														<a href="{{ route('exportNeracaFilter', ['selectedYear' => request('tahun'), 'selectedMonth' => request('bulan')]) }}" class="btn btn-sm btn-dark" title="Export Excel">Export Excel</a>
+													</div>
+												@else
+													<div class="d-inline">
+														<a href="{{ route('exportNeraca') }}" class="btn btn-sm btn-info" title="Export Excel">Export Excel</a>
+													</div>
+												@endif
                                             <!--end::Title-->
                                         </div>
                                         <!--end::Heading-->

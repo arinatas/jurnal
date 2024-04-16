@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Jurnal;
 use App\Models\Neraca;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Exports\NeracaExport;
+use Illuminate\Support\Facades\DB;
+use App\Exports\NeracaExportFilter;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class NeracaController extends Controller
@@ -212,6 +215,29 @@ class NeracaController extends Controller
                 'grandTotalAsset' => $grandTotalAsset,
                 'grandTotalLiabilDanEkuitas' => $grandTotalLiabilDanEkuitas,
             ]);
+    }
+
+    // Metode untuk Export ke Excel
+    public function exportNeraca(Request $request, $selectedYear = null, $selectedMonth = null)
+    {
+        $export = new NeracaExport($selectedYear, $selectedMonth);
+
+        $currentDate = Carbon::now()->format('d-m-y');
+
+        $fileName = 'laporan_neraca_' . $currentDate . '.xlsx';
+
+        return Excel::download($export, $fileName);
+    }
+
+    public function exportNeracaFilter(Request $request, $selectedYear, $selectedMonth)
+    {
+        $export = new NeracaExportFilter($selectedYear, $selectedMonth);
+
+        $currentDate = Carbon::now()->format('d-m-y');
+
+        $fileName = 'laporan_neraca_' . $currentDate . '.xlsx';
+
+        return Excel::download($export, $fileName);
     }
 
 }

@@ -65,6 +65,8 @@ Route::get('/printCompare', [CompareController::class, 'printCompare'])->middlew
 Route::get('/neraca', [NeracaController::class, 'index'])->middleware('auth')->name('neraca');
 Route::get('/printNeracaBlnThn/{selectedYear}/{selectedMonth}', [NeracaController::class, 'printNeracaBlnThn'])->middleware('auth')->name('printNeracaBlnThn');
 Route::get('/printNeraca', [NeracaController::class, 'printNeraca'])->middleware('auth')->name('printNeraca');
+Route::get('/exportNeraca', [NeracaController::class, 'exportNeraca'])->middleware('auth')->name('exportNeraca');
+Route::get('/exportNeracaFilter/{selectedYear}/{selectedMonth}', [NeracaController::class, 'exportNeracaFilter'])->middleware('auth')->name('exportNeracaFilter');
 
 
 // Menu Cash Flow
