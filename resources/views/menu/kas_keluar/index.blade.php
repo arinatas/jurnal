@@ -117,6 +117,7 @@
                                                     @foreach ($jurnals as $item)
                                                     <tr>
                                                         <td>
+                                                        @if($lockStatus->status !== 'Lock')
                                                             <a href="{{ route('edit.kasKeluar', $item->id ) }}" class="btn btn-sm btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                                             <form id="form-delete" action="{{ route('destroy.kasKeluar', $item->id ) }}" method="POST"
                                                             class="d-inline-block">
@@ -126,6 +127,7 @@
                                                                 class="btn btn-sm btn-danger btn-action" onclick="confirmDelete(event)"
                                                                 ><i class="fas fa-trash"></i></i></button>
                                                             </form>
+                                                        @endif
                                                         </td>
                                                         <td class="text-center">{{ $jurnals->firstItem() + $loop->index }}</td>
                                                         <td>{{ \Carbon\Carbon::parse($item->periode_jurnal)->format('j F Y'); }}</td>

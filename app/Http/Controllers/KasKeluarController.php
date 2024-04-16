@@ -48,6 +48,11 @@ class KasKeluarController extends Controller
     
         // Get the list of kode_akun options
         $jurnalAkunOptions = JurnalAkun::pluck('nama_akun', 'no_akun');
+
+        // Fetch lock status for the corresponding month and year
+        $lockStatus = LockJurnal::where('bulan', date('m', strtotime($startDate)))
+            ->where('tahun', date('Y', strtotime($startDate)))
+            ->first();
     
         return view('menu.kas_keluar.index', [
             'title' => 'Kas Keluar',
@@ -59,6 +64,7 @@ class KasKeluarController extends Controller
             'totalKredit' => $totalKredit,
             'start_date' => $startDate,
             'end_date' => $endDate,
+            'lockStatus' => $lockStatus,
         ]);
     }    
 
