@@ -117,7 +117,9 @@
                                                     @foreach ($jurnals as $item)
                                                     <tr>
                                                         <td>
-                                                        @if($lockStatus->status !== 'Lock')
+                                                        @if($lockStatuses[$item->id] == 'Lock')
+                                                            <!-- Tombol di-hide jika status terkunci -->
+                                                        @else
                                                             <a href="{{ route('edit.kasKeluar', $item->id ) }}" class="btn btn-sm btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                                             <form id="form-delete" action="{{ route('destroy.kasKeluar', $item->id ) }}" method="POST"
                                                             class="d-inline-block">
