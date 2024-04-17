@@ -80,11 +80,11 @@
                                 </div>
                                 <div class="d-flex justify-content-end">
                                     <!--begin::Actions-->
-                                    <a href="{{ route('jurnal') }}" class="btn btn-secondary">
-                                        <span class="indicator-label">
-                                            Cancel
-                                        </span>
-                                    </a>
+									<a href="{{ url()->previous() }}" class="btn btn-secondary">
+										<span class="indicator-label">
+											Cancel
+										</span>
+									</a>
                                     <button id="submit_form" type="submit" class="btn btn-primary" style="margin-left: 10px; margin-right: 10px;">
                                         <span class="indicator-label">
                                             Submit
