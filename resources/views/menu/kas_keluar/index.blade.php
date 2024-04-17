@@ -164,7 +164,7 @@
                                         </div>
                                         <!-- Add pagination links below the table -->
                                         <div class="d-flex justify-content-center">
-                                            {{ $jurnals->links() }}
+                                            {{ $jurnals->appends(request()->input())->links() }}
                                         </div>
                                         <div class="row mt-8">
                                             <div class="col-lg-6">
