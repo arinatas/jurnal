@@ -78,6 +78,8 @@
                                     <label for="exampleFormControlInput1" class="required form-label">Keterangan RKAT</label>
                                     <input type="text" value="{{$kasKeluar->keterangan_rkat}}" class="form-control form-control-solid" required name="keterangan_rkat"/>
                                 </div>
+								<input type="hidden" class="form-control" id="start_date" name="start_date" value="{{ request()->input('start_date') }}">
+								<input type="hidden" class="form-control" id="end_date" name="end_date" value="{{ request()->input('end_date') }}">
                                 <div class="d-flex justify-content-end">
                                     <!--begin::Actions-->
 									<a href="{{ url()->previous() }}" class="btn btn-secondary">

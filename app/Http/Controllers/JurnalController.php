@@ -577,7 +577,7 @@ class JurnalController extends Controller
         ]);
     }
 
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $jurnal = Jurnal::find($id);
         $divisions = Divisi::all();
@@ -587,6 +587,9 @@ class JurnalController extends Controller
             return redirect()->back()->with('dataNotFound', 'Data tidak ditemukan');
         }
 
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
         return view('menu.jurnal.edit', [
             'title' => 'Jurnal',
             'secction' => 'Menu',
@@ -594,6 +597,8 @@ class JurnalController extends Controller
             'jurnal' => $jurnal,
             'divisions' => $divisions, 
             'jurnalAkuns' => $jurnalAkuns, 
+            'start_date' => $startDate,
+            'end_date' => $endDate,
         ]);
     }
 
@@ -630,6 +635,15 @@ class JurnalController extends Controller
 
         try {
             DB::beginTransaction();
+
+            // Check apakah periode yang di input locked
+            $lockedPeriod = LockJurnal::where('bulan', date('m', strtotime($request->periode_jurnal)))
+                ->where('tahun', date('Y', strtotime($request->periode_jurnal)))
+                ->first();
+
+            if ($lockedPeriod && $lockedPeriod->status === 'Lock') {
+                return redirect()->back()->withInput()->with('error', 'Bulan dan tahun periode tersebut terkunci untuk input data.');
+            }
     
             $jurnal->periode_jurnal = $request->periode_jurnal;
             $jurnal->type_jurnal = $request->type_jurnal;
@@ -649,7 +663,8 @@ class JurnalController extends Controller
     
             DB::commit();
 
-            return redirect('/jurnal')->with('updateSuccess', 'Data berhasil di Update');
+            // return redirect('/jurnal')->with('updateSuccess', 'Data berhasil di Update');
+            return redirect('/jurnal?start_date='.$request->start_date.'&end_date='.$request->end_date)->with('updateSuccess', 'Data berhasil di Update');
     
         } catch(Exception $e) {
             DB::rollBack();
