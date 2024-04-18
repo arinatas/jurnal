@@ -278,7 +278,7 @@ class KasMasukController extends Controller
         }
     }
 
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $kasMasuk = Jurnal::find($id);
         $divisions = Divisi::all();
@@ -288,13 +288,18 @@ class KasMasukController extends Controller
             return redirect()->back()->with('dataNotFound', 'Data tidak ditemukan');
         }
 
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
         return view('menu.kas_masuk.edit', [
             'title' => 'Kas Masuk',
             'secction' => 'Menu',
             'active' => 'Kas Masuk',
             'kasMasuk' => $kasMasuk,
             'divisions' => $divisions, 
-            'jurnalAkuns' => $jurnalAkuns, 
+            'jurnalAkuns' => $jurnalAkuns,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
         ]);
     }
 
@@ -359,7 +364,8 @@ class KasMasukController extends Controller
     
             DB::commit();
 
-            return redirect('/kasMasuk')->with('updateSuccess', 'Data berhasil di Update');
+            // return redirect('/kasMasuk')->with('updateSuccess', 'Data berhasil di Update');
+            return redirect('/kasMasuk?start_date='.$request->start_date.'&end_date='.$request->end_date)->with('updateSuccess', 'Data berhasil di Update');
     
         } catch(Exception $e) {
             DB::rollBack();
