@@ -199,7 +199,8 @@
 							</div>
 							<!--begin::Actions-->
 							<div class="d-flex flex-center flex-row-fluid pt-12">
-								<a href="{{url('jurnal')}}" class="btn btn-warning me-3">Kembali</a>
+								<!-- <a href="{{url('jurnal')}}" class="btn btn-warning me-3">Kembali</a> -->
+								<a href="{{url()->previous()}}" class="btn btn-warning me-3">Kembali</a>
 								<button type="submit" onclick="submitForm(this)" class="btn btn-primary">
                                     <span class="indicator-label">Submit</span>
                                 </button>
