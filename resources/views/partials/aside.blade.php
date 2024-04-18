@@ -34,238 +34,175 @@
                 <div class="menu-item {{ ($active === "dashboard") ? 'here show' : '' }}">
                     <a class="menu-link" href="{{ url('dashboard') }}">
                         <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </span>
+							<i class="bi bi-house fs-3"></i>
+						</span>
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </div>
-                
+            
                 <div class="menu-item">
-                    <div class="menu-content pb-2">
-                        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Menu</span>
-                    </div>
-                </div>
-                <div class="menu-item {{ ($active === "Cash Flow") ? 'here show' : '' }}">
-                    <a class="menu-link" href="{{ url('cashflow') }}">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Cash Flow</span>
-                    </a>
-                </div>
-                <div class="menu-item {{ ($active === "Piutang") ? 'here show' : '' }}">
-                    <a class="menu-link" href="{{ url('piutang') }}">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Piutang</span>
-                    </a>
-                </div>
-                <div class="menu-item {{ ($active === "Uang Fisik") ? 'here show' : '' }}">
-                    <a class="menu-link" href="{{ url('uangFisik') }}">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Uang Fisik</span>
-                    </a>
-                </div>
-                <div class="menu-item {{ ($active === "Jurnal") ? 'here show' : '' }}">
-                    <a class="menu-link" href="{{ url('jurnal') }}">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Jurnal</span>
-                    </a>
-                </div>
-                <div class="menu-item {{ ($active === "Kas Masuk") ? 'here show' : '' }}">
-                    <a class="menu-link" href="{{ url('kasMasuk') }}">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Kas Masuk</span>
-                    </a>
-                </div>
-
-                <div class="menu-item {{ ($active === "Kas Keluar") ? 'here show' : '' }}">
-                    <a class="menu-link" href="{{ url('kasKeluar') }}">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Kas Keluar</span>
-                    </a>
-                </div>
-
-                <div class="menu-item {{ ($active === "Lock Jurnal") ? 'here show' : '' }}">
-                    <a class="menu-link" href="{{ url('lockJurnal') }}">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Lock Jurnal</span>
-                    </a>
-                </div>
+					<div class="menu-content pt-8 pb-2">
+						<span class="menu-section text-muted text-uppercase fs-8 ls-1">Menu Cash Flow</span>
+					</div>
+				</div>
+				<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+					<span class="menu-link">
+						<span class="menu-icon">
+							<i class="bi bi-cash-coin fs-3"></i>
+						</span>
+						<span class="menu-title">Menu Cash Flow</span>
+						<span class="menu-arrow"></span>
+					</span>
+				    <div class="menu-sub menu-sub-accordion">
+					    <div class="menu-item {{ ($active === "Cash Flow") ? 'here show' : '' }}">
+							<a class="menu-link" href="{{ url('cashflow') }}">
+								<span class="menu-bullet">
+                                    <i class="bi bi-piggy-bank fs-3"></i>
+								</span>
+							    <span class="menu-title">Cash Flow</span>
+							</a>
+						</div>
+						<div class="menu-item {{ ($active === "Piutang") ? 'here show' : '' }}">
+							<a class="menu-link" href="{{ url('piutang') }}">
+								<span class="menu-bullet">
+                                    <i class="bi bi-cash-stack fs-3"></i>
+								</span>
+								<span class="menu-title">Piutang</span>
+							</a>
+						</div>
+                        <div class="menu-item {{ ($active === "Uang Fisik") ? 'here show' : '' }}">
+							<a class="menu-link" href="{{ url('uangFisik') }}">
+								<span class="menu-bullet">
+                                    <i class="bi bi-wallet2 fs-3"></i>
+								</span>
+								<span class="menu-title">Uang Fisik</span>
+							</a>
+						</div>
+					</div>
+				</div>
 
                 <div class="menu-item">
-                    <div class="menu-content pt-8 pb-2">
-                        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Laporan</span>
-                    </div>
-                </div>
-                <div class="menu-item {{ ($active === "Laporan Compare") ? 'here show' : '' }}">
-                    <a class="menu-link" href="{{ url('compare') }}">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Laporan Compare</span>
-                    </a>
-                </div>
-                <div class="menu-item {{ ($active === "Laporan Cash Flow") ? 'here show' : '' }}">
-                    <a class="menu-link" href="{{ url('lapcashflow') }}">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Laporan Cash Flow</span>
-                    </a>
-                </div>
-                <div class="menu-item {{ ($active === "Buku Besar") ? 'here show' : '' }}">
-                    <a class="menu-link" href="{{ url('laporanBukuBesar') }}">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Buku Besar</span>
-                    </a>
-                </div>
-                <div class="menu-item {{ ($active === "Aktivitas") ? 'here show' : '' }}">
-                    <a class="menu-link" href="{{ url('aktivitas') }}">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Aktivitas</span>
-                    </a>
-                </div>
-                <div class="menu-item {{ ($active === "Neraca") ? 'here show' : '' }}">
-                    <a class="menu-link" href="{{ url('neraca') }}">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Neraca</span>
-                    </a>
-                </div>
+					<div class="menu-content pt-8 pb-2">
+						<span class="menu-section text-muted text-uppercase fs-8 ls-1">Menu Jurnal</span>
+					</div>
+				</div>
+				<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+					<span class="menu-link">
+						<span class="menu-icon">
+							<i class="bi bi-clipboard-data fs-3"></i>
+						</span>
+						<span class="menu-title">Menu Jurnal</span>
+						<span class="menu-arrow"></span>
+					</span>
+				    <div class="menu-sub menu-sub-accordion">
+						<div class="menu-item {{ ($active === "Jurnal") ? 'here show' : '' }}">
+							<a class="menu-link" href="{{ url('jurnal') }}">
+								<span class="menu-bullet">
+                                    <i class="bi bi-journal-text fs-3"></i>
+								</span>
+								<span class="menu-title">Jurnal</span>
+							</a>
+						</div>
+						<div class="menu-item {{ ($active === "Kas Masuk") ? 'here show' : '' }}">
+							<a class="menu-link" href="{{ url('kasMasuk') }}">
+								<span class="menu-bullet">
+                                    <i class="bi bi-journal-plus fs-3"></i>
+								</span>
+								<span class="menu-title">Kas Masuk</span>
+							</a>
+						</div>
+                        <div class="menu-item {{ ($active === "Kas Keluar") ? 'here show' : '' }}">
+							<a class="menu-link" href="{{ url('kasKeluar') }}">
+								<span class="menu-bullet">
+                                    <i class="bi bi-journal-minus fs-3"></i>
+								</span>
+								<span class="menu-title">Kas Keluar</span>
+							</a>
+						</div>
+						<div class="menu-item {{ ($active === "Lock Jurnal") ? 'here show' : '' }}">
+							<a class="menu-link" href="{{ url('lockJurnal') }}">
+								<span class="menu-bullet">
+                                    <i class="bi bi-lock fs-3"></i>
+								</span>
+								<span class="menu-title">Lock Jurnal</span>
+							</a>
+						</div>
+					</div>
+				</div>
+
+                <div class="menu-item">
+					<div class="menu-content pt-8 pb-2">
+						<span class="menu-section text-muted text-uppercase fs-8 ls-1">Laporan Cash Flow</span>
+					</div>
+				</div>
+				<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+					<span class="menu-link">
+						<span class="menu-icon">
+							<i class="bi bi-journal-bookmark fs-3"></i>
+						</span>
+						<span class="menu-title">Laporan Cash Flow</span>
+						<span class="menu-arrow"></span>
+					</span>
+				    <div class="menu-sub menu-sub-accordion">
+					    <div class="menu-item {{ ($active === "Laporan Compare") ? 'here show' : '' }}">
+							<a class="menu-link" href="{{ url('compare') }}">
+								<span class="menu-bullet">
+                                    <i class="bi bi-aspect-ratio fs-3"></i>
+								</span>
+							    <span class="menu-title">Laporan Compare</span>
+							</a>
+						</div>
+						<div class="menu-item {{ ($active === "Laporan Cash Flow") ? 'here show' : '' }}">
+							<a class="menu-link" href="{{ url('lapcashflow') }}">
+								<span class="menu-bullet">
+                                    <i class="bi bi-graph-down fs-3"></i>
+								</span>
+								<span class="menu-title">Laporan Cash Flow</span>
+							</a>
+						</div>
+					</div>
+				</div>
+
+                <div class="menu-item">
+					<div class="menu-content pt-8 pb-2">
+						<span class="menu-section text-muted text-uppercase fs-8 ls-1">Laporan Jurnal</span>
+					</div>
+				</div>
+				<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+					<span class="menu-link">
+						<span class="menu-icon">
+							<i class="bi bi-journal-bookmark-fill fs-3"></i>
+						</span>
+						<span class="menu-title">Laporan Jurnal</span>
+						<span class="menu-arrow"></span>
+					</span>
+				    <div class="menu-sub menu-sub-accordion">
+					    <div class="menu-item {{ ($active === "Buku Besar") ? 'here show' : '' }}">
+							<a class="menu-link" href="{{ url('laporanBukuBesar') }}">
+								<span class="menu-bullet">
+                                    <i class="bi bi-book fs-3"></i>
+								</span>
+							    <span class="menu-title">Buku Besar</span>
+							</a>
+						</div>
+						<div class="menu-item {{ ($active === "Aktivitas") ? 'here show' : '' }}">
+							<a class="menu-link" href="{{ url('aktivitas') }}">
+								<span class="menu-bullet">
+                                    <i class="bi bi-arrow-down-up fs-3"></i>
+								</span>
+								<span class="menu-title">Aktivitas</span>
+							</a>
+						</div>
+                        <div class="menu-item {{ ($active === "Laporan Neraca") ? 'here show' : '' }}">
+							<a class="menu-link" href="{{ url('neraca') }}">
+								<span class="menu-bullet">
+                                    <i class="bi bi-table fs-3"></i>
+								</span>
+								<span class="menu-title">Laporan Neraca</span>
+							</a>
+						</div>
+					</div>
+				</div>
                 
                 <div class="menu-item">
                     <div class="menu-content pt-8 pb-2">
@@ -275,14 +212,7 @@
                 <div class="menu-item {{ ($active === "user") ? 'here show' : '' }}">
                     <a class="menu-link" href="{{ url('user') }}">
                         <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/art/art002.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-                                    <path opacity="0.3" d="M8.9 21L7.19999 22.6999C6.79999 23.0999 6.2 23.0999 5.8 22.6999L4.1 21H8.9ZM4 16.0999L2.3 17.8C1.9 18.2 1.9 18.7999 2.3 19.1999L4 20.9V16.0999ZM19.3 9.1999L15.8 5.6999C15.4 5.2999 14.8 5.2999 14.4 5.6999L9 11.0999V21L19.3 10.6999C19.7 10.2999 19.7 9.5999 19.3 9.1999Z" fill="black" />
-                                    <path d="M21 15V20C21 20.6 20.6 21 20 21H11.8L18.8 14H20C20.6 14 21 14.4 21 15ZM10 21V4C10 3.4 9.6 3 9 3H4C3.4 3 3 3.4 3 4V21C3 21.6 3.4 22 4 22H9C9.6 22 10 21.6 10 21ZM7.5 18.5C7.5 19.1 7.1 19.5 6.5 19.5C5.9 19.5 5.5 19.1 5.5 18.5C5.5 17.9 5.9 17.5 6.5 17.5C7.1 17.5 7.5 17.9 7.5 18.5Z" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
+                            <i class="bi bi-people-fill fs-3"></i>
                         </span>
                         <span class="menu-title">User</span>
                     </a>
@@ -291,14 +221,7 @@
                 <div class="menu-item {{ ($active === "Uang Kas") ? 'here show' : '' }}">
                     <a class="menu-link" href="{{ url('kas') }}">
                         <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/art/art002.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-                                    <path opacity="0.3" d="M8.9 21L7.19999 22.6999C6.79999 23.0999 6.2 23.0999 5.8 22.6999L4.1 21H8.9ZM4 16.0999L2.3 17.8C1.9 18.2 1.9 18.7999 2.3 19.1999L4 20.9V16.0999ZM19.3 9.1999L15.8 5.6999C15.4 5.2999 14.8 5.2999 14.4 5.6999L9 11.0999V21L19.3 10.6999C19.7 10.2999 19.7 9.5999 19.3 9.1999Z" fill="black" />
-                                    <path d="M21 15V20C21 20.6 20.6 21 20 21H11.8L18.8 14H20C20.6 14 21 14.4 21 15ZM10 21V4C10 3.4 9.6 3 9 3H4C3.4 3 3 3.4 3 4V21C3 21.6 3.4 22 4 22H9C9.6 22 10 21.6 10 21ZM7.5 18.5C7.5 19.1 7.1 19.5 6.5 19.5C5.9 19.5 5.5 19.1 5.5 18.5C5.5 17.9 5.9 17.5 6.5 17.5C7.1 17.5 7.5 17.9 7.5 18.5Z" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
+                            <i class="bi bi-bank fs-3"></i>
                         </span>
                         <span class="menu-title">Uang Kas</span>
                     </a>
@@ -307,14 +230,7 @@
                 <div class="menu-item {{ ($active === "Pecahan Uang") ? 'here show' : '' }}">
                     <a class="menu-link" href="{{ url('pecahan') }}">
                         <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/art/art002.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-                                    <path opacity="0.3" d="M8.9 21L7.19999 22.6999C6.79999 23.0999 6.2 23.0999 5.8 22.6999L4.1 21H8.9ZM4 16.0999L2.3 17.8C1.9 18.2 1.9 18.7999 2.3 19.1999L4 20.9V16.0999ZM19.3 9.1999L15.8 5.6999C15.4 5.2999 14.8 5.2999 14.4 5.6999L9 11.0999V21L19.3 10.6999C19.7 10.2999 19.7 9.5999 19.3 9.1999Z" fill="black" />
-                                    <path d="M21 15V20C21 20.6 20.6 21 20 21H11.8L18.8 14H20C20.6 14 21 14.4 21 15ZM10 21V4C10 3.4 9.6 3 9 3H4C3.4 3 3 3.4 3 4V21C3 21.6 3.4 22 4 22H9C9.6 22 10 21.6 10 21ZM7.5 18.5C7.5 19.1 7.1 19.5 6.5 19.5C5.9 19.5 5.5 19.1 5.5 18.5C5.5 17.9 5.9 17.5 6.5 17.5C7.1 17.5 7.5 17.9 7.5 18.5Z" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
+                            <i class="bi bi-currency-dollar fs-3"></i>
                         </span>
                         <span class="menu-title">Pecahan Uang</span>
                     </a>
@@ -323,46 +239,16 @@
                 <div class="menu-item {{ ($active === "Jurnal Akun") ? 'here show' : '' }}">
                     <a class="menu-link" href="{{ url('jurnalakun') }}">
                         <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/art/art002.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-                                    <path opacity="0.3" d="M8.9 21L7.19999 22.6999C6.79999 23.0999 6.2 23.0999 5.8 22.6999L4.1 21H8.9ZM4 16.0999L2.3 17.8C1.9 18.2 1.9 18.7999 2.3 19.1999L4 20.9V16.0999ZM19.3 9.1999L15.8 5.6999C15.4 5.2999 14.8 5.2999 14.4 5.6999L9 11.0999V21L19.3 10.6999C19.7 10.2999 19.7 9.5999 19.3 9.1999Z" fill="black" />
-                                    <path d="M21 15V20C21 20.6 20.6 21 20 21H11.8L18.8 14H20C20.6 14 21 14.4 21 15ZM10 21V4C10 3.4 9.6 3 9 3H4C3.4 3 3 3.4 3 4V21C3 21.6 3.4 22 4 22H9C9.6 22 10 21.6 10 21ZM7.5 18.5C7.5 19.1 7.1 19.5 6.5 19.5C5.9 19.5 5.5 19.1 5.5 18.5C5.5 17.9 5.9 17.5 6.5 17.5C7.1 17.5 7.5 17.9 7.5 18.5Z" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
+                            <i class="bi bi-card-checklist fs-3"></i>
                         </span>
                         <span class="menu-title">Junal Akun</span>
-                    </a>
-                </div>
-
-                <div class="menu-item {{ ($active === "RKAT") ? 'here show' : '' }}">
-                    <a class="menu-link" href="{{ url('rkat') }}">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/art/art002.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-                                    <path opacity="0.3" d="M8.9 21L7.19999 22.6999C6.79999 23.0999 6.2 23.0999 5.8 22.6999L4.1 21H8.9ZM4 16.0999L2.3 17.8C1.9 18.2 1.9 18.7999 2.3 19.1999L4 20.9V16.0999ZM19.3 9.1999L15.8 5.6999C15.4 5.2999 14.8 5.2999 14.4 5.6999L9 11.0999V21L19.3 10.6999C19.7 10.2999 19.7 9.5999 19.3 9.1999Z" fill="black" />
-                                    <path d="M21 15V20C21 20.6 20.6 21 20 21H11.8L18.8 14H20C20.6 14 21 14.4 21 15ZM10 21V4C10 3.4 9.6 3 9 3H4C3.4 3 3 3.4 3 4V21C3 21.6 3.4 22 4 22H9C9.6 22 10 21.6 10 21ZM7.5 18.5C7.5 19.1 7.1 19.5 6.5 19.5C5.9 19.5 5.5 19.1 5.5 18.5C5.5 17.9 5.9 17.5 6.5 17.5C7.1 17.5 7.5 17.9 7.5 18.5Z" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">RKAT</span>
                     </a>
                 </div>
 
                 <div class="menu-item {{ ($active === "Divisi") ? 'here show' : '' }}">
                     <a class="menu-link" href="{{ url('divisi') }}">
                         <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/art/art002.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-                                    <path opacity="0.3" d="M8.9 21L7.19999 22.6999C6.79999 23.0999 6.2 23.0999 5.8 22.6999L4.1 21H8.9ZM4 16.0999L2.3 17.8C1.9 18.2 1.9 18.7999 2.3 19.1999L4 20.9V16.0999ZM19.3 9.1999L15.8 5.6999C15.4 5.2999 14.8 5.2999 14.4 5.6999L9 11.0999V21L19.3 10.6999C19.7 10.2999 19.7 9.5999 19.3 9.1999Z" fill="black" />
-                                    <path d="M21 15V20C21 20.6 20.6 21 20 21H11.8L18.8 14H20C20.6 14 21 14.4 21 15ZM10 21V4C10 3.4 9.6 3 9 3H4C3.4 3 3 3.4 3 4V21C3 21.6 3.4 22 4 22H9C9.6 22 10 21.6 10 21ZM7.5 18.5C7.5 19.1 7.1 19.5 6.5 19.5C5.9 19.5 5.5 19.1 5.5 18.5C5.5 17.9 5.9 17.5 6.5 17.5C7.1 17.5 7.5 17.9 7.5 18.5Z" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
+                            <i class="bi bi-building fs-3"></i>
                         </span>
                         <span class="menu-title">Divisi</span>
                     </a>
