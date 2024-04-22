@@ -31,7 +31,8 @@
                                             <table class="table table-striped gy-7 gs-7">
                                                 <thead>
                                                     <tr class="fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200">
-                                                        <th class="min-w-50px">No</th>
+                                                        <!-- <th class="min-w-50px">No</th> -->
+                                                        <th class="min-w-50px">Kode Divisi</th>
                                                         <th class="min-w-100px">Nama Divisi</th>
                                                         <th class="min-w-100px">Action</th>
                                                     </tr>
@@ -42,7 +43,8 @@
                                                     @endphp
                                                     @foreach ($divisis as $item)
                                                     <tr>
-                                                        <td>{{ $no }}</td>
+                                                        <!-- <td>{{ $no }}</td> -->
+                                                        <td>{{ $item->id }}</td>
                                                         <td>{{ $item->nama_divisi }}</td>
                                                         <td>
                                                             <a href="{{ route('edit.divisi', $item->id ) }}" class="btn btn-sm btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
