@@ -21,14 +21,23 @@ class NeracaExportFilter implements FromView, WithHeadings, ShouldAutoSize
 
     public function view(): View
     {
-        $query = Neraca::query()
+        // $neraca = Neraca::all();
+        $neracaQuery = Neraca::query()
+            ->whereIn('type_neraca', 'AKTIVA')
             ->whereYear('periode_jurnal', $this->selectedYear)
             ->whereMonth('periode_jurnal', $this->selectedMonth);
-        
-        $neraca = $query->get();
+        // Data neraca passiva
+        $neracaKreditQuery = NeracaKredit::query()
+            ->whereIn('type_neraca', ['PASSIVA', 'EKUITAS'])
+            ->whereYear('periode_jurnal', $this->selectedYear)
+            ->whereMonth('periode_jurnal', $this->selectedMonth);
+    
+        $neraca = $neracaQuery->get();
+        $neracaKredit = $neracaKreditQuery->get();
 
         return view('menu.neraca.export', [
             'neraca' => $neraca,
+            'neracaKredit' => $neracaKredit,
         ]);
     }
 

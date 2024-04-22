@@ -60,6 +60,19 @@
                     <td style="text-align: center;">{{ $item->total_neraca }}</td>
                 </tr>
             @endforeach
+            @foreach($neracaKredit as $item)
+                <tr>
+                    <td style="text-align: center;">{{ $item->no_akun }}</td>
+                    <td style="text-align: center;">{{ $item->nama_akun }}</td>
+                    <td style="text-align: center;">{{ $item->type_neraca }}</td>
+                    <td style="text-align: left;">{{ $item->sub_type }}</td>
+                    <td style="text-align: left;">{{ $item->tipe_akun }}</td>
+                    <td style="text-align: center;">{{ $item->periode_jurnal }}</td>
+                    <td style="text-align: center;">{{ $item->total_debit }}</td>
+                    <td style="text-align: center;">{{ $item->total_kredit }}</td>
+                    <td style="text-align: center;">{{ $item->total_neraca }}</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 </body>

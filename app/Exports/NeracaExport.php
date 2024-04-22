@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Neraca;
+use App\Models\NeracaKredit;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -21,10 +22,19 @@ class NeracaExport implements FromView, WithHeadings, ShouldAutoSize
 
     public function view(): View
     {
-        $neraca = Neraca::all();
+        // $neraca = Neraca::all();
+        $neracaQuery = Neraca::query()
+            ->where('type_neraca', 'AKTIVA');
+        // Data neraca passiva
+        $neracaKreditQuery = NeracaKredit::query()
+            ->whereIn('type_neraca', ['PASSIVA', 'EKUITAS']);
+    
+        $neraca = $neracaQuery->get();
+        $neracaKredit = $neracaKreditQuery->get();
 
         return view('menu.neraca.export', [
             'neraca' => $neraca,
+            'neracaKredit' => $neracaKredit,
         ]);
     }
 

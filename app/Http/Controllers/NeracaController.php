@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Jurnal;
 use App\Models\Neraca;
+use App\Models\NeracaKredit;
 use Illuminate\Http\Request;
 use App\Exports\NeracaExport;
 use Illuminate\Support\Facades\DB;
@@ -37,17 +38,30 @@ class NeracaController extends Controller
 
         $neraca = $neracaQuery->get();
 
+        // get data dari view neraca kredit
+        $neracaKreditQuery = NeracaKredit::query();
+
+        if ($selectedYear) {
+            $neracaKreditQuery->whereYear('periode_jurnal', $selectedYear);
+        }
+    
+        if ($selectedMonth) {
+            $neracaKreditQuery->whereMonth('periode_jurnal', $selectedMonth);
+        }
+
+        $neracaKredit = $neracaKreditQuery->get();
+
         // Pisahkan berdasarkan type_neraca
         $aktiva = $neraca->where('type_neraca', 'AKTIVA');
         $kasDanBank = $aktiva->where('sub_type', 'Kas & Bank');
         $piutang = $aktiva->where('sub_type', 'Piutang');
         $asetTidakLancar = $aktiva->where('sub_type', 'Aset Tidak Lancar');
 
-        $passiva = $neraca->where('type_neraca', 'PASSIVA');
+        $passiva = $neracaKredit->where('type_neraca', 'PASSIVA');
         $lljPendek = $passiva->where('sub_type', 'Liabilitas Jangka Pendek');
         $lljPanjang = $passiva->where('sub_type', 'Liabilitas Jangka Panjang');
 
-        $ekuitas = $neraca->where('type_neraca', 'EKUITAS');
+        $ekuitas = $neracaKredit->where('type_neraca', 'EKUITAS');
 
         // total asset lancar
         $totalKasDanBank = $kasDanBank->sum('total_neraca');
@@ -108,17 +122,30 @@ class NeracaController extends Controller
 
         $neraca = $neracaQuery->get();
 
+         // get data neraca passiva
+        $neracaKreditQuery = NeracaKredit::query();
+
+        if ($selectedYear) {
+            $neracaKreditQuery->whereYear('periode_jurnal', $selectedYear);
+        }
+    
+        if ($selectedMonth) {
+            $neracaKreditQuery->whereMonth('periode_jurnal', $selectedMonth);
+        }
+
+        $neracaKredit = $neracaKreditQuery->get();
+
         // Pisahkan berdasarkan type_neraca
         $aktiva = $neraca->where('type_neraca', 'AKTIVA');
         $kasDanBank = $aktiva->where('sub_type', 'Kas & Bank');
         $piutang = $aktiva->where('sub_type', 'Piutang');
         $asetTidakLancar = $aktiva->where('sub_type', 'Aset Tidak Lancar');
 
-        $passiva = $neraca->where('type_neraca', 'PASSIVA');
+        $passiva = $neracaKredit->where('type_neraca', 'PASSIVA');
         $lljPendek = $passiva->where('sub_type', 'Liabilitas Jangka Pendek');
         $lljPanjang = $passiva->where('sub_type', 'Liabilitas Jangka Panjang');
 
-        $ekuitas = $neraca->where('type_neraca', 'EKUITAS');
+        $ekuitas = $neracaKredit->where('type_neraca', 'EKUITAS');
 
         // total asset lancar
         $totalKasDanBank = $kasDanBank->sum('total_neraca');
@@ -165,6 +192,7 @@ class NeracaController extends Controller
     {
 
         $neraca = Neraca::all();
+        $neracaKredit = NeracaKredit::all();
 
         // Pisahkan berdasarkan type_neraca
         $aktiva = $neraca->where('type_neraca', 'AKTIVA');
@@ -172,11 +200,11 @@ class NeracaController extends Controller
         $piutang = $aktiva->where('sub_type', 'Piutang');
         $asetTidakLancar = $aktiva->where('sub_type', 'Aset Tidak Lancar');
 
-        $passiva = $neraca->where('type_neraca', 'PASSIVA');
+        $passiva = $neracaKredit->where('type_neraca', 'PASSIVA');
         $lljPendek = $passiva->where('sub_type', 'Liabilitas Jangka Pendek');
         $lljPanjang = $passiva->where('sub_type', 'Liabilitas Jangka Panjang');
 
-        $ekuitas = $neraca->where('type_neraca', 'EKUITAS');
+        $ekuitas = $neracaKredit->where('type_neraca', 'EKUITAS');
 
         // total asset lancar
         $totalKasDanBank = $kasDanBank->sum('total_neraca');
