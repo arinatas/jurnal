@@ -58,7 +58,7 @@ class AktivitasController extends Controller
             // Filter jurnal akun untuk section tertentu
             $jurnalAkun = JurnalAkun::where('parent', $parentId)->get();
             // Hitung credit amount untuk masing-masing no akun pada section tertentu
-            $amounts = $this->calculateCreditAmounts($jurnalAkun, $selectedYear, $selectedMonth);
+            $amounts = $this->calculateCreditAmounts($jurnalAkun, $selectedYear, $selectedMonth, $sectionKey);
     
             // Menambahkan data ke dalam array $data
             $data[$sectionKey] = $jurnalAkun;
@@ -70,23 +70,56 @@ class AktivitasController extends Controller
     
     
     // Function untuk menghitung credit amounts for multiple accounts
-    private function calculateCreditAmounts($jurnalAkuns, $selectedYear = null, $selectedMonth = null)
+    // private function calculateCreditAmounts($jurnalAkuns, $selectedYear = null, $selectedMonth = null)
+    // {
+    //     $creditAmounts = [];
+    
+    //     foreach ($jurnalAkuns as $item) {
+    //         $creditAmount = Jurnal::whereHas('akun', function ($query) use ($item) {
+    //             $query->where('no_akun', $item->no_akun);
+    //         })
+    //         ->whereYear('periode_jurnal', $selectedYear)
+    //         ->whereMonth('periode_jurnal', $selectedMonth)
+    //         ->sum('debit');    
+    
+    //         $creditAmounts[$item->no_akun] = $creditAmount;
+    //     }
+    
+    //     return $creditAmounts;
+    // }
+
+    private function calculateCreditAmounts($jurnalAkuns, $selectedYear = null, $selectedMonth = null, $sectionKey)
     {
         $creditAmounts = [];
-    
+
         foreach ($jurnalAkuns as $item) {
-            $creditAmount = Jurnal::whereHas('akun', function ($query) use ($item) {
-                $query->where('no_akun', $item->no_akun);
-            })
-            ->whereYear('periode_jurnal', $selectedYear)
-            ->whereMonth('periode_jurnal', $selectedMonth)
-            ->sum('debit');    
-    
-            $creditAmounts[$item->no_akun] = $creditAmount;
+            // Cek apakah nomor akun adalah 'pendapatan' dengan nomor akun 4
+            if ($sectionKey === 'pendapatan' || $sectionKey === 'pendapatanLainlain') {
+                // Jika iya, hitung jumlah debit
+                $creditAmount = Jurnal::whereHas('akun', function ($query) use ($item) {
+                    $query->where('no_akun', $item->no_akun);
+                })
+                ->whereYear('periode_jurnal', $selectedYear)
+                ->whereMonth('periode_jurnal', $selectedMonth)
+                ->sum('kredit');
+
+                $creditAmounts[$item->no_akun] = $creditAmount;
+            } else {
+                // Jika bukan, hitung jumlah kredit
+                $creditAmount = Jurnal::whereHas('akun', function ($query) use ($item) {
+                    $query->where('no_akun', $item->no_akun);
+                })
+                ->whereYear('periode_jurnal', $selectedYear)
+                ->whereMonth('periode_jurnal', $selectedMonth)
+                ->sum('debit');
+
+                $creditAmounts[$item->no_akun] = $creditAmount;
+            }
         }
-    
+
         return $creditAmounts;
     }
+
 
     // Metode untuk Print Aktivitas
     public function printAktivitas($selectedYear, $selectedMonth)
