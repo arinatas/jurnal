@@ -79,6 +79,9 @@ Route::get('/exportcashflow/{start_date}/{end_date}', [CashFlowController::class
 Route::get('/import-cashflow', [CashFlowController::class, 'showImportForm'])->name('import.cashflow.view');
 Route::post('/import-cashflow', [CashFlowController::class, 'importExcel'])->name('import.cashflow');
 Route::get('download-example-excel-cashflow', [CashFlowController::class, 'downloadExampleExcel'])->name('download.example.excel.cashflow');
+Route::get('/editCashFlow/{id}', [CashFlowController::class, 'edit'])->middleware('auth')->name('edit.cashflow');
+Route::post('/updateCashFlow/{id}', [CashFlowController::class, 'update'])->middleware('auth')->name('update.cashflow');
+Route::delete('/deleteCashFlow/{id}', [CashFlowController::class, 'destroy'])->middleware('auth')->name('destroy.cashflow');
 
 // Menu Jurnal
 Route::get('/jurnal', [JurnalController::class, 'index'])->middleware('auth')->name('jurnal');

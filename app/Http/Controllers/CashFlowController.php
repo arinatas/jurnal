@@ -288,4 +288,104 @@ class CashFlowController extends Controller
             return redirect()->back()->with('importError', $errorMessage);
         }
     }
+
+    public function edit($id, Request $request)
+    {
+        $cashflow = CashFlow::find($id);
+
+        if (!$cashflow) {
+            return redirect()->back()->with('dataNotFound', 'Data tidak ditemukan');
+        }
+
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        return view('menu.cashflow.edit', [
+            'title' => 'Cash Flow',
+            'secction' => 'Menu',
+            'active' => 'Cash Flow',
+            'cashflow' => $cashflow,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $cashflow = CashFlow::find($id);
+
+        if (!$cashflow) {
+            return redirect()->back()->with('dataNotFound', 'Data tidak ditemukan');
+        }
+
+        // validasi input yang didapatkan dari request
+        $validator = Validator::make($request->all(), [
+            'tanggal' => 'required|date',
+            'no_bukti' => 'required|string|max:100',
+            'pic' => 'required|string|max:255',
+            'nama' => 'nullable|string|max:255',
+            'kode_anggaran' => 'nullable|integer',
+            'transaksi' => 'required|string|max:255',
+            'ref' => 'nullable|string|max:100',
+            'debit' => 'required|integer',
+            'kredit' => 'required|integer',
+        ]);
+
+        // kalau ada error kembalikan error
+        if ($validator->fails()) {
+            $validatorErrors = implode('<br>', $validator->errors()->all());
+            return redirect()->back()->with('validatorFail', $validatorErrors);
+        }
+
+        try {
+            DB::beginTransaction();
+    
+            // Lakukan perubahan pada nilai kas berdasarkan debit atau kredit
+            $totalKas = Kas::findOrFail(1);
+            if ($request->debit > 0) {
+                $totalKas->kas = $totalKas->kas - $cashflow->debit + $request->debit;
+            } elseif ($request->kredit > 0) {
+                $totalKas->kas = $totalKas->kas + $cashflow->kredit - $request->kredit;
+            }
+            $totalKas->save();
+
+            $cashflow->tanggal = $request->tanggal;
+            $cashflow->no_bukti = $request->no_bukti;
+            $cashflow->pic = $request->pic;
+            $cashflow->nama = $request->nama;
+            $cashflow->kode_anggaran = $request->kode_anggaran;
+            $cashflow->transaksi = $request->transaksi;
+            $cashflow->ref = $request->ref;
+            $cashflow->debit = $request->debit;
+            $cashflow->kredit = $request->kredit;
+    
+            $cashflow->save();
+    
+            DB::commit();
+
+            return redirect('/lapcashflow?start_date='.$request->start_date.'&end_date='.$request->end_date)->with('updateSuccess', 'Data berhasil di Update');
+    
+        } catch(Exception $e) {
+            DB::rollBack();
+            // dd($e->getMessage());
+            return redirect()->back()->with('updateFail', 'Data gagal di Update');
+        }
+    }
+
+    public function destroy($id)
+    {
+        // Cari data pengguna berdasarkan ID
+        $cashflow = CashFlow::find($id);
+
+        try {
+            // Hapus data pengguna
+            $cashflow->delete();
+            return redirect()->back()->with('deleteSuccess', 'Data berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('deleteFail', $e->getMessage());
+        }
+    }
 }

@@ -61,6 +61,7 @@
                                                         <th class="min-w-100px">Accounting</th>
                                                         <th class="min-w-150px">Debit</th>
                                                         <th class="min-w-150px">Kredit</th>
+                                                        <th class="min-w-100px">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -77,6 +78,17 @@
                                                         <td>{{ $item->user->nama }}</td>
                                                         <td>Rp. @currency($item->debit )</td>
                                                         <td>Rp. @currency($item->kredit )</td>
+                                                        <td>
+                                                            <a href="{{ route('edit.cashflow', ['id' => $item->id, 'start_date' => $start_date, 'end_date' => $end_date] ) }}" class="btn btn-sm btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                                            <form id="form-delete" action="{{ route('destroy.cashflow', $item->id ) }}" method="POST"
+                                                            class="d-inline-block">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button id="submit-btn" type="submit" data-toggle="tooltip" data-original-title="Hapus bagian"
+                                                                class="btn btn-sm btn-danger btn-action" onclick="confirmDelete(event)"
+                                                                ><i class="fas fa-trash"></i></i></button>
+                                                            </form>
+                                                        </td>
                                                     </tr>
                                                     @php
                                                         $no++; // Tambahkan no setiap kali iterasi
