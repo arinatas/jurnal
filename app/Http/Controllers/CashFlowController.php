@@ -377,15 +377,30 @@ class CashFlowController extends Controller
 
     public function destroy($id)
     {
-        // Cari data pengguna berdasarkan ID
-        $cashflow = CashFlow::find($id);
-
         try {
-            // Hapus data pengguna
+            DB::beginTransaction();
+    
+            // Cari data cashflow berdasarkan ID
+            $cashflow = CashFlow::find($id);
+
+            // Update uang_kas accordingly
+            $totalKas = Kas::findOrFail("1");
+            if ($cashflow->debit > 0) {
+                $totalKas->kas = $totalKas->kas - $cashflow->debit;
+            } elseif ($cashflow->kredit > 0) {
+                $totalKas->kas = $totalKas->kas + $cashflow->kredit;
+            }
+            $totalKas->save();
+    
+            // Hapus data cashflow
             $cashflow->delete();
+    
+            DB::commit();
+    
             return redirect()->back()->with('deleteSuccess', 'Data berhasil dihapus!');
         } catch (\Exception $e) {
+            DB::rollback();
             return redirect()->back()->with('deleteFail', $e->getMessage());
         }
-    }
+    }    
 }
