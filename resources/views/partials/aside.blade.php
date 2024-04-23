@@ -81,6 +81,34 @@
 					</div>
 				</div>
 
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+					<span class="menu-link">
+						<span class="menu-icon">
+							<i class="bi bi-journal-bookmark fs-3"></i>
+						</span>
+						<span class="menu-title">Laporan Cash Flow</span>
+						<span class="menu-arrow"></span>
+					</span>
+				    <div class="menu-sub menu-sub-accordion">
+					    <div class="menu-item {{ ($active === "Laporan Compare") ? 'here show' : '' }}">
+							<a class="menu-link" href="{{ url('compare') }}">
+								<span class="menu-bullet">
+                                    <i class="bi bi-aspect-ratio fs-3"></i>
+								</span>
+							    <span class="menu-title">Laporan Compare</span>
+							</a>
+						</div>
+						<div class="menu-item {{ ($active === "Laporan Cash Flow") ? 'here show' : '' }}">
+							<a class="menu-link" href="{{ url('lapcashflow') }}">
+								<span class="menu-bullet">
+                                    <i class="bi bi-graph-down fs-3"></i>
+								</span>
+								<span class="menu-title">Laporan Cash Flow</span>
+							</a>
+						</div>
+					</div>
+				</div>
+
                 <div class="menu-item">
 					<div class="menu-content pt-8 pb-2">
 						<span class="menu-section text-muted text-uppercase fs-8 ls-1">Menu Jurnal</span>
@@ -130,45 +158,7 @@
 					</div>
 				</div>
 
-                <div class="menu-item">
-					<div class="menu-content pt-8 pb-2">
-						<span class="menu-section text-muted text-uppercase fs-8 ls-1">Laporan Cash Flow</span>
-					</div>
-				</div>
-				<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-					<span class="menu-link">
-						<span class="menu-icon">
-							<i class="bi bi-journal-bookmark fs-3"></i>
-						</span>
-						<span class="menu-title">Laporan Cash Flow</span>
-						<span class="menu-arrow"></span>
-					</span>
-				    <div class="menu-sub menu-sub-accordion">
-					    <div class="menu-item {{ ($active === "Laporan Compare") ? 'here show' : '' }}">
-							<a class="menu-link" href="{{ url('compare') }}">
-								<span class="menu-bullet">
-                                    <i class="bi bi-aspect-ratio fs-3"></i>
-								</span>
-							    <span class="menu-title">Laporan Compare</span>
-							</a>
-						</div>
-						<div class="menu-item {{ ($active === "Laporan Cash Flow") ? 'here show' : '' }}">
-							<a class="menu-link" href="{{ url('lapcashflow') }}">
-								<span class="menu-bullet">
-                                    <i class="bi bi-graph-down fs-3"></i>
-								</span>
-								<span class="menu-title">Laporan Cash Flow</span>
-							</a>
-						</div>
-					</div>
-				</div>
-
-                <div class="menu-item">
-					<div class="menu-content pt-8 pb-2">
-						<span class="menu-section text-muted text-uppercase fs-8 ls-1">Laporan Jurnal</span>
-					</div>
-				</div>
-				<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 					<span class="menu-link">
 						<span class="menu-icon">
 							<i class="bi bi-journal-bookmark-fill fs-3"></i>
