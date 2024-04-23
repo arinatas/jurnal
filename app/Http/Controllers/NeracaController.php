@@ -81,7 +81,7 @@ class NeracaController extends Controller
 
         // Grand Total Asset
         $grandTotalAsset = $subTotalAsetLancar + $subTotalAsetTidakLancar;
-        $grandTotalLiabilDanEkuitas = $subTotalLiabilitas - $subTotalEkuitas;
+        $grandTotalLiabilDanEkuitas = $subTotalLiabilitas + $subTotalEkuitas;
 
 
             return view('menu.neraca.index', [
