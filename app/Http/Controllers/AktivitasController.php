@@ -156,7 +156,7 @@ class AktivitasController extends Controller
             // Filter jurnal akun untuk section tertentu
             $jurnalAkun = JurnalAkun::where('parent', $parentId)->get();
             // Hitung credit amount untuk masing-masing no akun pada section tertentu
-            $amounts = $this->calculateCreditAmounts($jurnalAkun, $selectedYear, $selectedMonth);
+            $amounts = $this->calculateCreditAmounts($jurnalAkun, $selectedYear, $selectedMonth, $sectionKey);
     
             // Menambahkan data ke dalam array $data
             $data[$sectionKey] = $jurnalAkun;
