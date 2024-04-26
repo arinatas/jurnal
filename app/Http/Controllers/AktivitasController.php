@@ -88,11 +88,11 @@ class AktivitasController extends Controller
     //     return $creditAmounts;
     // }
 
-    private function calculateCreditAmounts($jurnalAkuns, $selectedYear = null, $selectedMonth = null, $sectionKey)
+    private function calculateCreditAmounts($jurnalAkun, $selectedYear = null, $selectedMonth = null, $sectionKey)
     {
         $creditAmounts = [];
 
-        foreach ($jurnalAkuns as $item) {
+        foreach ($jurnalAkun as $item) {
             // Cek apakah nomor akun adalah 'pendapatan' dengan nomor akun 4
             if ($sectionKey === 'pendapatan' || $sectionKey === 'pendapatanLainlain') {
                 // Jika iya, hitung jumlah debit
