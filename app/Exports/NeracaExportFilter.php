@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Neraca;
+use App\Models\NeracaKredit;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -23,7 +24,7 @@ class NeracaExportFilter implements FromView, WithHeadings, ShouldAutoSize
     {
         // $neraca = Neraca::all();
         $neracaQuery = Neraca::query()
-            ->whereIn('type_neraca', 'AKTIVA')
+            ->where('type_neraca', 'AKTIVA')
             ->whereYear('periode_jurnal', $this->selectedYear)
             ->whereMonth('periode_jurnal', $this->selectedMonth);
         // Data neraca passiva

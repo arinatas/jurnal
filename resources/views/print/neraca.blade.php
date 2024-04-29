@@ -146,12 +146,18 @@
                                 @foreach ($ekuitas as $item)
                                     <tr>
                                         <td>{{ $item->no_akun }} {{ $item->nama_akun }}</td>
-                                        <td>@currency($item->total_neraca)</td>
+                                        <td class="text-center">
+											@if ($item->no_akun == '3-30200')
+											    @currency($item->total_neraca + $kenaikanPenurunanAsetNettoTidakTerikat)
+											@else
+												@currency($item->total_neraca)
+											@endif
+										</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-						<h3 class="text-center" style="margin-bottom: 50px"> Sub Total @currency($subTotalEkuitas)</h3>
+						<h3 class="text-center" style="margin-bottom: 50px"> Sub Total @currency($subTotalEkuitasAktivitas)</h3>
                     </div>
                     <div class="col-6">
                         <div class="bg-light-dark rounded border-dark border border-dashed p-3">
