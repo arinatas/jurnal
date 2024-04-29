@@ -83,27 +83,78 @@ class NeracaController extends Controller
         $grandTotalAsset = $subTotalAsetLancar + $subTotalAsetTidakLancar;
         $grandTotalLiabilDanEkuitas = $subTotalLiabilitas + $subTotalEkuitas;
 
+        // Define a reusable function untuk build query data jurnal untuk menghitung aktivitas total
+        function getJurnalsQuery($paretData) {
+            return Jurnal::with('akun')
+                ->whereHas('akun', function ($query) {
+                    $query->whereColumn('jurnal.kode_akun', 'jurnal_akun.no_akun');
+                })
+                ->whereHas('akun', function ($query) use ($paretData) {
+                    $query->where('parent', '=', $paretData);
+                });
+        }
+        
+        // Get jurnals berdasarkan data where
+        $pendapatanAll = getJurnalsQuery(4)->get();
+        $bebanSehubunganProgramAll = getJurnalsQuery(5)->get();
+        $pendapatanLainLainAll = getJurnalsQuery(7)->get();
+        $bebanMarketingAll = getJurnalsQuery(601)->get();
+        $bebanKegiatanAll = getJurnalsQuery(602)->get();
+        $bebanGajiAll = getJurnalsQuery(603)->get();
+        $bebanOperasionalKantorAll = getJurnalsQuery(604)->get();
+        $bebanRumahTanggaKantorAll = getJurnalsQuery(605)->get();
+        $bebanSewaAll = getJurnalsQuery(606)->get();
+        $bebanPerawatanAll = getJurnalsQuery(607)->get();
+        $bebanYayasanAll = getJurnalsQuery(608)->get();
+        $bebanLainlainAll = getJurnalsQuery(609)->get();
+        $pajakAll = getJurnalsQuery(610)->get();
+        $depresiasiAll = getJurnalsQuery(611)->get();
 
-            return view('menu.neraca.index', [
-                'title' => 'Laporan Neraca',
-                'section' => 'Menu',
-                'active' => 'Laporan Neraca',
-                'kasDanBank' => $kasDanBank,
-                'piutang' => $piutang,
-                'asetTidakLancar' => $asetTidakLancar,
-                'lljPendek' => $lljPendek,
-                'lljPanjang' => $lljPanjang,
-                'ekuitas' => $ekuitas,
-                'subTotalAsetLancar' => $subTotalAsetLancar,
-                'subTotalLiabilitas' => $subTotalLiabilitas,
-                'subTotalAsetTidakLancar' => $subTotalAsetTidakLancar,
-                'subTotalEkuitas' => $subTotalEkuitas,
-                'grandTotalAsset' => $grandTotalAsset,
-                'grandTotalLiabilDanEkuitas' => $grandTotalLiabilDanEkuitas,
-                'years' => $years,
-                'selectedYear' => $selectedYear, 
-                'selectedMonth' => $selectedMonth,
-            ]);
+        // Calculate sum data jurnal
+        $pendapatanSum = $pendapatanAll->sum('kredit');
+        $bebanSehubunganProgramSum = $bebanSehubunganProgramAll->sum('debit');
+        $pendapatanLainLainSum = $pendapatanLainLainAll->sum('kredit');
+        $bebanMarketingSum = $bebanMarketingAll->sum('debit');
+        $bebanKegiatanSum = $bebanKegiatanAll->sum('debit');
+        $bebanGajiSum = $bebanGajiAll->sum('debit');
+        $bebanOperasionalKantorSum = $bebanOperasionalKantorAll->sum('debit');
+        $bebanRumahTanggaKantorSum = $bebanRumahTanggaKantorAll->sum('debit');
+        $bebanSewaSum = $bebanSewaAll->sum('debit');
+        $bebanPerawatanSum = $bebanPerawatanAll->sum('debit');
+        $bebanYayasanSum = $bebanYayasanAll->sum('debit');
+        $bebanLainlainSum = $bebanLainlainAll->sum('debit');
+        $pajakSum = $pajakAll->sum('debit');
+        $depresiasiSum = $depresiasiAll->sum('debit');
+
+        $labaKotor = $pendapatanSum - $bebanSehubunganProgramSum;
+        $allBeban = $bebanMarketingSum + $bebanKegiatanSum + $bebanGajiSum + $bebanOperasionalKantorSum + $bebanRumahTanggaKantorSum + $bebanSewaSum + $bebanPerawatanSum + $bebanYayasanSum;
+        $labaRugiSebelumBunga = $labaKotor + $pendapatanLainLainSum - $allBeban;
+        $labaRugiSebelumPajak = $labaRugiSebelumBunga - $bebanLainlainSum;
+        $labaRugiSebelumDepresiasi = $labaRugiSebelumPajak - $pajakSum;
+        $kenaikanPenurunanAsetNettoTidakTerikat = $labaRugiSebelumDepresiasi - $depresiasiSum;
+        // dd($kenaikanPenurunanAsetNettoTidakTerikat);
+
+        return view('menu.neraca.index', [
+            'title' => 'Laporan Neraca',
+            'section' => 'Menu',
+            'active' => 'Laporan Neraca',
+            'kasDanBank' => $kasDanBank,
+            'piutang' => $piutang,
+            'asetTidakLancar' => $asetTidakLancar,
+            'lljPendek' => $lljPendek,
+            'lljPanjang' => $lljPanjang,
+            'ekuitas' => $ekuitas,
+            'subTotalAsetLancar' => $subTotalAsetLancar,
+            'subTotalLiabilitas' => $subTotalLiabilitas,
+            'subTotalAsetTidakLancar' => $subTotalAsetTidakLancar,
+            'subTotalEkuitas' => $subTotalEkuitas,
+            'grandTotalAsset' => $grandTotalAsset,
+            'grandTotalLiabilDanEkuitas' => $grandTotalLiabilDanEkuitas,
+            'years' => $years,
+            'selectedYear' => $selectedYear, 
+            'selectedMonth' => $selectedMonth,
+            'kenaikanPenurunanAsetNettoTidakTerikat' => $kenaikanPenurunanAsetNettoTidakTerikat
+        ]);
     }
     
     public function printNeracaBlnThn($selectedYear, $selectedMonth)

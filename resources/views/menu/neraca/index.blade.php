@@ -180,12 +180,25 @@
 															@foreach ($ekuitas as $item)
 																<tr>
 																	<td>{{ $item->no_akun }} {{ $item->nama_akun }}</td>
-																	<td class="text-center">@currency($item->total_neraca)</td>
+																	<td class="text-center">
+																		@if ($item->no_akun == '3-30200')
+																			@currency($item->total_neraca + $kenaikanPenurunanAsetNettoTidakTerikat)
+																		@else
+																			@currency($item->total_neraca)
+																		@endif
+																	</td>
 																</tr>
 															@endforeach
 														</tbody>
 													</table>
-													<h3 class="text-center mt-10">Sub Total @currency($subTotalEkuitas)</h3>
+													<!-- <h3 class="text-center mt-10">Sub Total @currency($subTotalEkuitas)</h3> -->
+													<h3 class="text-center mt-10">Sub Total 
+														@if ($ekuitas->contains('no_akun', '3-30200'))
+															@currency($subTotalEkuitas + $kenaikanPenurunanAsetNettoTidakTerikat)
+														@else
+															@currency($subTotalEkuitas)
+														@endif
+													</h3>
 												</div>
 												<div class="col-xl-6">
 													<div class="bg-light-primary rounded border-primary border border-dashed p-5 mb-15 mt-5">
@@ -322,12 +335,24 @@
 															@foreach ($ekuitas as $item)
 																<tr>
 																	<td>{{ $item->no_akun }} {{ $item->nama_akun }}</td>
-																	<td class="text-center">@currency($item->total_neraca)</td>
+																	<td class="text-center">
+																		@if ($item->no_akun == '3-30200')
+																			@currency($item->total_neraca + $kenaikanPenurunanAsetNettoTidakTerikat)
+																		@else
+																			@currency($item->total_neraca)
+																		@endif
+																	</td>
 																</tr>
 															@endforeach
 														</tbody>
 													</table>
-													<h3 class="text-center mt-10">Sub Total @currency($subTotalEkuitas)</h3>
+													<h3 class="text-center mt-10">Sub Total 
+														@if ($ekuitas->contains('no_akun', '3-30200'))
+															@currency($subTotalEkuitas + $kenaikanPenurunanAsetNettoTidakTerikat)
+														@else
+															@currency($subTotalEkuitas)
+														@endif
+													</h3>
 												</div>
 												<div class="col-xl-6">
 													<div class="bg-light-primary rounded border-primary border border-dashed p-5 mb-15 mt-5">
