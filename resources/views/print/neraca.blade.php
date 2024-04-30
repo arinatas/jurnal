@@ -157,7 +157,12 @@
                                 @endforeach
                             </tbody>
                         </table>
-						<h3 class="text-center" style="margin-bottom: 50px"> Sub Total @currency($subTotalEkuitasAktivitas)</h3>
+						<!-- <h3 class="text-center" style="margin-bottom: 50px"> Sub Total @currency($subTotalEkuitasAktivitas)</h3> -->
+                        @if ($subTotalEkuitas != null)
+							<h3 class="text-center mt-10">Sub Total @currency($subTotalEkuitasAktivitas)</h3>
+						@else
+							<h3 class="text-center mt-10">Sub Total 0</h3>
+						@endif
                     </div>
                     <div class="col-6">
                         <div class="bg-light-dark rounded border-dark border border-dashed p-3">

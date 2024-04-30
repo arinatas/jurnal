@@ -191,7 +191,12 @@
 															@endforeach
 														</tbody>
 													</table>
-													<h3 class="text-center mt-10">Sub Total @currency($subTotalEkuitasAktivitas)</h3>
+													<!-- <h3 class="text-center mt-10">Sub Total @currency($subTotalEkuitasAktivitas)</h3> -->
+													@if ($subTotalEkuitas != null)
+														<h3 class="text-center mt-10">Sub Total @currency($subTotalEkuitasAktivitas)</h3>
+													@else
+														<h3 class="text-center mt-10">Sub Total 0</h3>
+													@endif
 													<!-- <h3 class="text-center mt-10">Sub Total 
 														@if ($ekuitas->contains('no_akun', '3-30200'))
 															@currency($subTotalEkuitas + $kenaikanPenurunanAsetNettoTidakTerikat)
@@ -346,7 +351,11 @@
 															@endforeach
 														</tbody>
 													</table>
-													<h3 class="text-center mt-10">Sub Total @currency($subTotalEkuitasAktivitas)</h3>
+													@if ($subTotalEkuitas != null)
+														<h3 class="text-center mt-10">Sub Total @currency($subTotalEkuitasAktivitas)</h3>
+													@else
+														<h3 class="text-center mt-10">Sub Total 0</h3>
+													@endif
 													<!-- <h3 class="text-center mt-10">Sub Total 
 														@if ($ekuitas->contains('no_akun', '3-30200'))
 															@currency($subTotalEkuitas + $kenaikanPenurunanAsetNettoTidakTerikat)
