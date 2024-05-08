@@ -31,7 +31,8 @@
                     <div class="col-9 text-center text-uppercase">
                         <h2>YAYASAN PRIMAKARA</h2>
                         <h1>LAPORAN POSISI KEUANGAN</h1>
-                        <h2>PERIODE {{ \Carbon\Carbon::parse(date("Y-m-d h:i:sa"))->format('F Y') }}</h2>
+                        <!-- <h2>PERIODE {{ \Carbon\Carbon::parse(date("Y-m-d h:i:sa"))->format('F Y') }}</h2> -->
+                        <h2>PERIODE {{ \Carbon\Carbon::create($selectedYear, $selectedMonth, 1)->format('F Y') }}</h2>
                     </div>
                     <!-- /.col -->
                 </div>
@@ -174,7 +175,7 @@
                     <div class="col-6">
                         <div class="bg-light-dark rounded border-dark border border-dashed p-3">
                             <!--begin::Wrapper-->
-                            <h2 class="text-gray-900 fw-bolder" style="text-align: center;">Grand Total @currency($grandTotalLiabilDanEkuitas)</h2>
+                            <h2 class="text-gray-900 fw-bolder" style="text-align: center;">Grand Total @currency($grandTotalLiabilDanEkuitasAktivitas)</h2>
                             <!--end::Wrapper-->
                         </div>
                     </div>

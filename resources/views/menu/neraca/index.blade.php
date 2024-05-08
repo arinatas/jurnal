@@ -29,7 +29,7 @@
                                         </div>
                                         <!--end::Heading-->
                                         <!-- Form Filter -->
-                                        <div class="card-px mt-10">                                            
+                                        <div class="card-px mt-10">
                                             <form action="{{ route('neraca') }}" method="GET">
                                                 <div class="row mb-3">
                                                     <div class="col-md-2">
@@ -73,7 +73,8 @@
 										<div class="card-body pb-0">
 											<!--begin::Row-->
 											<div class="row g-5 g-xl-8">
-												<h1 class="text-center text-uppercase mt-10">YAYASAN PRIMAKARA <br> LAPORAN POSISI KEUANGAN <br> PERIODE {{ \Carbon\Carbon::parse(date("Y-m-d h:i:sa"))->format('F Y') }}</h1>
+												<!-- <h1 class="text-center text-uppercase mt-10">YAYASAN PRIMAKARA <br> LAPORAN POSISI KEUANGAN <br> PERIODE {{ \Carbon\Carbon::parse(date("Y-m-d h:i:sa"))->format('F Y') }}</h1> -->
+                                                <h1 class="text-center text-uppercase mt-10">YAYASAN PRIMAKARA <br> LAPORAN POSISI KEUANGAN <br> PERIODE {{ \Carbon\Carbon::create($selectedYear, $selectedMonth, 1)->format('F Y') }}</h1>
 												<hr>
 												<div class="col-xl-6">
 													<h3>ASET LANCAR</h3>
@@ -197,7 +198,7 @@
 													@else
 														<h3 class="text-center mt-10">Sub Total 0</h3>
 													@endif
-													<!-- <h3 class="text-center mt-10">Sub Total 
+													<!-- <h3 class="text-center mt-10">Sub Total
 														@if ($ekuitas->contains('no_akun', '3-30200'))
 															@currency($subTotalEkuitas + $kenaikanPenurunanAsetNettoTidakTerikat)
 														@else
@@ -215,7 +216,7 @@
 												<div class="col-xl-6">
 													<div class="bg-light-primary rounded border-primary border border-dashed p-5 mb-15 mt-5">
 														<!--begin::Wrapper-->
-														<h2 class="text-gray-900 fw-bolder" style="text-align: center;">Grand Total @currency($grandTotalLiabilDanEkuitas)</h2>
+														<h2 class="text-gray-900 fw-bolder" style="text-align: center;">Grand Total @currency($grandTotalLiabilDanEkuitasAktivitas)</h2>
 														<!--end::Wrapper-->
 													</div>
 												</div>
@@ -356,7 +357,7 @@
 													@else
 														<h3 class="text-center mt-10">Sub Total 0</h3>
 													@endif
-													<!-- <h3 class="text-center mt-10">Sub Total 
+													<!-- <h3 class="text-center mt-10">Sub Total
 														@if ($ekuitas->contains('no_akun', '3-30200'))
 															@currency($subTotalEkuitas + $kenaikanPenurunanAsetNettoTidakTerikat)
 														@else
@@ -374,7 +375,8 @@
 												<div class="col-xl-6">
 													<div class="bg-light-primary rounded border-primary border border-dashed p-5 mb-15 mt-5">
 														<!--begin::Wrapper-->
-														<h2 class="text-gray-900 fw-bolder" style="text-align: center;">Grand Total @currency($grandTotalLiabilDanEkuitas)</h2>
+														<!-- <h2 class="text-gray-900 fw-bolder" style="text-align: center;">Grand Total @currency($grandTotalLiabilDanEkuitas)</h2> -->
+                                                        <h2 class="text-gray-900 fw-bolder" style="text-align: center;">Grand Total @currency($grandTotalLiabilDanEkuitasAktivitas)</h2>
 														<!--end::Wrapper-->
 													</div>
 												</div>

@@ -20,7 +20,7 @@ class NeracaController extends Controller
     {
         // Get the unique years from the "periode_jurnal" field
         $years = Jurnal::distinct()->select(DB::raw('YEAR(periode_jurnal) as year'))->pluck('year');
-    
+
         // Get the selected year and month from the request
         $selectedYear = $request->input('tahun');
         $selectedMonth = $request->input('bulan');
@@ -31,7 +31,7 @@ class NeracaController extends Controller
         if ($selectedYear) {
             $neracaQuery->whereYear('periode_jurnal', $selectedYear);
         }
-    
+
         if ($selectedMonth) {
             $neracaQuery->whereMonth('periode_jurnal', $selectedMonth);
         }
@@ -44,7 +44,7 @@ class NeracaController extends Controller
         if ($selectedYear) {
             $neracaKreditQuery->whereYear('periode_jurnal', $selectedYear);
         }
-    
+
         if ($selectedMonth) {
             $neracaKreditQuery->whereMonth('periode_jurnal', $selectedMonth);
         }
@@ -61,7 +61,7 @@ class NeracaController extends Controller
                     $query->where('parent', '=', $paretData);
                 });
         }
-        
+
         // Get jurnals berdasarkan data where
         $pendapatanAll = getJurnalsQuery(4)->get();
         $bebanSehubunganProgramAll = getJurnalsQuery(5)->get();
@@ -136,6 +136,7 @@ class NeracaController extends Controller
         // Grand Total Asset
         $grandTotalAsset = $subTotalAsetLancar + $subTotalAsetTidakLancar;
         $grandTotalLiabilDanEkuitas = $subTotalLiabilitas + $subTotalEkuitas;
+        $grandTotalLiabilDanEkuitasAktivitas = $subTotalLiabilitas + $subTotalEkuitasAktivitas;
 
         // dd($subTotalEkuitas);
 
@@ -156,13 +157,14 @@ class NeracaController extends Controller
             'grandTotalAsset' => $grandTotalAsset,
             'grandTotalLiabilDanEkuitas' => $grandTotalLiabilDanEkuitas,
             'years' => $years,
-            'selectedYear' => $selectedYear, 
+            'selectedYear' => $selectedYear,
             'selectedMonth' => $selectedMonth,
             'kenaikanPenurunanAsetNettoTidakTerikat' => $kenaikanPenurunanAsetNettoTidakTerikat,
             'subTotalEkuitasAktivitas' => $subTotalEkuitasAktivitas,
+            'grandTotalLiabilDanEkuitasAktivitas' => $grandTotalLiabilDanEkuitasAktivitas
         ]);
     }
-    
+
     public function printNeracaBlnThn($selectedYear, $selectedMonth)
     {
 
@@ -172,7 +174,7 @@ class NeracaController extends Controller
         if ($selectedYear) {
             $neracaQuery->whereYear('periode_jurnal', $selectedYear);
         }
-    
+
         if ($selectedMonth) {
             $neracaQuery->whereMonth('periode_jurnal', $selectedMonth);
         }
@@ -185,14 +187,14 @@ class NeracaController extends Controller
         if ($selectedYear) {
             $neracaKreditQuery->whereYear('periode_jurnal', $selectedYear);
         }
-    
+
         if ($selectedMonth) {
             $neracaKreditQuery->whereMonth('periode_jurnal', $selectedMonth);
         }
 
         $neracaKredit = $neracaKreditQuery->get();
 
-        
+
         // Define a reusable function untuk build query data jurnal untuk menghitung aktivitas total
         function getJurnalsQuery($paretData) {
             return Jurnal::with('akun')
@@ -203,7 +205,7 @@ class NeracaController extends Controller
                     $query->where('parent', '=', $paretData);
                 });
         }
-        
+
         // Get jurnals berdasarkan data where
         $pendapatanAll = getJurnalsQuery(4)->get();
         $bebanSehubunganProgramAll = getJurnalsQuery(5)->get();
@@ -275,6 +277,7 @@ class NeracaController extends Controller
         // Grand Total Asset
         $grandTotalAsset = $subTotalAsetLancar + $subTotalAsetTidakLancar;
         $grandTotalLiabilDanEkuitas = $subTotalLiabilitas + $subTotalEkuitas;
+        $grandTotalLiabilDanEkuitasAktivitas = $subTotalLiabilitas + $subTotalEkuitasAktivitas;
 
             return view('print.neraca', [
                 'title' => 'Laporan Neraca',
@@ -292,10 +295,11 @@ class NeracaController extends Controller
                 'subTotalEkuitas' => $subTotalEkuitas,
                 'grandTotalAsset' => $grandTotalAsset,
                 'grandTotalLiabilDanEkuitas' => $grandTotalLiabilDanEkuitas,
-                'selectedYear' => $selectedYear, 
+                'selectedYear' => $selectedYear,
                 'selectedMonth' => $selectedMonth,
                 'kenaikanPenurunanAsetNettoTidakTerikat' => $kenaikanPenurunanAsetNettoTidakTerikat,
                 'subTotalEkuitasAktivitas' => $subTotalEkuitasAktivitas,
+                'grandTotalLiabilDanEkuitasAktivitas' => $grandTotalLiabilDanEkuitasAktivitas
             ]);
     }
 
@@ -315,7 +319,7 @@ class NeracaController extends Controller
                     $query->where('parent', '=', $paretData);
                 });
         }
-        
+
         // Get jurnals berdasarkan data where
         $pendapatanAll = getJurnalsQuery(4)->get();
         $bebanSehubunganProgramAll = getJurnalsQuery(5)->get();
@@ -387,6 +391,7 @@ class NeracaController extends Controller
         // Grand Total Asset
         $grandTotalAsset = $subTotalAsetLancar + $subTotalAsetTidakLancar;
         $grandTotalLiabilDanEkuitas = $subTotalLiabilitas + $subTotalEkuitas;
+        $grandTotalLiabilDanEkuitasAktivitas = $subTotalLiabilitas + $subTotalEkuitasAktivitas;
 
             return view('print.neraca', [
                 'title' => 'Laporan Neraca',
@@ -406,6 +411,7 @@ class NeracaController extends Controller
                 'grandTotalLiabilDanEkuitas' => $grandTotalLiabilDanEkuitas,
                 'kenaikanPenurunanAsetNettoTidakTerikat' => $kenaikanPenurunanAsetNettoTidakTerikat,
                 'subTotalEkuitasAktivitas' => $subTotalEkuitasAktivitas,
+                'grandTotalLiabilDanEkuitasAktivitas' => $grandTotalLiabilDanEkuitasAktivitas
             ]);
     }
 
