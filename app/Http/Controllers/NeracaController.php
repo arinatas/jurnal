@@ -79,27 +79,68 @@ class NeracaController extends Controller
         $depresiasiAll = getJurnalsQuery(611)->get();
 
         // Calculate sum data jurnal
-        $pendapatanSum = $pendapatanAll->sum('kredit');
-        $bebanSehubunganProgramSum = $bebanSehubunganProgramAll->sum('debit');
-        $pendapatanLainLainSum = $pendapatanLainLainAll->sum('kredit');
-        $bebanMarketingSum = $bebanMarketingAll->sum('debit');
-        $bebanKegiatanSum = $bebanKegiatanAll->sum('debit');
-        $bebanGajiSum = $bebanGajiAll->sum('debit');
-        $bebanOperasionalKantorSum = $bebanOperasionalKantorAll->sum('debit');
-        $bebanRumahTanggaKantorSum = $bebanRumahTanggaKantorAll->sum('debit');
-        $bebanSewaSum = $bebanSewaAll->sum('debit');
-        $bebanPerawatanSum = $bebanPerawatanAll->sum('debit');
-        $bebanYayasanSum = $bebanYayasanAll->sum('debit');
-        $bebanLainlainSum = $bebanLainlainAll->sum('debit');
-        $pajakSum = $pajakAll->sum('debit');
-        $depresiasiSum = $depresiasiAll->sum('debit');
+        $pendapatanSumKredit = $pendapatanAll->sum('kredit');
+        $pendapatanSumDebit = $pendapatanAll->sum('debit');
+        $totPendapatan = $pendapatanSumKredit - $pendapatanSumDebit;
 
-        $labaKotor = $pendapatanSum - $bebanSehubunganProgramSum;
-        $allBeban = $bebanMarketingSum + $bebanKegiatanSum + $bebanGajiSum + $bebanOperasionalKantorSum + $bebanRumahTanggaKantorSum + $bebanSewaSum + $bebanPerawatanSum + $bebanYayasanSum;
-        $labaRugiSebelumBunga = $labaKotor + $pendapatanLainLainSum - $allBeban;
-        $labaRugiSebelumPajak = $labaRugiSebelumBunga - $bebanLainlainSum;
-        $labaRugiSebelumDepresiasi = $labaRugiSebelumPajak - $pajakSum;
-        $kenaikanPenurunanAsetNettoTidakTerikat = $labaRugiSebelumDepresiasi - $depresiasiSum;
+        $bebanSehubunganProgramSumKredit = $bebanSehubunganProgramAll->sum('kredit');
+        $bebanSehubunganProgramSumDebit = $bebanSehubunganProgramAll->sum('debit');
+        $totbebanSehubunganProgram = $bebanSehubunganProgramSumDebit - $bebanSehubunganProgramSumKredit;
+
+        $pendapatanLainLainSumKredit = $pendapatanLainLainAll->sum('kredit');
+        $pendapatanLainLainSumDebit = $pendapatanLainLainAll->sum('debit');
+        $totPendapatanLainLain = $pendapatanLainLainSumKredit - $pendapatanLainLainSumDebit;
+
+        $bebanMarketingSumKredit = $bebanMarketingAll->sum('kredit');
+        $bebanMarketingSumDebit = $bebanMarketingAll->sum('debit');
+        $totBebanMarketing = $bebanMarketingSumDebit - $bebanMarketingSumKredit;
+
+        $bebanKegiatanSumKredit = $bebanKegiatanAll->sum('kredit');
+        $bebanKegiatanSumDebit = $bebanKegiatanAll->sum('debit');
+        $totBebanKegiatanSumKredit = $bebanKegiatanSumDebit - $bebanKegiatanSumKredit;
+
+        $bebanGajiSumKredit = $bebanGajiAll->sum('kredit');
+        $bebanGajiSumDebit = $bebanGajiAll->sum('debit');
+        $totbebanGaji = $bebanGajiSumDebit - $bebanGajiSumKredit;
+
+        $bebanOperasionalKantorSumKredit = $bebanOperasionalKantorAll->sum('kredit');
+        $bebanOperasionalKantorSumDebit = $bebanOperasionalKantorAll->sum('debit');
+        $totbebanOperasionalKantor = $bebanOperasionalKantorSumDebit - $bebanOperasionalKantorSumKredit;
+
+        $bebanRumahTanggaKantorSumKredit = $bebanRumahTanggaKantorAll->sum('kredit');
+        $bebanRumahTanggaKantorSumDebit = $bebanRumahTanggaKantorAll->sum('debit');
+        $totbebanRumahTanggaKantor = $bebanRumahTanggaKantorSumDebit - $bebanRumahTanggaKantorSumKredit;
+
+        $bebanSewaSumKredit = $bebanSewaAll->sum('kredit');
+        $bebanSewaSumDebit = $bebanSewaAll->sum('debit');
+        $totbebanSewa = $bebanSewaSumDebit - $bebanSewaSumKredit;
+
+        $bebanPerawatanSumKredit = $bebanPerawatanAll->sum('kredit');
+        $bebanPerawatanSumDebit = $bebanPerawatanAll->sum('debit');
+        $totbebanPerawatan = $bebanPerawatanSumDebit - $bebanPerawatanSumKredit;
+
+        $bebanYayasanSumKredit = $bebanYayasanAll->sum('kredit');
+        $bebanYayasanSumDebit = $bebanYayasanAll->sum('debit');
+        $totbebanYayasan = $bebanYayasanSumDebit - $bebanYayasanSumKredit;
+
+        $bebanLainlainSumKredit = $bebanLainlainAll->sum('kredit');
+        $bebanLainlainSumDebit = $bebanLainlainAll->sum('debit');
+        $totbebanLainlain = $bebanLainlainSumDebit - $bebanLainlainSumKredit;
+
+        $pajakSumKredit = $pajakAll->sum('kredit');
+        $pajakSumDebit = $pajakAll->sum('debit');
+        $totpajak = $pajakSumDebit - $pajakSumKredit;
+
+        $depresiasiSumKredit = $depresiasiAll->sum('kredit');
+        $depresiasiSumDebit = $depresiasiAll->sum('debit');
+        $totdepresiasi = $depresiasiSumDebit - $depresiasiSumKredit;
+
+        $labaKotor = $totPendapatan - $totbebanSehubunganProgram;
+        $allBeban = $totBebanMarketing + $totBebanKegiatanSumKredit + $totbebanGaji + $totbebanOperasionalKantor + $totbebanRumahTanggaKantor + $totbebanSewa + $totbebanPerawatan + $totbebanYayasan;
+        $labaRugiSebelumBunga = $labaKotor + $totPendapatanLainLain - $allBeban;
+        $labaRugiSebelumPajak = $labaRugiSebelumBunga - $totbebanLainlain;
+        $labaRugiSebelumDepresiasi = $labaRugiSebelumPajak - $totpajak;
+        $kenaikanPenurunanAsetNettoTidakTerikat = $labaRugiSebelumDepresiasi - $totdepresiasi;
         // dd($kenaikanPenurunanAsetNettoTidakTerikat);
 
 
@@ -223,27 +264,68 @@ class NeracaController extends Controller
         $depresiasiAll = getJurnalsQuery(611)->get();
 
         // Calculate sum data jurnal
-        $pendapatanSum = $pendapatanAll->sum('kredit');
-        $bebanSehubunganProgramSum = $bebanSehubunganProgramAll->sum('debit');
-        $pendapatanLainLainSum = $pendapatanLainLainAll->sum('kredit');
-        $bebanMarketingSum = $bebanMarketingAll->sum('debit');
-        $bebanKegiatanSum = $bebanKegiatanAll->sum('debit');
-        $bebanGajiSum = $bebanGajiAll->sum('debit');
-        $bebanOperasionalKantorSum = $bebanOperasionalKantorAll->sum('debit');
-        $bebanRumahTanggaKantorSum = $bebanRumahTanggaKantorAll->sum('debit');
-        $bebanSewaSum = $bebanSewaAll->sum('debit');
-        $bebanPerawatanSum = $bebanPerawatanAll->sum('debit');
-        $bebanYayasanSum = $bebanYayasanAll->sum('debit');
-        $bebanLainlainSum = $bebanLainlainAll->sum('debit');
-        $pajakSum = $pajakAll->sum('debit');
-        $depresiasiSum = $depresiasiAll->sum('debit');
+        $pendapatanSumKredit = $pendapatanAll->sum('kredit');
+        $pendapatanSumDebit = $pendapatanAll->sum('debit');
+        $totPendapatan = $pendapatanSumKredit - $pendapatanSumDebit;
 
-        $labaKotor = $pendapatanSum - $bebanSehubunganProgramSum;
-        $allBeban = $bebanMarketingSum + $bebanKegiatanSum + $bebanGajiSum + $bebanOperasionalKantorSum + $bebanRumahTanggaKantorSum + $bebanSewaSum + $bebanPerawatanSum + $bebanYayasanSum;
-        $labaRugiSebelumBunga = $labaKotor + $pendapatanLainLainSum - $allBeban;
-        $labaRugiSebelumPajak = $labaRugiSebelumBunga - $bebanLainlainSum;
-        $labaRugiSebelumDepresiasi = $labaRugiSebelumPajak - $pajakSum;
-        $kenaikanPenurunanAsetNettoTidakTerikat = $labaRugiSebelumDepresiasi - $depresiasiSum;
+        $bebanSehubunganProgramSumKredit = $bebanSehubunganProgramAll->sum('kredit');
+        $bebanSehubunganProgramSumDebit = $bebanSehubunganProgramAll->sum('debit');
+        $totbebanSehubunganProgram = $bebanSehubunganProgramSumDebit - $bebanSehubunganProgramSumKredit;
+
+        $pendapatanLainLainSumKredit = $pendapatanLainLainAll->sum('kredit');
+        $pendapatanLainLainSumDebit = $pendapatanLainLainAll->sum('debit');
+        $totPendapatanLainLain = $pendapatanLainLainSumKredit - $pendapatanLainLainSumDebit;
+
+        $bebanMarketingSumKredit = $bebanMarketingAll->sum('kredit');
+        $bebanMarketingSumDebit = $bebanMarketingAll->sum('debit');
+        $totBebanMarketing = $bebanMarketingSumDebit - $bebanMarketingSumKredit;
+
+        $bebanKegiatanSumKredit = $bebanKegiatanAll->sum('kredit');
+        $bebanKegiatanSumDebit = $bebanKegiatanAll->sum('debit');
+        $totBebanKegiatanSumKredit = $bebanKegiatanSumDebit - $bebanKegiatanSumKredit;
+
+        $bebanGajiSumKredit = $bebanGajiAll->sum('kredit');
+        $bebanGajiSumDebit = $bebanGajiAll->sum('debit');
+        $totbebanGaji = $bebanGajiSumDebit - $bebanGajiSumKredit;
+
+        $bebanOperasionalKantorSumKredit = $bebanOperasionalKantorAll->sum('kredit');
+        $bebanOperasionalKantorSumDebit = $bebanOperasionalKantorAll->sum('debit');
+        $totbebanOperasionalKantor = $bebanOperasionalKantorSumDebit - $bebanOperasionalKantorSumKredit;
+
+        $bebanRumahTanggaKantorSumKredit = $bebanRumahTanggaKantorAll->sum('kredit');
+        $bebanRumahTanggaKantorSumDebit = $bebanRumahTanggaKantorAll->sum('debit');
+        $totbebanRumahTanggaKantor = $bebanRumahTanggaKantorSumDebit - $bebanRumahTanggaKantorSumKredit;
+
+        $bebanSewaSumKredit = $bebanSewaAll->sum('kredit');
+        $bebanSewaSumDebit = $bebanSewaAll->sum('debit');
+        $totbebanSewa = $bebanSewaSumDebit - $bebanSewaSumKredit;
+
+        $bebanPerawatanSumKredit = $bebanPerawatanAll->sum('kredit');
+        $bebanPerawatanSumDebit = $bebanPerawatanAll->sum('debit');
+        $totbebanPerawatan = $bebanPerawatanSumDebit - $bebanPerawatanSumKredit;
+
+        $bebanYayasanSumKredit = $bebanYayasanAll->sum('kredit');
+        $bebanYayasanSumDebit = $bebanYayasanAll->sum('debit');
+        $totbebanYayasan = $bebanYayasanSumDebit - $bebanYayasanSumKredit;
+
+        $bebanLainlainSumKredit = $bebanLainlainAll->sum('kredit');
+        $bebanLainlainSumDebit = $bebanLainlainAll->sum('debit');
+        $totbebanLainlain = $bebanLainlainSumDebit - $bebanLainlainSumKredit;
+
+        $pajakSumKredit = $pajakAll->sum('kredit');
+        $pajakSumDebit = $pajakAll->sum('debit');
+        $totpajak = $pajakSumDebit - $pajakSumKredit;
+
+        $depresiasiSumKredit = $depresiasiAll->sum('kredit');
+        $depresiasiSumDebit = $depresiasiAll->sum('debit');
+        $totdepresiasi = $depresiasiSumDebit - $depresiasiSumKredit;
+
+        $labaKotor = $totPendapatan - $totbebanSehubunganProgram;
+        $allBeban = $totBebanMarketing + $totBebanKegiatanSumKredit + $totbebanGaji + $totbebanOperasionalKantor + $totbebanRumahTanggaKantor + $totbebanSewa + $totbebanPerawatan + $totbebanYayasan;
+        $labaRugiSebelumBunga = $labaKotor + $totPendapatanLainLain - $allBeban;
+        $labaRugiSebelumPajak = $labaRugiSebelumBunga - $totbebanLainlain;
+        $labaRugiSebelumDepresiasi = $labaRugiSebelumPajak - $totpajak;
+        $kenaikanPenurunanAsetNettoTidakTerikat = $labaRugiSebelumDepresiasi - $totdepresiasi;
 
         // Pisahkan berdasarkan type_neraca
         $aktiva = $neraca->where('type_neraca', 'AKTIVA');
@@ -337,27 +419,68 @@ class NeracaController extends Controller
         $depresiasiAll = getJurnalsQuery(611)->get();
 
         // Calculate sum data jurnal
-        $pendapatanSum = $pendapatanAll->sum('kredit');
-        $bebanSehubunganProgramSum = $bebanSehubunganProgramAll->sum('debit');
-        $pendapatanLainLainSum = $pendapatanLainLainAll->sum('kredit');
-        $bebanMarketingSum = $bebanMarketingAll->sum('debit');
-        $bebanKegiatanSum = $bebanKegiatanAll->sum('debit');
-        $bebanGajiSum = $bebanGajiAll->sum('debit');
-        $bebanOperasionalKantorSum = $bebanOperasionalKantorAll->sum('debit');
-        $bebanRumahTanggaKantorSum = $bebanRumahTanggaKantorAll->sum('debit');
-        $bebanSewaSum = $bebanSewaAll->sum('debit');
-        $bebanPerawatanSum = $bebanPerawatanAll->sum('debit');
-        $bebanYayasanSum = $bebanYayasanAll->sum('debit');
-        $bebanLainlainSum = $bebanLainlainAll->sum('debit');
-        $pajakSum = $pajakAll->sum('debit');
-        $depresiasiSum = $depresiasiAll->sum('debit');
+        $pendapatanSumKredit = $pendapatanAll->sum('kredit');
+        $pendapatanSumDebit = $pendapatanAll->sum('debit');
+        $totPendapatan = $pendapatanSumKredit - $pendapatanSumDebit;
 
-        $labaKotor = $pendapatanSum - $bebanSehubunganProgramSum;
-        $allBeban = $bebanMarketingSum + $bebanKegiatanSum + $bebanGajiSum + $bebanOperasionalKantorSum + $bebanRumahTanggaKantorSum + $bebanSewaSum + $bebanPerawatanSum + $bebanYayasanSum;
-        $labaRugiSebelumBunga = $labaKotor + $pendapatanLainLainSum - $allBeban;
-        $labaRugiSebelumPajak = $labaRugiSebelumBunga - $bebanLainlainSum;
-        $labaRugiSebelumDepresiasi = $labaRugiSebelumPajak - $pajakSum;
-        $kenaikanPenurunanAsetNettoTidakTerikat = $labaRugiSebelumDepresiasi - $depresiasiSum;
+        $bebanSehubunganProgramSumKredit = $bebanSehubunganProgramAll->sum('kredit');
+        $bebanSehubunganProgramSumDebit = $bebanSehubunganProgramAll->sum('debit');
+        $totbebanSehubunganProgram = $bebanSehubunganProgramSumDebit - $bebanSehubunganProgramSumKredit;
+
+        $pendapatanLainLainSumKredit = $pendapatanLainLainAll->sum('kredit');
+        $pendapatanLainLainSumDebit = $pendapatanLainLainAll->sum('debit');
+        $totPendapatanLainLain = $pendapatanLainLainSumKredit - $pendapatanLainLainSumDebit;
+
+        $bebanMarketingSumKredit = $bebanMarketingAll->sum('kredit');
+        $bebanMarketingSumDebit = $bebanMarketingAll->sum('debit');
+        $totBebanMarketing = $bebanMarketingSumDebit - $bebanMarketingSumKredit;
+
+        $bebanKegiatanSumKredit = $bebanKegiatanAll->sum('kredit');
+        $bebanKegiatanSumDebit = $bebanKegiatanAll->sum('debit');
+        $totBebanKegiatanSumKredit = $bebanKegiatanSumDebit - $bebanKegiatanSumKredit;
+
+        $bebanGajiSumKredit = $bebanGajiAll->sum('kredit');
+        $bebanGajiSumDebit = $bebanGajiAll->sum('debit');
+        $totbebanGaji = $bebanGajiSumDebit - $bebanGajiSumKredit;
+
+        $bebanOperasionalKantorSumKredit = $bebanOperasionalKantorAll->sum('kredit');
+        $bebanOperasionalKantorSumDebit = $bebanOperasionalKantorAll->sum('debit');
+        $totbebanOperasionalKantor = $bebanOperasionalKantorSumDebit - $bebanOperasionalKantorSumKredit;
+
+        $bebanRumahTanggaKantorSumKredit = $bebanRumahTanggaKantorAll->sum('kredit');
+        $bebanRumahTanggaKantorSumDebit = $bebanRumahTanggaKantorAll->sum('debit');
+        $totbebanRumahTanggaKantor = $bebanRumahTanggaKantorSumDebit - $bebanRumahTanggaKantorSumKredit;
+
+        $bebanSewaSumKredit = $bebanSewaAll->sum('kredit');
+        $bebanSewaSumDebit = $bebanSewaAll->sum('debit');
+        $totbebanSewa = $bebanSewaSumDebit - $bebanSewaSumKredit;
+
+        $bebanPerawatanSumKredit = $bebanPerawatanAll->sum('kredit');
+        $bebanPerawatanSumDebit = $bebanPerawatanAll->sum('debit');
+        $totbebanPerawatan = $bebanPerawatanSumDebit - $bebanPerawatanSumKredit;
+
+        $bebanYayasanSumKredit = $bebanYayasanAll->sum('kredit');
+        $bebanYayasanSumDebit = $bebanYayasanAll->sum('debit');
+        $totbebanYayasan = $bebanYayasanSumDebit - $bebanYayasanSumKredit;
+
+        $bebanLainlainSumKredit = $bebanLainlainAll->sum('kredit');
+        $bebanLainlainSumDebit = $bebanLainlainAll->sum('debit');
+        $totbebanLainlain = $bebanLainlainSumDebit - $bebanLainlainSumKredit;
+
+        $pajakSumKredit = $pajakAll->sum('kredit');
+        $pajakSumDebit = $pajakAll->sum('debit');
+        $totpajak = $pajakSumDebit - $pajakSumKredit;
+
+        $depresiasiSumKredit = $depresiasiAll->sum('kredit');
+        $depresiasiSumDebit = $depresiasiAll->sum('debit');
+        $totdepresiasi = $depresiasiSumDebit - $depresiasiSumKredit;
+
+        $labaKotor = $totPendapatan - $totbebanSehubunganProgram;
+        $allBeban = $totBebanMarketing + $totBebanKegiatanSumKredit + $totbebanGaji + $totbebanOperasionalKantor + $totbebanRumahTanggaKantor + $totbebanSewa + $totbebanPerawatan + $totbebanYayasan;
+        $labaRugiSebelumBunga = $labaKotor + $totPendapatanLainLain - $allBeban;
+        $labaRugiSebelumPajak = $labaRugiSebelumBunga - $totbebanLainlain;
+        $labaRugiSebelumDepresiasi = $labaRugiSebelumPajak - $totpajak;
+        $kenaikanPenurunanAsetNettoTidakTerikat = $labaRugiSebelumDepresiasi - $totdepresiasi;
 
         // Pisahkan berdasarkan type_neraca
         $aktiva = $neraca->where('type_neraca', 'AKTIVA');

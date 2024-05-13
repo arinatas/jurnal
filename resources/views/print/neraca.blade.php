@@ -31,8 +31,11 @@
                     <div class="col-9 text-center text-uppercase">
                         <h2>YAYASAN PRIMAKARA</h2>
                         <h1>LAPORAN POSISI KEUANGAN</h1>
-                        <!-- <h2>PERIODE {{ \Carbon\Carbon::parse(date("Y-m-d h:i:sa"))->format('F Y') }}</h2> -->
-                        <h2>PERIODE {{ \Carbon\Carbon::create($selectedYear, $selectedMonth, 1)->format('F Y') }}</h2>
+                        @if(isset($selectedYear) && isset($selectedMonth))
+                            <h2>PERIODE {{ \Carbon\Carbon::create($selectedYear, $selectedMonth, 1)->format('F Y') }}</h2>
+                        @else
+                            <h2>PERIODE {{ \Carbon\Carbon::parse(date("Y-m-d h:i:sa"))->format('F Y') }}</h2>
+                        @endif
                     </div>
                     <!-- /.col -->
                 </div>
