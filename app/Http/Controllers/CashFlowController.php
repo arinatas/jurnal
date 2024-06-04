@@ -344,15 +344,30 @@ class CashFlowController extends Controller
         try {
             DB::beginTransaction();
     
-            // Lakukan perubahan pada nilai kas berdasarkan debit atau kredit
+            // Temukan entitas Kas dengan id 1 atau lemparkan exception jika tidak ditemukan
             $totalKas = Kas::findOrFail(1);
+
+            // Periksa apakah nilai debit lebih besar dari 0
             if ($request->debit > 0) {
+                // Jalankan rumus untuk debit
                 $totalKas->kas = $totalKas->kas - $cashflow->debit + $request->debit;
+            } else {
+                // Jika debit diubah menjadi 0, tambahkan kembali nilai debit yang sebelumnya dikurangi
+                $totalKas->kas = $totalKas->kas + $cashflow->debit;
             }
+
+            // Periksa apakah nilai kredit lebih besar dari 0
             if ($request->kredit > 0) {
+                // Jalankan rumus untuk kredit
                 $totalKas->kas = $totalKas->kas + $cashflow->kredit - $request->kredit;
+            } else {
+                // Jika kredit diubah menjadi 0, kurangi kembali nilai kredit yang sebelumnya ditambahkan
+                $totalKas->kas = $totalKas->kas - $cashflow->kredit;
             }
+
+            // Simpan perubahan ke dalam database
             $totalKas->save();
+
 
             $cashflow->tanggal = $request->tanggal;
             $cashflow->no_bukti = $request->no_bukti;
