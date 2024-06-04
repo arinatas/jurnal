@@ -352,8 +352,8 @@ class CashFlowController extends Controller
                 // Jalankan rumus untuk debit
                 $totalKas->kas = $totalKas->kas - $cashflow->debit + $request->debit;
             } else {
-                // Jika debit diubah menjadi 0, tambahkan kembali nilai debit yang sebelumnya dikurangi
-                $totalKas->kas = $totalKas->kas + $cashflow->debit;
+                // Jika debit diubah menjadi 0, kurangi kembali nilai debit yang sebelumnya dikurangi
+                $totalKas->kas = $totalKas->kas - $cashflow->debit;
             }
 
             // Periksa apakah nilai kredit lebih besar dari 0
@@ -361,8 +361,8 @@ class CashFlowController extends Controller
                 // Jalankan rumus untuk kredit
                 $totalKas->kas = $totalKas->kas + $cashflow->kredit - $request->kredit;
             } else {
-                // Jika kredit diubah menjadi 0, kurangi kembali nilai kredit yang sebelumnya ditambahkan
-                $totalKas->kas = $totalKas->kas - $cashflow->kredit;
+                // Jika kredit diubah menjadi 0, tambahkan kembali nilai kredit yang sebelumnya ditambahkan
+                $totalKas->kas = $totalKas->kas + $cashflow->kredit;
             }
 
             // Simpan perubahan ke dalam database
