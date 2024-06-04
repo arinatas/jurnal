@@ -102,7 +102,8 @@ class CashFlowController extends Controller
             $totalKas = Kas::findOrFail("1");
             if ($cashFlow->debit > 0) {
                 $totalKas->kas = $totalKas->kas + $cashFlow->debit;
-            } elseif ($cashFlow->kredit > 0) {
+            } 
+            if ($cashFlow->kredit > 0) {
                 $totalKas->kas = $totalKas->kas - $cashFlow->kredit;
             }
 
@@ -347,7 +348,8 @@ class CashFlowController extends Controller
             $totalKas = Kas::findOrFail(1);
             if ($request->debit > 0) {
                 $totalKas->kas = $totalKas->kas - $cashflow->debit + $request->debit;
-            } elseif ($request->kredit > 0) {
+            }
+            if ($request->kredit > 0) {
                 $totalKas->kas = $totalKas->kas + $cashflow->kredit - $request->kredit;
             }
             $totalKas->save();
@@ -387,7 +389,8 @@ class CashFlowController extends Controller
             $totalKas = Kas::findOrFail("1");
             if ($cashflow->debit > 0) {
                 $totalKas->kas = $totalKas->kas - $cashflow->debit;
-            } elseif ($cashflow->kredit > 0) {
+            }
+            if ($cashflow->kredit > 0) {
                 $totalKas->kas = $totalKas->kas + $cashflow->kredit;
             }
             $totalKas->save();
